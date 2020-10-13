@@ -1,1 +1,1 @@
-# MIB2MaSimSe
+# MIB2MaSimSemester
