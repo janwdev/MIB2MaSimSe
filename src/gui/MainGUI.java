@@ -20,10 +20,10 @@ public class MainGUI  extends JFrame{
 		this.control = control;
 		this.setTitle(Constants.PROGNAME);
 		this.setSize(300,300); //TODO aendern
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 		
 		this.add(createSouthPanel(), BorderLayout.SOUTH);
-		
 		this.setVisible(true);
 	}
 	
