@@ -35,4 +35,22 @@ public class Matrix {
         }
     }
 	
+	public int get(int rows, int cols) throws Exception {
+        check(rows, cols);
+        return this.matrix[rows-1][cols-1];
+    }
+	
+	public void set(int rows, int cols, int value) throws Exception {
+        check(rows, cols);
+        this.matrix[rows-1][cols-1] = value;
+    }
+	
+	public void check(int rows, int cos) throws Exception {
+        if (rows < 0 || cols < 0) {
+            throw new Exception("Negative index werte.");
+        }
+        if (rows > this.rows || cols > this.cols) {
+            throw new Exception("zu hoher index für die Matrix");
+        }
+    }
 }
