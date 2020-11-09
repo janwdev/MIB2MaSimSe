@@ -16,6 +16,7 @@ public class InfoDialog extends JDialog {
 	public InfoDialog() {
 		createInfoDialog();
 		this.pack();
+		this.setModal(true);
 		this.setVisible(true);
 	}
 

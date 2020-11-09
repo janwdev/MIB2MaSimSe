@@ -14,6 +14,18 @@ import gui.MainGUI;
 public class Control {
 	private MainGUI gui;
 
+	public String[] abflugFlughafenStr = new String[] { "Zürch", "Bangkok", "Helsinki" };
+	//TODO in Konstruktor aus Datei einlesen
+	// TODO ueberpruefen und ersetzen
+	public int[] abflugFlughafenX = new int[] { 5, 7, 9 };
+	public int[] abflugFlughafenY = new int[] { 5, 7, 9 };
+	public int[] abflugFlughafenZ = new int[] { 5, 7, 9 };
+	public String[] ankunftFlughafenStr = new String[] { "Zürch", "Bangkok", "Helsinki" };
+	// TODO ueberpruefen und ersetzen
+	public int[] ankunftFlughafenX = new int[] { 5, 7, 9 };
+	public int[] ankunftFlughafenY = new int[] { 5, 7, 9 };
+	public int[] ankunftFlughafenZ = new int[] { 5, 7, 9 };
+
 	public Control() {
 		Constants.LICENCETEXT = createLicencesText();
 	}
@@ -21,7 +33,7 @@ public class Control {
 	protected void setGUI(MainGUI gui) {
 		this.gui = gui;
 	}
-	
+
 	private String createLicencesText() {
 		StringBuilder apacheBuilder = new StringBuilder();
 		apacheBuilder.append("Uses Apache 2 Licence\n");
@@ -36,11 +48,11 @@ public class Control {
 			e.printStackTrace();
 		}
 		String apacheLicence = apacheBuilder.toString();
-		
+
 		// evtl mehr Lizenzen einfuegen
-		
+
 		String licences = apacheLicence + "\n";
-		
+
 		return licences;
 	}
 
