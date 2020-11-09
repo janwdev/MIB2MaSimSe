@@ -15,7 +15,7 @@ public class Control {
 	private MainGUI gui;
 
 	public String[] abflugFlughafenStr = new String[] { "Zürch", "Bangkok", "Helsinki" };
-	//TODO in Konstruktor aus Datei einlesen
+	// TODO in Konstruktor aus Datei einlesen
 	// TODO ueberpruefen und ersetzen
 	public int[] abflugFlughafenX = new int[] { 5, 7, 9 };
 	public int[] abflugFlughafenY = new int[] { 5, 7, 9 };

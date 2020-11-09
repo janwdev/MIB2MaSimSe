@@ -3,75 +3,95 @@ package objectClasses;
 import maths.Vektorberechnung;
 
 public class Vector {
-	
+
 	private double x;
 	private double y;
 	private double z;
-	public int dim;		//ob 2 Dimensional oder 3 Dimensional
+	public int dim; // ob 2 Dimensional oder 3 Dimensional
 	private double wP;
 	private double wO;
-	
-	
-	public Vector(double x, double y, double z){
+
+	public Vector(double x, double y, double z) {
+		initVector(true, x, y, z);
+	}
+
+	private Vector(boolean sollteWinkel, double x, double y, double z) {
+		initVector(sollteWinkel, x, y, z);
+	}
+
+	private void initVector(boolean sollteWinkel, double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		dim = 3;
-		winkelBerechnen();
-		
+		if (sollteWinkel)
+			winkelBerechnen();
 	}
+
 	public Vector(double wP, double wO) {
 		this.wP = wP;
 		this.wO = wO;
 		koordinatenBerechnen();
 	}
-	
-	
+
 	public void winkelBerechnen() {
-		
-		Vector u = this;
-		Vector v = new Vector(x,y,0); 		//u-Strich
-		Vector xDach = new Vector(x,0,0);
-		
 		Vektorberechnung vekbe = new Vektorberechnung();
-		wO = vekbe.winkelBerechnen(u, v);
-		wP = vekbe.winkelBerechnen(u, xDach);
-		
+		wO = vekbe.winkelBerechnen(this, new Vector(false, x, y, 0));
+		wP = vekbe.winkelBerechnen(this, new Vector(false, x, 0, 0));
 	}
-	
+
 	public void koordinatenBerechnen() {
-		this.x = Math.cos(wO)*Math.cos(wP);
-		this.y = Math.cos(wO)*Math.sin(wP);
+		this.x = Math.cos(wO) * Math.cos(wP);
+		this.y = Math.cos(wO) * Math.sin(wP);
 		this.z = Math.sin(wO);
 		dim = 3;
 	}
-	
-	
-	
-	public double[] getVector(){
-		return new double[]{x,y,z};
+
+	public double[] getVector() {
+		return new double[] { x, y, z };
 	}
-	
-	public void setVector(double x, double y, double z){
+
+	public double getVectorX() {
+		return x;
+	}
+
+	public double getVectorY() {
+		return y;
+	}
+
+	public double getVectorZ() {
+		return z;
+	}
+
+	public void setVector(Double[] werte) {
+		if (werte[0] != null)
+			this.x = werte[0];
+		if (werte[1] != null)
+			this.y = werte[1];
+		if (werte[2] != null)
+			this.z = werte[2];
+		winkelBerechnen();
+	}
+
+	public void setVector(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		winkelBerechnen();
 	}
+
 	public void setWinkel(double wP, double wO) {
 		this.wP = wP;
 		this.wO = wO;
 		koordinatenBerechnen();
 	}
-	public double getPWinkel(){
+
+	public double getPWinkel() {
 		return wP;
 	}
-	public double getOWinkel(){
+
+	public double getOWinkel() {
 		return wP;
 	}
-	
-	
-	
+
 }
-
-

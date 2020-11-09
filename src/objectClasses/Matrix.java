@@ -4,8 +4,8 @@ public class Matrix {
 
 	private int[][] matrix;
 
-	private int rows = 0; // Zeilen
-	private int cols = 0; // Spalten
+	public final int rows; // Zeilen
+	public final int cols; // Spalten
 
 	public Matrix(int rows, int cols) throws Exception {
 		if (rows < 0 || cols < 0) {
@@ -19,6 +19,7 @@ public class Matrix {
 		if (args.length > this.cols * this.rows) {
 			throw new Exception("Übergabe-Anzahl ist größer als spalte*zeile");
 		}else {
+			this.matrix = new int[rows][cols];
 			int index = 0;
 			for (int i = 0; i < this.rows; i++) {
 				for (int j = 0; j < this.cols; j++) {
