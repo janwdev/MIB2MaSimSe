@@ -32,23 +32,11 @@ public class Vector {
 		Vector u = this;
 		Vector v = new Vector(x,y,0); 		//u-Strich
 		Vector xDach = new Vector(x,0,0);
-		//double[]u = getVector();
-		//double[]v = {x,y,0}; 	// u-Strich
-		//double[]xDach = {x,0,0};
 		
 		Vektorberechnung vekbe = new Vektorberechnung();
+		wO = vekbe.winkelBerechnen(u, v);
+		wP = vekbe.winkelBerechnen(u, xDach);
 		
-		if(z >= 0) {
-			wO = (double) Math.acos(vekbe.skalarProdukt(v, u)/(vekbe.wurzel(v)*vekbe.wurzel(u)));
-		}else {
-			wO = (double) -(Math.acos(vekbe.skalarProdukt(v, u)/(vekbe.wurzel(v)*vekbe.wurzel(u))));
-		}
-		
-		if(y >= 0) {
-			wP = (double) Math.acos(vekbe.skalarProdukt(v, xDach)/(vekbe.wurzel(v)*vekbe.wurzel(xDach)));
-		}else {
-			wP = (double) -(Math.acos(vekbe.skalarProdukt(v, xDach)/(vekbe.wurzel(v)*vekbe.wurzel(xDach))));
-		}
 	}
 	
 	public void koordinatenBerechnen() {

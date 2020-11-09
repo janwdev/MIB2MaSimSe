@@ -21,6 +21,17 @@ public class Vektorberechnung {
 		return Math.sqrt(Math.pow(v.getVector()[0], 2) + Math.pow(v.getVector()[1], 2) + Math.pow(v.getVector()[2], 2));
 	}
 	
+	public double winkelBerechnen(Vector u, Vector v) {
+		
+		
+		if(u.getVector()[2] >= 0) {
+			return (double) Math.acos(skalarProdukt(u, v)/(wurzel(v)*wurzel(u)));
+		}else {
+			return (double) -(Math.acos(skalarProdukt(u, v)/(wurzel(v)*wurzel(u))));
+		}
+		
+	}
+	
 					
 	
 }
