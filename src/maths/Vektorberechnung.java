@@ -1,26 +1,24 @@
 package maths;
 
+import objectClasses.Vector;
+
 public class Vektorberechnung {
 
 	
-	public Vektorberechnung() {
-		
-	}
 	
-	
-	public double skalarProdukt(double[] u, double[] v) {
+	public double skalarProdukt(Vector u, Vector v) {
 		
 		double skalarprodukt = 0;
-		for (int i = 0; i < u.length; i++) {
-			skalarprodukt = skalarprodukt + u[i] * v[i];
+		for (int i = 0; i < u.dim; i++) {
+			skalarprodukt = skalarprodukt + u.getVector()[i] * v.getVector()[i];
 		}
 
 		return skalarprodukt;
 	}
 	
-	public double wurzel(double[]v) {
+	public double wurzel(Vector v) {
 		// Fehlermeldung hinzufügen, falls zu wenig werte im Array (oder zu viel)
-		return Math.sqrt(Math.pow(v[0], 2) + Math.pow(v[1], 2) + Math.pow(v[2], 2));
+		return Math.sqrt(Math.pow(v.getVector()[0], 2) + Math.pow(v.getVector()[1], 2) + Math.pow(v.getVector()[2], 2));
 	}
 	
 					
