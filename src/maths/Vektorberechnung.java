@@ -26,7 +26,6 @@ public class Vektorberechnung {
 			return (double) -(Math.acos(skalarProdukt(u, v) / (wurzel(v) * wurzel(u))));
 		}
 	}
-<<<<<<< Updated upstream
 
 	public Vector drehen(Vector vektor, Matrix drehMatrix) throws Exception {
 		double oldZ = vektor.getVectorZ();
@@ -36,7 +35,7 @@ public class Vektorberechnung {
 		return vektor;
 	}
 
-=======
+
 	
 	public double abstandVector(Vector u, Vector v) {
 		
@@ -45,14 +44,5 @@ public class Vektorberechnung {
 		
 	}
 	
-	public double abstandVector(Vector u, Vector v) {
-		
-		double r = wurzel(u);//radius
-		return (2*Math.PI*r*Math.toDegrees(winkelBerechnen(u, v)))/360;
-		
-	}
 	
-					
-	
->>>>>>> Stashed changes
 }

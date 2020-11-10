@@ -2,7 +2,7 @@ package objectClasses;
 
 public class Matrix {
 
-	private int[][] matrix;
+	private double[][] matrix;
 
 	public final int rows; // Zeilen
 	public final int cols; // Spalten
@@ -15,11 +15,11 @@ public class Matrix {
 		this.cols = cols;
 	}
 
-	public void init(int... args) throws Exception {
+	public void init(double... args) throws Exception {
 		if (args.length > this.cols * this.rows) {
 			throw new Exception("Übergabe-Anzahl ist größer als spalte*zeile");
 		}else {
-			this.matrix = new int[rows][cols];
+			this.matrix = new double[rows][cols];
 			int index = 0;
 			for (int i = 0; i < this.rows; i++) {
 				for (int j = 0; j < this.cols; j++) {
@@ -34,12 +34,19 @@ public class Matrix {
 		}
 	}
 
-	public int get(int rows, int cols) throws Exception {
+	public double[][] getMatrix() throws Exception{
+		if(matrix == null) {
+			throw new Exception("Die Matrix wurde noch nicht deklariert");
+		}
+		return matrix;
+	}
+	
+	public double get(int rows, int cols) throws Exception {
 		check(rows, cols);
 		return this.matrix[rows - 1][cols - 1];
 	}
 
-	public void set(int rows, int cols, int value) throws Exception {
+	public void set(int rows, int cols, double value) throws Exception {
 		check(rows, cols);
 		this.matrix[rows - 1][cols - 1] = value;
 	}

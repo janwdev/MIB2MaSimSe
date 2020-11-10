@@ -13,7 +13,7 @@ public class VektorMatrixBerechnung {
 			for (int i = 0; i < matrix.rows; i++) {
 				double reihenErgebnis = 0;
 				for (int j = 0; j < matrix.cols; j++) {
-					int matrixValue = matrix.get(i + 1, j + 1);
+					double matrixValue = matrix.get(i + 1, j + 1); // zu double verändert
 					double vectorValue = vector.getVector()[i];
 					reihenErgebnis = reihenErgebnis + matrix.get(i + 1, j + 1) * vector.getVector()[j];
 				}
