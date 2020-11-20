@@ -7,6 +7,7 @@ public class Vector {
 	private double x;
 	private double y;
 	private double z;
+	public int dim; // ob 2 Dimensional oder 3 Dimensional
 	private double wP;
 	private double wO;
 
@@ -22,6 +23,7 @@ public class Vector {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		dim = 3;
 		if (sollteWinkel)
 			winkelBerechnen();
 	}
@@ -42,6 +44,7 @@ public class Vector {
 		this.x = Math.cos(wO) * Math.cos(wP);
 		this.y = Math.cos(wO) * Math.sin(wP);
 		this.z = Math.sin(wO);
+		dim = 3;
 	}
 
 	public double[] getVector() {

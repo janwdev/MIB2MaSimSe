@@ -8,7 +8,7 @@ public class Vektorberechnung {
 
 	public double skalarProdukt(Vector u, Vector v) {
 		double skalarprodukt = 0;
-		for (int i = 0; i < 3; i++) { // ändern
+		for (int i = 0; i < u.dim; i++) {
 			skalarprodukt = skalarprodukt + u.getVector()[i] * v.getVector()[i];
 		}
 		return skalarprodukt;
@@ -36,16 +36,6 @@ public class Vektorberechnung {
 	}
 
 
-	public Vector kreuzprodukt(Vector u, Vector v) {
-		
-		
-		double x = (u.getVectorY()*v.getVectorZ())-(u.getVectorZ()*v.getVectorY());
-		double y = (u.getVectorZ()*v.getVectorX())-(u.getVectorX()*v.getVectorZ());
-		double z = (u.getVectorX()*v.getVectorY())-(u.getVectorY()*v.getVectorX());
-		Vector vec = new Vector(x,y,z);
-		return vec;
-		
-	}
 	
 	public double abstandVector(Vector u, Vector v) {
 		
