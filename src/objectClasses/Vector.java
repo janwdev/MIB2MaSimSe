@@ -2,13 +2,13 @@ package objectClasses;
 
 import maths.Vektorberechnung;
 
-public class Vector {
+public class Vector { 
 
 	private double x;
 	private double y;
 	private double z;
-	private double wP;
-	private double wO;
+	private double wPhi; //längengrad xDach und v'
+	private double wTheta; //breitengrad v und v'
 
 	public Vector(double x, double y, double z) {
 		initVector(true, x, y, z);
@@ -27,21 +27,21 @@ public class Vector {
 	}
 
 	public Vector(double wP, double wO) {
-		this.wP = wP;
-		this.wO = wO;
+		this.wPhi = wP;
+		this.wTheta = wO;
 		koordinatenBerechnen();
 	}
 
 	public void winkelBerechnen() {
 		Vektorberechnung vekbe = new Vektorberechnung();
-		wO = vekbe.winkelBerechnen(this, new Vector(false, x, y, 0));
-		wP = vekbe.winkelBerechnen(this, new Vector(false, x, 0, 0));
+		wTheta = vekbe.winkelBerechnen(this, new Vector(false, x, y, 0));
+		wPhi = vekbe.winkelBerechnen(this, new Vector(false, x, 0, 0));
 	}
 
 	public void koordinatenBerechnen() {
-		this.x = Math.cos(wO) * Math.cos(wP);
-		this.y = Math.cos(wO) * Math.sin(wP);
-		this.z = Math.sin(wO);
+		this.x = Math.cos(wTheta) * Math.cos(wPhi);
+		this.y = Math.cos(wTheta) * Math.sin(wPhi);
+		this.z = Math.sin(wTheta);
 	}
 
 	public double[] getVector() {
@@ -78,17 +78,17 @@ public class Vector {
 	}
 
 	public void setWinkel(double wP, double wO) {
-		this.wP = wP;
-		this.wO = wO;
+		this.wPhi = wP;
+		this.wTheta = wO;
 		koordinatenBerechnen();
 	}
 
 	public double getPWinkel() {
-		return wP;
+		return wPhi;
 	}
 
 	public double getOWinkel() {
-		return wP;
+		return wPhi;
 	}
 
 }

@@ -8,4 +8,5 @@ public class Constants {
 	
 	public static int drawSizeXPixels = 800;
 	public static int drawSizeYPixels = 600;
+	// public static int earthRadius = 6371; //später
 }
