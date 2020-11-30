@@ -9,7 +9,8 @@ public class ProjektionsMatrix {
 	double s = (1/Math.sqrt(2));	// Standarteinstellungen axonometrische Angaben
 	double a = (135); 				//in Grad
 	double[][] pm;
-	Matrix m = new Matrix(2,4);
+	Matrix m = new Matrix(2,3); // zuz 2,3 ändern
+	
 	
 	
 	public ProjektionsMatrix() throws Exception{
@@ -23,8 +24,10 @@ public class ProjektionsMatrix {
 	
 	public void proMatrixErstellen() throws Exception{
 		try {
-			pm = new double[2][4] ;
-			m.init(-s*Math.sin(a), 1.0, 0.0, (double)Constants.drawSizeXPixels, s*Math.cos(a), 0.0, 1.0, (double)Constants.drawSizeYPixels); // Nachschauen überprüfen (minus bei cos hab ich weggemacht
+			//pm = new double[2][4] ;
+			//m.init(-s*Math.sin(a), 1.0, 0.0, (double)Constants.drawSizeXPixels, s*Math.cos(a), 0.0, 1.0, (double)Constants.drawSizeYPixels); // Nachschauen überprüfen (minus bei cos hab ich weggemacht
+			pm = new double[2][3] ;
+			m.init(-s*Math.sin(a), 1.0, 0.0, s*Math.cos(a), 0.0, 1.0); // Nachschauen überprüfen (minus bei cos hab ich weggemacht
 			pm = m.getMatrix();
 		}catch (Exception e){
 			System.out.println("Ein Fehler bei der Matrixerzeugeung: "+e);

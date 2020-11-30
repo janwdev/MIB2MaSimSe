@@ -1,6 +1,7 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 
@@ -10,6 +11,8 @@ import maths.VektorMatrixBerechnung;
 import maths.Vektorberechnung;
 import objectClasses.Matrix;
 import objectClasses.Vector;
+import app.Constants;
+
 
 public class Main {
 
@@ -20,6 +23,9 @@ public class Main {
 		Control control = new Control();
 		MainGUI gui = new MainGUI(control);
 		control.setGUI(gui);
+		
+		
+		
 		
 		toRun();
 		
@@ -53,7 +59,7 @@ public class Main {
 	
 	private static void toRun () {
 		// Deklaration
-		Vector p = new Vector(2.0, 0.0, 0.0);
+		Vector p = new Vector(2.0, 4.0, 8.0);
 		Vector q = new Vector(-2.0, 3.0, 0.0);
 		Vector n = new Vector(0, 0, 0);
 		Vector u = new Vector(0, 0, 0);
@@ -74,7 +80,7 @@ public class Main {
 		double gschw = 1.0;
 		double winkel = vecBe.winkelBerechnen(p, q);
 		double degreeWinkel = Math.toDegrees(winkel);
-		double r = vecBe.vecLength(u);
+		double r = Constants.r;     //vecBe.vecLength(u);
 		ArrayList<Double> posP = new ArrayList<Double>();
 		
 		// schrittzähler in der Strecke zwischen p und q (Phi)
@@ -84,10 +90,17 @@ public class Main {
 		
 		// Punkte in der Bahn in einem Array
 		for(int i=0; i<posP.size(); i++) {
-			points.add( vecBe.vecAddition( (vecBe.vecMulti(p, r*Math.cos(posP.get(i)))),  (vecBe.vecMulti(u, r*Math.cos(posP.get(i))))    ));
+			
+			Vector v1 = new Vector(0,0,0);
+			Vector v2 = new Vector(0,0,0);
+			double a = posP.get(i) ;
+			
+			v1 = vecBe.vecMulti(p, r*Math.cos(a));
+			v2 = vecBe.vecMulti(u, r*Math.sin(a));
+			points.add( vecBe.vecAddition(v1, v2));
 		}
 
-		// 2D Projektion alles Punkte im Array
+		// 2D Projektion aller Punkte im Array
 		try {
 			ProjektionsMatrix proMatrix = new ProjektionsMatrix();
 			Matrix matrix = new Matrix(2,4);
@@ -103,6 +116,7 @@ public class Main {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("Fehler: "+e);
 		}
 		
 		//Punkte ausgeben
@@ -112,7 +126,10 @@ public class Main {
 			System.out.println("Y: "+points.get(i).getVectorY());
 			System.out.println("Z: "+points.get(i).getVectorZ());
 		}
-		
+		for(int i=0; i<posP.size(); i++) {
+			System.out.println("Position: "+posP.get(i));
+		}
+		System.out.println("Winkel: "+winkel + " Winkeldegree: "+ degreeWinkel);
 		
 	}
 	

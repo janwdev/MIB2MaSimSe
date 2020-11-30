@@ -1,12 +1,14 @@
 package objectClasses;
 
 import maths.Vektorberechnung;
+import app.Constants;
 
 public class Vector { 
 
 	private double x;
 	private double y;
 	private double z;
+	private double r = Constants.r;
 	private double wPhi; //längengrad xDach und v'
 	private double wTheta; //breitengrad v und v'
 
@@ -39,9 +41,9 @@ public class Vector {
 	}
 
 	public void koordinatenBerechnen() {
-		this.x = Math.cos(wTheta) * Math.cos(wPhi);
-		this.y = Math.cos(wTheta) * Math.sin(wPhi);
-		this.z = Math.sin(wTheta);
+		this.x = r * Math.cos(wTheta) * Math.cos(wPhi);
+		this.y = r * Math.cos(wTheta) * Math.sin(wPhi);
+		this.z = r * Math.sin(wTheta);
 	}
 
 	public double[] getVector() {
