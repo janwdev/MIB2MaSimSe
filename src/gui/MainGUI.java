@@ -20,7 +20,7 @@ public class MainGUI extends JFrame {
 
 	public MainGUI(Control control) {
 		this.control = control;
-		JPanel centerPanel = new CenterPanel();
+		CenterPanel centerPanel = new CenterPanel();
 		
 		this.setTitle(Constants.PROGNAME);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

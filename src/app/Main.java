@@ -18,7 +18,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		
-		FlatDarculaLaf.install();
+		//FlatDarculaLaf.install();
 		
 		Control control = new Control();
 		MainGUI gui = new MainGUI(control);

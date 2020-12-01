@@ -9,12 +9,13 @@ public class ProjektionsMatrix {
 	double s = (1/Math.sqrt(2));	// Standarteinstellungen axonometrische Angaben
 	double a = (135); 				//in Grad
 	double[][] pm;
-	Matrix m = new Matrix(2,3); // zuz 2,3 ändern
+	Matrix m;
 	
 	
 	
-	public ProjektionsMatrix() throws Exception{
+	public ProjektionsMatrix() {
 		try {
+			m = new Matrix(2,3); // zuz 2,3 ändern
 			proMatrixErstellen();
 		}catch (Exception e){
 			
