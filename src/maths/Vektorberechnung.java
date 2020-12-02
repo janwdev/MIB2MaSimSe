@@ -6,7 +6,7 @@ import objectClasses.Vector;
 public class Vektorberechnung { // erbt von Vector.java
 	VektorMatrixBerechnung vektorMatrix = new VektorMatrixBerechnung();
 
-	public double skalarProdukt(Vector u, Vector v) {
+	protected double skalarProdukt(Vector u, Vector v) {
 		double skalarprodukt = 0;
 		for (int i = 0; i < 3; i++) { // ändern
 			skalarprodukt = skalarprodukt + u.getVector()[i] * v.getVector()[i];
@@ -14,7 +14,7 @@ public class Vektorberechnung { // erbt von Vector.java
 		return skalarprodukt;
 	}
 
-	public double vecLength(Vector v) {//norm oder length
+	protected double vecLength(Vector v) {//norm oder length
 		// Fehlermeldung hinzufügen, falls zu wenig werte im Array (oder zu viel)
 		return Math.sqrt(Math.pow(v.getVector()[0], 2) + Math.pow(v.getVector()[1], 2) + Math.pow(v.getVector()[2], 2));
 	}
@@ -25,7 +25,7 @@ public class Vektorberechnung { // erbt von Vector.java
 	
 	}
 
-	public Vector drehen(Vector vektor, Matrix drehMatrix) throws Exception {
+	protected Vector drehen(Vector vektor, Matrix drehMatrix) throws Exception {
 		double oldZ = vektor.getVectorZ();
 		vektor.setVector(vektor.getVectorX(), vektor.getVectorY(), 0);
 		vektor = vektorMatrix.multiply(vektor, drehMatrix);
@@ -33,19 +33,19 @@ public class Vektorberechnung { // erbt von Vector.java
 		return vektor;
 	}
 	
-	public Vector vecDiv(Vector vector, double wert) {
+	protected Vector vecDiv(Vector vector, double wert) {
 		Vector vec = vector;
 		vec.setVector(vec.getVectorX()/wert, vec.getVectorY()/wert, vec.getVectorZ()/wert);
 		return vec;
 	}
 	
-	public Vector vecMulti(Vector vector, double wert) {
+	protected Vector vecMulti(Vector vector, double wert) {
 		Vector vec = vector;
 		vec.setVector(vec.getVectorX()*wert, vec.getVectorY()*wert, vec.getVectorZ()*wert);
 		return vec;
 	}
 	
-	public Vector vecAddition(Vector v, Vector u) {
+	protected Vector vecAddition(Vector v, Vector u) {
 		
 		Vector vec = new Vector(0,0,0);
 		
@@ -55,7 +55,7 @@ public class Vektorberechnung { // erbt von Vector.java
 	}
 
 
-	public Vector kreuzprodukt(Vector u, Vector v) {
+	protected Vector kreuzprodukt(Vector u, Vector v) {
 		
 		
 		double x = (u.getVectorY()*v.getVectorZ())-(u.getVectorZ()*v.getVectorY());
@@ -66,7 +66,7 @@ public class Vektorberechnung { // erbt von Vector.java
 		
 	}
 	
-	public double abstandVector(Vector u, Vector v) {
+	protected double abstandVector(Vector u, Vector v) {
 		
 		double r = vecLength(u);//radius r=konstante Erdradius
 		return (2*Math.PI*r*Math.toDegrees(winkelBerechnen(u, v)))/360;

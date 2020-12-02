@@ -4,7 +4,7 @@ import objectClasses.Matrix;
 
 public class MatrixBerechnung {
 
-	public Matrix multipy(Matrix ma1, Matrix ma2) {
+	protected Matrix multipy(Matrix ma1, Matrix ma2) {
 		try {
 			double[][] m1 = ma1.getMatrix();
 			double[][] m2 = ma2.getMatrix();
@@ -51,7 +51,7 @@ public class MatrixBerechnung {
 		}
 	}
 
-	public Matrix getDrehMatrix(double winkelX, double winkelY, double winkelZ) throws Exception {
+	protected Matrix getDrehMatrix(double winkelX, double winkelY, double winkelZ) throws Exception {
 		Matrix xMatrix = new Matrix(3, 3);
 		xMatrix.init(1, 0, 0, 0, Math.cos(winkelX), -Math.sin(winkelX), 0, Math.sin(winkelX), Math.cos(winkelX));
 		Matrix yMatrix = new Matrix(3, 3);
