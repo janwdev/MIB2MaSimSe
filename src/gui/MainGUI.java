@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -14,13 +15,15 @@ import javax.swing.JPanel;
 
 import app.Constants;
 import app.Control;
+import objectClasses.Vector;
 
 public class MainGUI extends JFrame {
 	private Control control;
+	private CenterPanel centerPanel;
 
 	public MainGUI(Control control) {
 		this.control = control;
-		CenterPanel centerPanel = new CenterPanel();
+		centerPanel = new CenterPanel();
 		
 		this.setTitle(Constants.PROGNAME);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -33,6 +36,10 @@ public class MainGUI extends JFrame {
 		this.setVisible(true);
 		
 		this.setMinimumSize(this.getSize());
+	}
+	
+	public void drawVector(Vector v) {
+		centerPanel.drawVector(v, Color.RED, 4, 4);
 	}
 	
 	

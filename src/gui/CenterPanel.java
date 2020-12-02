@@ -29,8 +29,22 @@ public class CenterPanel extends JPanel {
 		this.g = g;
 		drahtgitter();
 	}
+	
+	protected void drawVector(Vector v, Color color, int w, int h) {
+		g.setColor(color);
+		try {
+			v = maths.multiply(v, maths.getProjektionsMatrix());
+			int[] dispKoordinaten = maths.vektor2DToDisplayKoordinates(v);
+			int x = dispKoordinaten[0];
+			int y = dispKoordinaten[1];
+			g.fillOval(x, y, w, h);
 
-	public void drahtgitter() {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void drahtgitter() {
 		// TODO farbe anpassen wenn hinter kugel verborgen
 		g.setColor(Color.BLACK);
 		// Kreise Horizontal
@@ -44,22 +58,7 @@ public class CenterPanel extends JPanel {
 		for (int iQuer = 0; iQuer < anzCircles*2; iQuer++) {
 			for (int i = 0; i < dotPerCircle; i++) {
 				Vector v = new Vector(winkelX, winkelY);
-//				if(winkelX <= Math.PI/2 || winkelX >= 3/2*Math.PI) {
-//					g.setColor(Color.BLACK);
-//				} else {
-//					g.setColor(Color.RED);
-//				}
-				try {
-					v = maths.multiply(v, maths.getProjektionsMatrix());
-					int[] dispKoordinaten = maths.vektor2DToDisplayKoordinates(v);
-					int x = dispKoordinaten[0];
-					int y = dispKoordinaten[1];
-					g.fillOval(x, y, 2, 2);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
+				drawVector(v, Color.BLACK, 2, 2);
 				winkelX = winkelX + abstandX;
 			}
 			winkelX = 0;
@@ -73,25 +72,10 @@ public class CenterPanel extends JPanel {
 		winkelY = 0;
 		anzCircles = 6;
 		abstandX = 2 * Math.PI / (anzCircles*2);
-		//g.setColor(Color.RED);
 		for (int iQuer = 0; iQuer < anzCircles*2; iQuer++) {
 			for (int i = 0; i < dotPerCircle; i++) {
 				Vector v = new Vector(winkelX, winkelY);
-//				if(winkelX <= Math.PI/2 || winkelX >= 3/2*Math.PI) {
-//					g.setColor(Color.BLACK);
-//				} else {
-//					g.setColor(Color.RED);
-//				}
-				try {
-					v = maths.multiply(v, maths.getProjektionsMatrix());
-					int[] dispKoordinaten = maths.vektor2DToDisplayKoordinates(v);
-					int x = dispKoordinaten[0];
-					int y = dispKoordinaten[1];
-					g.fillOval(x, y, 2, 2);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				drawVector(v, Color.BLACK, 2, 2);
 				winkelY = winkelY + abstandY;
 				
 			}
