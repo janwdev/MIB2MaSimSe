@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import app.Constants;
 import app.Control;
@@ -39,7 +40,13 @@ public class MainGUI extends JFrame {
 	}
 	
 	public void drawVector(Vector v) {
-		centerPanel.drawVector(v, Color.RED, 4, 4);
+		centerPanel.vectorDrawList.add(new VectorToDraw(v, Color.RED, 4, 4));
+		centerPanel.repaint();
+	}
+	
+	public void clearDrawedVectors() {
+		centerPanel.vectorDrawList.clear();
+		centerPanel.repaint();
 	}
 	
 	
