@@ -90,7 +90,7 @@ public class Vector {
 	}
 
 	public double getOWinkel() {
-		return wPhi;
+		return wTheta;
 	}
 
 }
