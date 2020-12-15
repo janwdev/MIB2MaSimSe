@@ -15,6 +15,12 @@ public class DebugMain {
 		Control control = new Control();
 		MainGUI gui = new MainGUI(control);
 		control.setGUI(gui);
+		
+		// Vector malen
+		Vector v = new Vector(Math.PI, Math.PI);
+		gui.drawVector(v);
+		// gemalte Vektoren loeschen, nur Drahtgitter bleibt
+		// gui.clearDrawedVectors();
 
 		// Test Matrix Vektor Multiplikation
 //		try {

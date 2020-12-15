@@ -5,7 +5,7 @@ import objectClasses.Vector;
 
 public class VektorMatrixBerechnung {
 
-	public Vector multiply(Vector vector, Matrix matrix) throws Exception {
+	protected Vector multiply(Vector vector, Matrix matrix) throws Exception {
 		try {
 			//matrix.check(1, vector.dim);
 			Vector returnVector = new Vector(0, 0, 0);

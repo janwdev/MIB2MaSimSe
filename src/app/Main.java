@@ -27,7 +27,7 @@ public class Main {
 		
 		
 		
-		toRun();
+		//toRun();
 		
 		/*
 		Vector u = new Vector(2.0, 3.0, 4.0);
@@ -56,7 +56,7 @@ public class Main {
 		*/
 		
 	}
-	
+	/*
 	private static void toRun () {
 		// Deklaration
 		Vector p = new Vector(2.0, 4.0, 8.0);
@@ -132,5 +132,6 @@ public class Main {
 		System.out.println("Winkel: "+winkel + " Winkeldegree: "+ degreeWinkel);
 		
 	}
+	*/
 	
 }

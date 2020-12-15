@@ -7,11 +7,15 @@ public class Constants {
 	public static String LICENCETEXT;
 	
 	public static int drawSizeXPixels = 800;
-	public static int drawSizeYPixels = 600;
+	public static int drawSizeYPixels = 800;
 	public static int r = 1;
 	
 	public static int FPS = 60;
 	public static int TPF = 1000/FPS;
 	public static double TIMESCALE = 1.0;
 	// public static int earthRadius = 6371; //später
+	
+	public static int yOffsetDraw = 350;
+	public static int xOffsetDraw = 350;
+	public static double drawScaleFactor = 2;
 }
