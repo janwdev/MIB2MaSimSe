@@ -43,7 +43,10 @@ public class MainGUI extends JFrame {
 		centerPanel.repaint();
 	}
 	
-	
+	public void clearDrawedVectors() {
+		centerPanel.vectorDrawList.clear();
+		centerPanel.repaint();
+	}
 
 	private JPanel createEastPanel() {
 		JPanel eastPanel = new JPanel(new GridBagLayout());
