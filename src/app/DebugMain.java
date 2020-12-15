@@ -19,7 +19,7 @@ public class DebugMain {
 		Control control = new Control();
 		MainGUI gui = new MainGUI(control);
 		control.setGUI(gui);
-<<<<<<< Updated upstream
+
 		
 		
 		// Vector malen
@@ -98,9 +98,6 @@ public class DebugMain {
 					points.add(ma.vektorAddition(v1, v2));
 					//System.out.println(ma.vektorAddition(v1, v2).getVectorX());
 				}
-
-=======
->>>>>>> Stashed changes
 
 				//Punkte ausgeben
 				
