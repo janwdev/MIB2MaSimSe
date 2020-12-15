@@ -14,7 +14,7 @@ public class DebugMain {
 
 		Control control = new Control();
 		MainGUI gui = new MainGUI(control);
-		control.setGUI(gui);
+		control.setGUI(gui); // Noetig damit auf GUI zugegriffen werden kann
 		
 		// Vector malen
 		Vector v = new Vector(Math.PI, Math.PI);
