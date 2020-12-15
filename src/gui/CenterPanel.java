@@ -3,6 +3,7 @@ package gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -13,12 +14,12 @@ import objectClasses.Vector;
 public class CenterPanel extends JPanel {
 
 	private Graphics g;
-<<<<<<< Updated upstream
+
 	private boolean egg = true;
 	ArrayList<VectorToDraw> vectorDrawList = new ArrayList<VectorToDraw>();
-=======
+
 	private Maths maths = new Maths();
->>>>>>> Stashed changes
+
 
 	public CenterPanel() {
 		Dimension size = new Dimension(Constants.drawSizeXPixels, Constants.drawSizeYPixels);
@@ -38,15 +39,13 @@ public class CenterPanel extends JPanel {
 	protected void drawVector(Vector v, Color color, int w, int h) {
 		g.setColor(color);
 		try {
-<<<<<<< Updated upstream
+
 			
 			Vector vN = maths.multiply(v, maths.getProjektionsMatrix());
 			
 			int[] dispKoordinaten = maths.vektor2DToDisplayKoordinates(vN);
-=======
-			v = maths.multiply(v, maths.getProjektionsMatrix());
-			int[] dispKoordinaten = maths.vektor2DToDisplayKoordinates(v);
->>>>>>> Stashed changes
+
+
 			int x = dispKoordinaten[0];
 			int y = dispKoordinaten[1];
 			g.fillOval(x, y, w, h);
@@ -97,4 +96,16 @@ public class CenterPanel extends JPanel {
 
 	}
 
+}
+class VectorToDraw{ 
+	Vector v; 
+	Color c; 
+	int w; 
+	int h; 
+	public VectorToDraw(Vector v, Color c, int w, int h) { 
+		this.v = v; 
+		this.c = c; 
+		this.w = w; 
+		this.h = h; 
+	} 
 }

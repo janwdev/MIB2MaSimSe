@@ -93,7 +93,7 @@ public class DebugMain {
 					
 					v1 = ma.vektorMultiplikation(p, r*Math.cos(a));
 					v2 = ma.vektorMultiplikation(u, r*Math.sin(a));
-					Vector v3 = new Vector();
+					//Vector v3 = new Vector();
 					points.add(ma.vektorAddition(v1, v2));
 					//System.out.println(ma.vektorAddition(v1, v2).getVectorX());
 				}
