@@ -40,15 +40,15 @@ public class Matrix {
 		}
 		return matrix;
 	}
-	
+	// Warum -1
 	public double get(int rows, int cols) throws Exception {
 		check(rows, cols);
-		return this.matrix[rows - 1][cols - 1];
+		return this.matrix[rows -1 ][cols -1];
 	}
-
+	// Warum -1 wenn i oder j in Matrix.java 0 sein kann (-1 könnte entstehen);
 	public void set(int rows, int cols, double value) throws Exception {
 		check(rows, cols);
-		this.matrix[rows - 1][cols - 1] = value;
+		this.matrix[rows -1 ][cols -1 ] = value;
 	}
 
 	public void check(int rows, int cols) throws Exception {

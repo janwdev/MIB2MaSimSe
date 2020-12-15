@@ -13,7 +13,7 @@ public class Constants {
 	public static int FPS = 60;
 	public static int TPF = 1000/FPS;
 	public static double TIMESCALE = 1.0;
-	// public static int earthRadius = 6371; //später
+	public static double earthRadius = 1.0; //später
 	
 	public static int yOffsetDraw = 350;
 	public static int xOffsetDraw = 350;

@@ -48,11 +48,13 @@ public class ProjektionsMatrix {
 
 	}
 
-	protected Matrix getProMatrix() {
+	
+	public Matrix getProMatrix() { // von Protected zu public
 
 		return m;
 
 	}
+
 
 	protected void setProjektionsMatrix(double s, double a) { // eventuelle überprüfung einfügen, falls Parameter nicht
 																// zulässig sind.

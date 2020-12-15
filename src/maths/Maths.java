@@ -26,7 +26,7 @@ public class Maths {
 		return bVektor.skalarProdukt(u, v);
 	}
 
-	public double VektorLaenge(Vector v) {
+	public double vektorLaenge(Vector v) {
 		return bVektor.vecLength(v);
 	}
 
@@ -47,7 +47,7 @@ public class Maths {
 		return bVektor.vecMulti(v, wert);
 	}
 
-	public Vector vectorAddition(Vector v, Vector u) {
+	public Vector vektorAddition(Vector v, Vector u) {
 		return bVektor.vecAddition(v, u);
 	}
 
