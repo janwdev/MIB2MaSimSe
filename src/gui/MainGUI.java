@@ -39,7 +39,8 @@ public class MainGUI extends JFrame {
 	}
 	
 	public void drawVector(Vector v) {
-		centerPanel.drawVector(v, Color.RED, 4, 4);
+		centerPanel.vectorDrawList.add(new VectorToDraw(v, Color.RED, 4, 4));
+		centerPanel.repaint();
 	}
 	
 	
