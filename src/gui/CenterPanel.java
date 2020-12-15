@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import app.Constants;
 import maths.Maths;
 import objectClasses.Vector;
@@ -35,13 +37,13 @@ public class CenterPanel extends JPanel {
 	}
 
 	protected void drawVector(Vector v, Color color, int w, int h) {
-//		while (g == null) {
-//			try {
-//				Thread.sleep(20);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//		}
+		while (g == null) {
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		g.setColor(color);
 		try {
 			Vector vN = maths.multiply(v, maths.getProjektionsMatrix());
