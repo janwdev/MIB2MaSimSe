@@ -1,5 +1,6 @@
 package maths;
 
+import app.Constants;
 import objectClasses.Matrix;
 import objectClasses.Vector;
 
@@ -34,8 +35,8 @@ public class Vektorberechnung { // erbt von Vector.java
 	}
 	
 	protected Vector vecDiv(Vector vector, double wert) {
-		Vector vec = vector;
-		vec.setVector(vec.getVectorX()/wert, vec.getVectorY()/wert, vec.getVectorZ()/wert);
+		Vector vec = new Vector(0,0,0);
+		vec.setVector(vector.getVectorX()/wert, vector.getVectorY()/wert, vector.getVectorZ()/wert);
 		return vec;
 	}
 	
@@ -68,7 +69,7 @@ public class Vektorberechnung { // erbt von Vector.java
 	
 	protected double abstandVector(Vector u, Vector v) {
 		
-		double r = vecLength(u);//radius r=konstante Erdradius
+		double r = Constants.earthRadius;//rdius r=konstante Erdradius
 		return (2*Math.PI*r*Math.toDegrees(winkelBerechnen(u, v)))/360;
 		
 	}
