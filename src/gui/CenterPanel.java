@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import app.Constants;
 import maths.Maths;
+import objectClasses.Matrix;
 import objectClasses.Vector;
 
 public class CenterPanel extends JPanel {
@@ -29,6 +30,7 @@ public class CenterPanel extends JPanel {
 		super.paintComponent(g);
 		this.g = g;
 		drahtgitter();
+		umriss();
 		for (VectorToDraw vectorToDraw : vectorDrawList) {
 			drawVector(vectorToDraw.v, vectorToDraw.c, vectorToDraw.w, vectorToDraw.h);
 		}
@@ -42,6 +44,7 @@ public class CenterPanel extends JPanel {
 //				e.printStackTrace();
 //			}
 //		}
+		//TODO evtl mal Drehmatrix wenn Drehung eingebaut werden soll... (Ueberlegung)
 		g.setColor(color);
 		try {
 			Vector vN = maths.multiply(v, maths.getProjektionsMatrix());
@@ -53,6 +56,36 @@ public class CenterPanel extends JPanel {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void umriss() {
+		double s1 = maths.getProjektionsMatrixClass().getS();
+		double a = maths.getProjektionsMatrixClass().getA();
+		double phiP = Math.atan(s1 * Math.sin(a));
+		double thetaP = Math.atan(-s1 * Math.cos(a) * Math.cos(phiP));
+		int schrittweiteUmriss = 360;
+		for (int i = 0; i < schrittweiteUmriss; i++) {
+			try {
+				double iDouble = i;
+				double t = (iDouble / schrittweiteUmriss) * 2 * Math.PI;
+				umrissVektor(t, phiP, thetaP);
+			} catch (Exception e) {
+				e.printStackTrace();
+				break;
+			}
+		}
+	}
+
+	private void umrissVektor(double t, double phiP, double thetaP) throws Exception {
+		Matrix drehMatrixRechtsLinks = new Matrix(3, 3);
+		Matrix drehMatrixOben = new Matrix(3, 3);
+		drehMatrixRechtsLinks.init(Math.cos(phiP), -Math.sin(phiP), 0, Math.sin(phiP), Math.cos(phiP), 0, 0, 0, 1);
+		drehMatrixOben.init(Math.cos(thetaP), 0, -Math.sin(thetaP), 0, 1, 0, Math.sin(thetaP), 0, Math.cos(thetaP));
+		// Projektionsmatrix wird nicht mitmultipliziert, da das bereits in drawVector geschieht
+		Vector u = maths.multiply(new Vector(0, Math.cos(t), Math.sin(t)),
+				maths.multiply(drehMatrixRechtsLinks, drehMatrixOben));
+		// TODO Farbe anpassen
+		drawVector(u, Color.YELLOW, 2, 2);
 	}
 
 	private void drahtgitter() {
@@ -97,11 +130,12 @@ public class CenterPanel extends JPanel {
 
 }
 
-class VectorToDraw{
+class VectorToDraw {
 	Vector v;
 	Color c;
 	int w;
 	int h;
+
 	public VectorToDraw(Vector v, Color c, int w, int h) {
 		this.v = v;
 		this.c = c;

@@ -50,6 +50,13 @@ public class Matrix {
 		check(rows, cols);
 		this.matrix[rows -1 ][cols -1 ] = value;
 	}
+	
+	public void setWithInit(int rows, int cols, double value) throws Exception {
+		check(rows, cols);
+		if(this.matrix == null)
+			this.matrix = new double[this.rows][this.cols];
+		this.matrix[rows -1 ][cols -1 ] = value;
+	}
 
 	public void check(int rows, int cols) throws Exception {
 		if (rows < 0 || cols < 0) {
