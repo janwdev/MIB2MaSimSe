@@ -54,10 +54,23 @@ public class Maths {
 	public Vector kreuzprodukt(Vector u, Vector v) {
 		return bVektor.kreuzprodukt(u, v);
 	}
-
+	// Berechnung des Punktes
+	public Vector berechneOrtho(Vector u, Vector v) {
+		return bVektor.berechneOrtho(u, v);
+	}
+	
+	public Vector berechnePunkt(Vector p, Vector u, double a) {
+		return bVektor.berechnePunkt(p, u, a);
+	}
+	
+	// ***********************
+	
 	public double getAbstand(Vector u, Vector v) {
 		return bVektor.abstandVector(u, v);
 	}
+	
+	
+	
 
 	public Vector multiply(Vector v, Matrix m) throws Exception {
 		return bVektorMatrix.multiply(v, m);

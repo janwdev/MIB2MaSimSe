@@ -8,9 +8,9 @@ public class Vector {
 	private double x;
 	private double y;
 	private double z;
-	private double r = Constants.r;
-	private double wPhi; //längengrad xDach und v'
-	private double wTheta; //breitengrad v und v'
+	private double r = Constants.earthRadius;
+	private double wPhi ; //längengrad xDach und v'
+	private double wTheta ; //breitengrad v und v'
 
 	public Vector(double x, double y, double z) {
 		initVector(true, x, y, z);
@@ -37,7 +37,7 @@ public class Vector {
 	public void winkelBerechnen() {
 		Vektorberechnung vekbe = new Vektorberechnung();
 		wTheta = vekbe.winkelBerechnen(this, new Vector(false, x, y, 0));
-		wPhi = vekbe.winkelBerechnen(this, new Vector(false, x, 0, 0));
+		wPhi = vekbe.winkelBerechnen(new Vector(false, x, y, 0), new Vector(false, x, 0, 0));
 	}
 
 	public void koordinatenBerechnen() {
@@ -91,6 +91,9 @@ public class Vector {
 
 	public double getOWinkel() {
 		return wTheta;
+	}
+	public String toString() {
+		return "X: "+x+" Y: "+y+" Z: "+z+" Phi: "+wPhi+" Theta: "+wTheta;
 	}
 
 }

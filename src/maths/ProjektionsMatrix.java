@@ -5,8 +5,8 @@ import objectClasses.Matrix;
 
 public class ProjektionsMatrix {
 
-	double s = (1 / Math.sqrt(2)); // Standarteinstellungen axonometrische Angaben
-	double a = (135); // in Grad
+	double s = (1 / Math.sqrt(2)); // Standardeinstellungen axonometrische Angaben
+	double a = (3*Math.PI)/4; // in Grad
 	double[][] pm;
 	Matrix m;
 
@@ -27,7 +27,7 @@ public class ProjektionsMatrix {
 			// s*Math.cos(a), 0.0, 1.0, (double)Constants.drawSizeYPixels); // Nachschauen
 			// überprüfen (minus bei cos hab ich weggemacht
 			pm = new double[2][3];
-			m.init(-s * Math.sin(a), 1.0, 0.0, s * Math.cos(a), 0.0, 1.0); // Nachschauen überprüfen (minus bei cos hab
+			m.init(-s * Math.sin(a), 1.0, 0.0, -s * Math.cos(a), 0.0, -1.0); // Nachschauen überprüfen (minus bei cos hab
 																			// ich weggemacht
 			pm = m.getMatrix();
 		} catch (Exception e) {
