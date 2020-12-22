@@ -28,92 +28,147 @@ public class DebugMain {
 		// gui.clearDrawedVectors();
 		
 		
-		// !! Berchnungen stimmen alle in MAths.java
+		// !! Winkel radiant oder Grad
 		
 		
 		// Deklaration
-				Vector p = new Vector(Math.PI/2, 0);
-				Vector q = new Vector(Math.PI, 0);
+			
 				
-				
-				
-				Vector n = new Vector(0, 0, 0);
-				Vector u = new Vector(0, 0, 0);
-				
-				gui.drawVector(p);
-				gui.drawVector(q);
-				
-				
-				//Vektorberechnung vecBe = new Vektorberechnung();
-				
-				Maths ma = new Maths();
-				
-				ma.getAbstand(p,q);
-				
-				System.out.println("Kreuz :"+ma.kreuzprodukt(p, q).getVectorZ());
-				System.out.println("lange :"+ma.vektorLaenge(ma.kreuzprodukt(n, p)));
-				
-				// Vectorberechnung
-				n = ma.vektorDivision(ma.kreuzprodukt(p, q), ma.vektorLaenge(ma.kreuzprodukt(p, q)));
-				u = ma.vektorDivision(ma.kreuzprodukt(n, p), ma.vektorLaenge(ma.kreuzprodukt(n, p)));
-				
-				//gui.drawVector(n);
-				//gui.drawVector(u);
-				
-				System.out.println("n: "+n.getVectorX()+n.getVectorY()+n.getVectorZ());
-				System.out.println("ux: "+u.getVectorX()+"uy: "+u.getVectorY()+"uZ: "+u.getVectorZ());
-				System.out.println("u-kreuz: "+ma.kreuzprodukt(n, p).getVectorX());
-						
-				
-				
-				// Deklaration zur Punktbewegung
-
-				double schritte = 100.0;
-				double gschw = 1.0;
-				double winkel = ma.getWinkelZwischen(p, q);
-				double degreeWinkel = Math.toDegrees(winkel);
-				double r =     ma.vektorLaenge(p);
-				ArrayList<Vector> points = new ArrayList<Vector>();
-				ArrayList<Double> posP = new ArrayList<Double>();
-				
-				// schrittzï¿½hler in der Strecke zwischen p und q (Phi)
-				for(double t=0; gschw*t<winkel; t=t+((2*Math.PI)/schritte)) {	// muss spï¿½ter in Echtzeit realisiert werden
-					posP.add(t);
-				}
-				
-				// Punkte in der Bahn in einem Array
-				for(int i=0; i<posP.size(); i++) {
-					
-					Vector v1 = new Vector(0,0,0);
-					Vector v2 = new Vector(0,0,0);
-					double a = posP.get(i) ;
-					
-					//System.out.println("wert ist:  "+a);
-					//System.out.println("wert sin:  "+Math.sin(a));
-					
-					v1 = ma.vektorMultiplikation(p, r*Math.cos(a));
-					v2 = ma.vektorMultiplikation(u, r*Math.sin(a));
-					//Vector v3 = new Vector();
-					points.add(ma.vektorAddition(v1, v2));
-					//System.out.println(ma.vektorAddition(v1, v2).getVectorX());
-				}
-
-				//Punkte ausgeben
-				
-				for(int i=0; i<points.size(); i++) {
-					//System.out.println("X: "+points.get(i).getVectorX());
-					//System.out.println("Y: "+points.get(i).getVectorY());
-					//System.out.println("Z: "+points.get(i).getVectorZ());
-					gui.drawVector(points.get(i));
-					
-				}
-				for(int i=0; i<posP.size(); i++) {
-					//System.out.println("Position: "+posP.get(i));
-				}
-				System.out.println("Winkel: "+winkel + " Winkeldegree: "+ degreeWinkel);
+			
+			// Vector mit Winkel
+			Vector p = new Vector(0, 0);
+			//p.setWinkel(0, 3.2);
+			//Vector q = new Vector(Math.PI/3, 0); // minus geht nicht und über 90 grad
+	        Vector q = new Vector(Math.PI*2/3, 0);
+	        // Zeichnen der Vektoren
+	        gui.drawVector(p);
+	        gui.drawVector(q);
+	        
+	        formelBerechnung(p,q,gui);
+	        //mitWinkelBerechnung1(p,q,gui);
+	        //mitWinkelBerechnungTest(p,q,gui);
+	        
 				
 
 	}
+	
+	
+	private static void mitWinkelBerechnungTest(Vector p, Vector q, MainGUI gui) {
+		Maths ma = new Maths();
+        
+        int schritte = 20;
+        double dif = ma.getWinkelZwischen(p, q);
+        double anfZustand = dif;
+        double schrittePunkte = dif/schritte;
+       
+        
+        for (int i = 0; i <= schritte; i++) {
+            gui.drawVector(new Vector(anfZustand, 0));
+            anfZustand = anfZustand + schrittePunkte; 
+        }
+	}
+	
+	
+	private static void mitWinkelBerechnung1(Vector p, Vector q, MainGUI gui) {
+		double pOW = p.getOWinkel();
+        double pPW = p.getPWinkel();
+        double actO = pOW;
+        double actP = pPW;
+        
+        double qOW = q.getOWinkel();
+        double qPW = q.getPWinkel();
+        
+        int schritte = 100;
+        
+        double difOW = pOW - qOW;
+        double difPW = pPW - qPW;
+        
+        double pWPerTime = difPW / schritte;
+        double oWPerTime = difOW / schritte;
+        
+        for (int i = 0; i <= schritte; i++) {
+            gui.drawVector(new Vector(actP, actO));
+            actP = actP + pWPerTime; // Das hier minus weil sonst falschherum läuft
+            actO = actO + oWPerTime;
+        }
+	}
+	
+	
+	// muss man am Ende nicht noch zurück drehen ?
+	private static void formelBerechnung(Vector p, Vector q, MainGUI gui) {
+		// Maths
+		Maths ma = new Maths();
+		// Vectorlänge (=radius) ist bei Berechnung mit Winkel immer 1
+		Vector pDach = ma.vektorDivision(p, ma.vektorLaenge(p)); // Einheitsvektor hat immer die länge 1
+		// ******
+		
+						System.out.println("länge p:"+ma.vektorLaenge(p));
+						System.out.println("P = "+p.getVectorX()+" , "+p.getVectorY()+" , "+p.getVectorZ());
+						//System.out.println("Q = "+q.getVectorX()+" , "+q.getVectorY()+" , "+q.getVectorZ());
+						System.out.println("PDach = "+pDach.toString());
+						
+						//ma.getAbstand(p,q);
+		// Vectorberechnung der Orthogonalen n und u
+		Vector n = ma.berechneOrtho(p, q);
+		Vector u = ma.berechneOrtho(n, pDach);
+		
+						System.out.println("Kreuz :"+ma.kreuzprodukt(p, q).getVectorZ());
+						System.out.println("lange :"+ma.vektorLaenge(ma.kreuzprodukt(n, p)));
+						//gui.drawVector(n);
+						//gui.drawVector(u);
+						System.out.println("n: "+n.getVectorX()+n.getVectorY()+n.getVectorZ());
+						System.out.println("ux: "+u.getVectorX()+"uy: "+u.getVectorY()+"uZ: "+u.getVectorZ());
+						System.out.println("u-kreuz: "+ma.kreuzprodukt(n, p).getVectorX());
+				
+		// Deklaration zur Punktbewegung 
+		double schritte = 360.0;
+		double gschw = 1.0;
+		double winkel = ma.getWinkelZwischen(p, q);
+		double degreeWinkel = Math.toDegrees(winkel);
+		double r =     ma.vektorLaenge(p);
+		ArrayList<Vector> points = new ArrayList<Vector>(); // Vektorenpunkte
+		ArrayList<Double> posP = new ArrayList<Double>();	// Schrittzähler t für phi
+		
+		// schrittzaehler in der Strecke zwischen p und q (Phi)
+		for(double t=0; gschw*t<winkel; t=t+((Math.PI*2)/schritte)) {	// muss später in Echtzeit realisiert werden
+			posP.add(t);
+		}
+		
+		// Punkte in der Bahn in einem Array
+		for(int i=0; i<posP.size(); i++) {
+						//Vector v1 = new Vector(0,0,0);
+						//Vector v2 = new Vector(0,0,0);
+			
+			double a = posP.get(i) ;
+			
+			
+						//System.out.println("wert ist:  "+a);
+						//System.out.println("wert sin:  "+Math.sin(a));
+						//v1 = ma.vektorMultiplikation(p, r*Math.cos(a));
+						//v2 = ma.vektorMultiplikation(u, r*Math.sin(a));
+						//v3 = ma.vektorAddition(v1, v2);
+			System.out.print("U WERR : " +u.toString());
+			Vector v = new Vector(ma.berechnePunkt(pDach,u,a).getPWinkel(),ma.berechnePunkt(pDach,u,a).getOWinkel());
+			points.add(v);
+					// System.out.println("v1: "+v1.getVectorX() + "v1: "+v1.getVectorY());
+		}
+
+		//Punkte ausgeben
+		for(int i=0; i<points.size(); i++) {
+			//System.out.println("X: "+points.get(i).getVectorX());
+			//System.out.println("Y: "+points.get(i).getVectorY());
+			//System.out.println("Z: "+points.get(i).getVectorZ());
+			gui.drawVector(points.get(i));
+			
+		}
+		for(int i=0; i<posP.size(); i++) {
+			System.out.println("Position: "+posP.get(i));
+		}
+		System.out.println("Winkel: "+winkel + " Winkeldegree: "+ degreeWinkel);
+	}
+	
+	
+	
 	
 	
 	
