@@ -18,7 +18,11 @@ public class Maths {
 		return projektionsMatrix.getProjektionsMatrix();
 	}
 
-	public Matrix multipy(Matrix ma1, Matrix ma2) {
+	public ProjektionsMatrix getProjektionsMatrixClass() {
+		return projektionsMatrix;
+	}
+
+	public Matrix multiply(Matrix ma1, Matrix ma2) {
 		return bMatrix.multipy(ma1, ma2);
 	}
 

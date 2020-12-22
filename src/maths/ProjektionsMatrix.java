@@ -54,6 +54,14 @@ public class ProjektionsMatrix {
 		return m;
 
 	}
+	
+	public double getS() {
+		return s;
+	}
+	
+	public double getA() {
+		return a;
+	}
 
 
 	protected void setProjektionsMatrix(double s, double a) { // eventuelle überprüfung einfügen, falls Parameter nicht

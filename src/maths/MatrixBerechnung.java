@@ -19,14 +19,15 @@ public class MatrixBerechnung {
 
 				// ergebnismatrix = new double[zeilenm1][spalenm2];
 				retMat = new Matrix(zeilenm1, spalenm2);
+				
 
-				for (int i = 0; i < zeilenm1; i++) {
-					for (int j = 0; j < spalenm2; j++) {
+				for (int i = 1; i <= zeilenm1; i++) {
+					for (int j = 1; j <= spalenm2; j++) {
 						// ergebnismatrix[i][j] = 0;
-						retMat.set(i, j, 0);
-						for (int k = 0; k < spaltenm1; k++) {
+						retMat.setWithInit(i, j, 0);
+						for (int k = 1; k <= spaltenm1; k++) {
 							// ergebnismatrix[i][j] += m1[i][k] * m2[k][j];
-							retMat.set(i, j, retMat.get(i, j) + m1[i][k] * m2[k][j]);
+							retMat.setWithInit(i, j, retMat.get(i, j) + m1[i-1][k-1] * m2[k-1][j-1]);
 						}
 					}
 				}
