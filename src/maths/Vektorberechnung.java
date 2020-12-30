@@ -41,36 +41,22 @@ public class Vektorberechnung { // erbt von Vector.java
 	
 	protected Vector vecMulti(Vector vector, double wert) {
 		Vector vec = new Vector(vector.getVectorX()*wert, vector.getVectorY()*wert, vector.getVectorZ()*wert);
-		System.out.println("VecMulti: X: "+vec.getVectorX()+" Y: "+vec.getVectorY()+" Z: "+vec.getVectorZ());
 		return vec;
 	}
 	
 	protected Vector vecAddition(Vector v, Vector u) {
-		// hier ist das Problem
-		System.out.println("uadd: X: "+u.getVectorX()+" Y: "+u.getVectorY()+" Z: "+u.getVectorZ());
-		/*Vector vec = new Vector(v.getVectorX(), v.getVectorY(), v.getVectorZ());
-		Vector vecU = new Vector(u.getVectorX(), u.getVectorY(), u.getVectorZ());
-							System.out.println("hier:"+ vecU.getPWinkel());
-							System.out.println("x: "+vec.getVectorX()+"y: "+vec.getVectorY()+"z: "+vec.getVectorZ());
-							System.out.println("xU: "+vecU.getVectorX()+"yU: "+vecU.getVectorY()+"zU: "+vecU.getVectorZ());
-							*/
-		Vector vecNew = new Vector(v.getVectorX()+u.getVectorX(), v.getVectorY()+u.getVectorY(), v.getVectorZ()+u.getVectorZ());
-		//Vector vecNew = new Vector(vec.getVectorX()+vecU.getVectorX(), vec.getVectorY()+vecU.getVectorY(), vec.getVectorZ()+vecU.getVectorZ());
-							System.out.println("xNew: "+vecNew.getVectorX()+"y: "+vecNew.getVectorY()+"z: "+vecNew.getVectorZ());
+		Vector vecNew = new Vector(v.getVectorX()+u.getVectorX(), v.getVectorY()+u.getVectorY(), v.getVectorZ()+u.getVectorZ());					
 		return vecNew;
-		
 	}
 
 
 	protected Vector kreuzprodukt(Vector u, Vector v) {
-		
 		
 		double x = (u.getVectorY()*v.getVectorZ())-(u.getVectorZ()*v.getVectorY());
 		double y = (u.getVectorZ()*v.getVectorX())-(u.getVectorX()*v.getVectorZ());
 		double z = (u.getVectorX()*v.getVectorY())-(u.getVectorY()*v.getVectorX());
 		
 		return new Vector(x,y,z);
-		
 	}
 	
 	protected double abstandVector(Vector u, Vector v) {
@@ -88,17 +74,9 @@ public class Vektorberechnung { // erbt von Vector.java
 	
 	protected Vector berechnePunkt(Vector pDach, Vector u, double a) {
 		double r = 1.0; // Constants.earthRadius // ist immer 1
-		System.out.println("Pdach: X: "+pDach.getVectorX()+" Y: "+pDach.getVectorY()+" Z: "+pDach.getVectorZ());
-		System.out.println("u: X: "+u.getVectorX()+" Y: "+u.getVectorY()+" Z: "+u.getVectorZ());
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: "+a);
-		
-		//Vector v = new Vector(vecAddition(vecMulti(pDach, r*Math.cos(a)),vecMulti(u, r*Math.sin(a))).getPWinkel(),vecAddition(vecMulti(pDach, r*Math.cos(a)),vecMulti(u, r*Math.sin(a))).getOWinkel());
 		Vector v = null;
 		
-		//System.out.println("Vektor: X: "+v.getVectorX()+" Y: "+v.getVectorY()+" Z: "+v.getVectorZ());
 		return vecAddition(vecMulti(pDach, r*Math.cos(a)),vecMulti(u, r*Math.sin(a))); // Formel pDach*r*cos(a) + u*r*sin(a);
-		//return new Vector(r*Math.cos(a),r*Math.sin(a),0);
-		
 	}
 	
 	
