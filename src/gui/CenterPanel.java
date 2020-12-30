@@ -16,6 +16,8 @@ public class CenterPanel extends JPanel {
 	private Maths maths = new Maths();
 	private Graphics g;
 	ArrayList<VectorToDraw> vectorDrawList = new ArrayList<VectorToDraw>();
+	VectorToDraw startVector;
+	VectorToDraw endVector;
 
 	public CenterPanel() {
 		Dimension size = new Dimension(Constants.drawSizeXPixels, Constants.drawSizeYPixels);
@@ -23,6 +25,13 @@ public class CenterPanel extends JPanel {
 		this.setPreferredSize(size);
 		this.setMaximumSize(size);
 		this.repaint();
+	}
+	
+	public Vector getStartVector() {
+		return startVector.v;
+	}
+	public Vector getEndVector() {
+		return endVector.v;
 	}
 
 	@Override
@@ -32,18 +41,16 @@ public class CenterPanel extends JPanel {
 		drahtgitter();
 		umriss();
 		if (vectorDrawList.size() > 0) {
-			if (vectorDrawList.size() > 1) {
-				for (int i = 1; i < vectorDrawList.size() - 2; i++) {
-					drawVector(vectorDrawList.get(i).v, vectorDrawList.get(i).c, vectorDrawList.get(i).w,
-							vectorDrawList.get(i).h);
-				}
+			for (int i = 1; i < vectorDrawList.size() - 2; i++) {
+				drawVector(vectorDrawList.get(i).v, vectorDrawList.get(i).c, vectorDrawList.get(i).w,
+						vectorDrawList.get(i).h);
 			}
-			drawVector(vectorDrawList.get(0).v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
-					Constants.STARTENDVECHEIGHT);
-			if (vectorDrawList.size() > 2) {
-				drawVector(vectorDrawList.get(vectorDrawList.size() - 1).v, Constants.COLORSTARTEND,
-						Constants.STARTENDVECWIDTH, Constants.STARTENDVECHEIGHT);
-			}
+			drawVector(vectorDrawList.get(vectorDrawList.size() - 1).v, Constants.COLORFLIGHT, Constants.FLIGHTVECWIDTH,
+					Constants.FLIGHTVECHEIGHT);
+		}
+		if (startVector != null && endVector != null) {
+			drawVector(startVector.v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH, Constants.STARTENDVECHEIGHT);
+			drawVector(endVector.v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH, Constants.STARTENDVECHEIGHT);
 		}
 	}
 

@@ -14,17 +14,14 @@ import gui.MainGUI;
 public class Control {
 	private MainGUI gui;
 
-	public String[] abflugFlughafenStr = new String[] { "Zürch", "Bangkok", "Helsinki" };
 	// TODO in Konstruktor aus Datei einlesen
 	// TODO ueberpruefen und ersetzen
-	public int[] abflugFlughafenX = new int[] { 5, 7, 9 };
-	public int[] abflugFlughafenY = new int[] { 5, 7, 9 };
-	public int[] abflugFlughafenZ = new int[] { 5, 7, 9 };
+	public String[] abflugFlughafenStr = new String[] { "Zürch", "Bangkok", "Helsinki" };
+	public double[] abflugFlughafenPhi = new double[] { 0, (2 * Math.PI * 3 / 4), (2 * Math.PI * 3 / 4) };
+	public double[] abflugFlughafenThetha = new double[] { 0, 0, (2 * Math.PI * 3 / 4) };
 	public String[] ankunftFlughafenStr = new String[] { "Zürch", "Bangkok", "Helsinki" };
-	// TODO ueberpruefen und ersetzen
-	public int[] ankunftFlughafenX = new int[] { 5, 7, 9 };
-	public int[] ankunftFlughafenY = new int[] { 5, 7, 9 };
-	public int[] ankunftFlughafenZ = new int[] { 5, 7, 9 };
+	public double[] ankunftFlughafenPhi = new double[] { 0, (2 * Math.PI * 3 / 4), (2 * Math.PI * 3 / 4) };
+	public double[] ankunftFlughafenThetha = new double[] { 0, 0, (2 * Math.PI * 3 / 4) };
 
 	public Control() {
 		Constants.LICENCETEXT = createLicencesText();

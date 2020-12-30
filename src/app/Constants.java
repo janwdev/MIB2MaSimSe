@@ -23,6 +23,8 @@ public class Constants {
 	
 	public static int STARTENDVECWIDTH = 8;
 	public static int STARTENDVECHEIGHT = 8;
+	public static int FLIGHTVECWIDTH = 6;
+	public static int FLIGHTVECHEIGHT = 6;
 
 	public static Color EARTHCOLORFRONT = new Color(0, 0, 0, 255);
 	public static Color EARTHCOLORBACKFACE = new Color(35, 35, 35, 255); // oder new Color(42, 40, 39, 255);
@@ -30,4 +32,6 @@ public class Constants {
 	
 	public static Color COLORSTARTEND = new Color(255, 0, 0, 255);
 	public static Color COLORVECWAY = new Color(12, 92, 169, 255);
+	
+	public static Color COLORFLIGHT = new Color(0, 255, 0, 255);
 }
