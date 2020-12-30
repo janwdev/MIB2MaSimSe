@@ -31,8 +31,19 @@ public class CenterPanel extends JPanel {
 		this.g = g;
 		drahtgitter();
 		umriss();
-		for (VectorToDraw vectorToDraw : vectorDrawList) {
-			drawVector(vectorToDraw.v, vectorToDraw.c, vectorToDraw.w, vectorToDraw.h);
+		if (vectorDrawList.size() > 0) {
+			if (vectorDrawList.size() > 1) {
+				for (int i = 1; i < vectorDrawList.size() - 2; i++) {
+					drawVector(vectorDrawList.get(i).v, vectorDrawList.get(i).c, vectorDrawList.get(i).w,
+							vectorDrawList.get(i).h);
+				}
+			}
+			drawVector(vectorDrawList.get(0).v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
+					Constants.STARTENDVECHEIGHT);
+			if (vectorDrawList.size() > 2) {
+				drawVector(vectorDrawList.get(vectorDrawList.size() - 1).v, Constants.COLORSTARTEND,
+						Constants.STARTENDVECWIDTH, Constants.STARTENDVECHEIGHT);
+			}
 		}
 	}
 
@@ -44,7 +55,7 @@ public class CenterPanel extends JPanel {
 //				e.printStackTrace();
 //			}
 //		}
-		//TODO evtl mal Drehmatrix wenn Drehung eingebaut werden soll... (Ueberlegung)
+		// TODO evtl mal Drehmatrix wenn Drehung eingebaut werden soll... (Ueberlegung)
 		g.setColor(color);
 		try {
 			Vector vN = maths.multiply(v, maths.getProjektionsMatrix());
@@ -81,16 +92,23 @@ public class CenterPanel extends JPanel {
 		Matrix drehMatrixOben = new Matrix(3, 3);
 		drehMatrixRechtsLinks.init(Math.cos(phiP), -Math.sin(phiP), 0, Math.sin(phiP), Math.cos(phiP), 0, 0, 0, 1);
 		drehMatrixOben.init(Math.cos(thetaP), 0, -Math.sin(thetaP), 0, 1, 0, Math.sin(thetaP), 0, Math.cos(thetaP));
-		// Projektionsmatrix wird nicht mitmultipliziert, da das bereits in drawVector geschieht
+		// Projektionsmatrix wird nicht mitmultipliziert, da das bereits in drawVector
+		// geschieht
 		Vector u = maths.multiply(new Vector(0, Math.cos(t), Math.sin(t)),
 				maths.multiply(drehMatrixRechtsLinks, drehMatrixOben));
 		// TODO Farbe anpassen
-		drawVector(u, Color.YELLOW, 2, 2);
+		drawVector(u, Constants.EARTHOUTLINECOLOR, 2, 2);
 	}
 
 	private void drahtgitter() {
 		// TODO farbe anpassen wenn hinter kugel verborgen
 		// Kreise Horizontal
+
+		double s1 = maths.getProjektionsMatrixClass().getS();
+		double a = maths.getProjektionsMatrixClass().getA();
+		double phiP = Math.atan(s1 * Math.sin(a));
+		double thetaP = Math.atan(-s1 * Math.cos(a) * Math.cos(phiP));
+
 		int dotPerCircle = 200;
 		double abstandX = 2 * Math.PI / dotPerCircle;
 		double winkelX = 0;
@@ -101,7 +119,13 @@ public class CenterPanel extends JPanel {
 		for (int iQuer = 0; iQuer < anzCircles * 2; iQuer++) {
 			for (int i = 0; i < dotPerCircle; i++) {
 				Vector v = new Vector(winkelX, winkelY);
-				drawVector(v, Color.BLACK, 2, 2);
+				double test = Math.cos(phiP) * Math.cos(thetaP) * v.getVectorX()
+						+ Math.sin(phiP) * Math.cos(thetaP) * v.getVectorY() + Math.sin(thetaP) * v.getVectorZ();
+				if (test < 0) {
+					drawVector(v, Constants.EARTHCOLORBACKFACE, 2, 2);
+				} else {
+					drawVector(v, Constants.EARTHCOLORFRONT, 2, 2);
+				}
 				winkelX = winkelX + abstandX;
 			}
 			winkelX = 0;
@@ -118,7 +142,13 @@ public class CenterPanel extends JPanel {
 		for (int iQuer = 0; iQuer < anzCircles * 2; iQuer++) {
 			for (int i = 0; i < dotPerCircle; i++) {
 				Vector v = new Vector(winkelX, winkelY);
-				drawVector(v, Color.BLACK, 2, 2);
+				double test = Math.cos(phiP) * Math.cos(thetaP) * v.getVectorX()
+						+ Math.sin(phiP) * Math.cos(thetaP) * v.getVectorY() + Math.sin(thetaP) * v.getVectorZ();
+				if (test < 0) {
+					drawVector(v, Constants.EARTHCOLORBACKFACE, 2, 2);
+				} else {
+					drawVector(v, Constants.EARTHCOLORFRONT, 2, 2);
+				}
 				winkelY = winkelY + abstandY;
 
 			}

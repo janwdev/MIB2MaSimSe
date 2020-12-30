@@ -3,6 +3,8 @@ package app;
 import java.util.ArrayList;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 
 import gui.MainGUI;
 import maths.Maths;
@@ -17,6 +19,7 @@ public class DebugMain {
 	public static void main(String[] args) {
 
 		FlatDarculaLaf.install();
+		//FlatLightLaf.install();
 
 		Control control = new Control();
 		MainGUI gui = new MainGUI(control);
