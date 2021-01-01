@@ -16,7 +16,6 @@ public class Animation {
 	double gschw = 10.0;
 	boolean pause = false;
 	Timer timer = new Timer();
-	
 
 	public Animation(MainGUI gui, CenterPanel centerPanel) {
 		this.gui = gui;
@@ -60,14 +59,13 @@ public class Animation {
 		 * for (double t = 0; gschw * t < winkel; t = t + ((Math.PI * 2) / schritte)) {
 		 * gui.drawVector(ma.berechnePunkt(pDach, u, t)); }
 		 */
-		
-		
+
 		TimerTask tt = new TimerTask() {
 			double t = 0;
 
 			@Override
 			public void run() {
-				if(!pause) {
+				if (!pause) {
 					gui.drawVector(ma.berechnePunkt(pDach, u, t));
 					t = t + ((Math.PI * 2) / schritte);
 				}
@@ -79,15 +77,15 @@ public class Animation {
 		timer.scheduleAtFixedRate(tt, 0, (long) (1000 / gschw));
 
 	}
-	
-	private void pauseContinue() {
+
+	public void pauseContinue() {
 		pause = !pause;
 	}
-	private void cancel() {
+
+	public void cancel() {
 		timer.cancel();
 	}
-	
-	//pausieren, abbrechen und weiter
 
-	
+	// pausieren, abbrechen und weiter
+
 }
