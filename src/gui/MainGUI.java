@@ -106,6 +106,21 @@ public class MainGUI extends JFrame {
 				startAnim();
 			}
 		});
+		JButton btPlayPause = new JButton("Pause/Weiter");
+		btPlayPause.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				animation.pauseContinue();
+			}
+		});
+		JButton btCancel = new JButton("Abbrechen");
+		btCancel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				animation.cancel();
+				clearDrawedVectors();
+			}
+		});
 
 		eastPanel.add(lbAbflug, gbc);
 		gbc.gridy = 1;
@@ -129,6 +144,10 @@ public class MainGUI extends JFrame {
 
 		gbc.gridy = 9;
 		eastPanel.add(btStartAnim, gbc);
+		gbc.gridy = 10;
+		eastPanel.add(btPlayPause, gbc);
+		gbc.gridy = 11;
+		eastPanel.add(btCancel, gbc);
 
 		return eastPanel;
 	}

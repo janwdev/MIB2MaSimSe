@@ -6,7 +6,7 @@ import objectClasses.Matrix;
 public class ProjektionsMatrix {
 
 	double s = (1 / Math.sqrt(2)); // Standardeinstellungen axonometrische Angaben
-	double a = (3*Math.PI)/4; // in Grad
+	double a = 3.0;//(3*Math.PI)/4; // in Grad
 	double[][] pm;
 	Matrix m;
 
