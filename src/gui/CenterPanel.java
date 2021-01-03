@@ -19,6 +19,10 @@ public class CenterPanel extends JPanel {
 	VectorToDraw startVector;
 	VectorToDraw endVector;
 
+	private double xRot = 0; // um QuerAchse
+	private double yRot = 0;
+	double zRot = 1; // Um Hochachse
+
 	public CenterPanel() {
 		Dimension size = new Dimension(Constants.drawSizeXPixels, Constants.drawSizeYPixels);
 		this.setMinimumSize(size);
@@ -26,10 +30,11 @@ public class CenterPanel extends JPanel {
 		this.setMaximumSize(size);
 		this.repaint();
 	}
-	
+
 	public Vector getStartVector() {
 		return startVector.v;
 	}
+
 	public Vector getEndVector() {
 		return endVector.v;
 	}
@@ -40,29 +45,29 @@ public class CenterPanel extends JPanel {
 		this.g = g;
 		drahtgitter();
 		umriss();
-		if (vectorDrawList.size() > 0) {
-			for (int i = 1; i < vectorDrawList.size() - 2; i++) {
-				drawVector(vectorDrawList.get(i).v, vectorDrawList.get(i).c, vectorDrawList.get(i).w,
-						vectorDrawList.get(i).h);
+
+		try {
+			if (vectorDrawList.size() > 0) {
+				for (int i = 1; i < vectorDrawList.size() - 2; i++) {
+
+					drawVector(maths.rotateVector(vectorDrawList.get(i).v, xRot, yRot, zRot), vectorDrawList.get(i).c,
+							vectorDrawList.get(i).w, vectorDrawList.get(i).h);
+				}
+				drawVector(maths.rotateVector(vectorDrawList.get(vectorDrawList.size() - 1).v, xRot, yRot, zRot),
+						Constants.COLORFLIGHT, Constants.FLIGHTVECWIDTH, Constants.FLIGHTVECHEIGHT);
 			}
-			drawVector(vectorDrawList.get(vectorDrawList.size() - 1).v, Constants.COLORFLIGHT, Constants.FLIGHTVECWIDTH,
-					Constants.FLIGHTVECHEIGHT);
-		}
-		if (startVector != null && endVector != null) {
-			drawVector(startVector.v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH, Constants.STARTENDVECHEIGHT);
-			drawVector(endVector.v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH, Constants.STARTENDVECHEIGHT);
+			if (startVector != null && endVector != null) {
+				drawVector(maths.rotateVector(startVector.v, xRot, yRot, zRot), Constants.COLORSTARTEND,
+						Constants.STARTENDVECWIDTH, Constants.STARTENDVECHEIGHT);
+				drawVector(maths.rotateVector(endVector.v, xRot, yRot, zRot), Constants.COLORSTARTEND,
+						Constants.STARTENDVECWIDTH, Constants.STARTENDVECHEIGHT);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	protected void drawVector(Vector v, Color color, int w, int h) {
-//		while (g == null) {
-//			try {
-//				Thread.sleep(20);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//		}
-		// TODO evtl mal Drehmatrix wenn Drehung eingebaut werden soll... (Ueberlegung)
 		g.setColor(color);
 		try {
 			Vector vN = maths.multiply(v, maths.getProjektionsMatrix());
@@ -103,7 +108,6 @@ public class CenterPanel extends JPanel {
 		// geschieht
 		Vector u = maths.multiply(new Vector(0, Math.cos(t), Math.sin(t)),
 				maths.multiply(drehMatrixRechtsLinks, drehMatrixOben));
-		// TODO Farbe anpassen
 		drawVector(u, Constants.EARTHOUTLINECOLOR, 2, 2);
 	}
 
@@ -122,45 +126,49 @@ public class CenterPanel extends JPanel {
 		double winkelY = 0;
 		int anzCircles = 8;
 		double abstandY = 2 * Math.PI / (anzCircles * 2);
+		try {
 
-		for (int iQuer = 0; iQuer < anzCircles * 2; iQuer++) {
-			for (int i = 0; i < dotPerCircle; i++) {
-				Vector v = new Vector(winkelX, winkelY);
-				double test = Math.cos(phiP) * Math.cos(thetaP) * v.getVectorX()
-						+ Math.sin(phiP) * Math.cos(thetaP) * v.getVectorY() + Math.sin(thetaP) * v.getVectorZ();
-				if (test < 0) {
-					drawVector(v, Constants.EARTHCOLORBACKFACE, 2, 2);
-				} else {
-					drawVector(v, Constants.EARTHCOLORFRONT, 2, 2);
+			for (int iQuer = 0; iQuer < anzCircles * 2; iQuer++) {
+				for (int i = 0; i < dotPerCircle; i++) {
+					Vector v = new Vector(winkelX, winkelY);
+					double test = Math.cos(phiP) * Math.cos(thetaP) * v.getVectorX()
+							+ Math.sin(phiP) * Math.cos(thetaP) * v.getVectorY() + Math.sin(thetaP) * v.getVectorZ();
+					if (test < 0) {
+						drawVector(maths.rotateVector(v, xRot, yRot, zRot), Constants.EARTHCOLORBACKFACE, 2, 2);
+					} else {
+						drawVector(maths.rotateVector(v, xRot, yRot, zRot), Constants.EARTHCOLORFRONT, 2, 2);
+					}
+					winkelX = winkelX + abstandX;
 				}
+				winkelX = 0;
+				winkelY = winkelY + abstandY;
+			}
+
+			// Kreise vertikal
+			dotPerCircle = 300;
+			abstandY = 2 * Math.PI / dotPerCircle;
+			winkelX = 0;
+			winkelY = 0;
+			anzCircles = 6;
+			abstandX = 2 * Math.PI / (anzCircles * 2);
+			for (int iQuer = 0; iQuer < anzCircles * 2; iQuer++) {
+				for (int i = 0; i < dotPerCircle; i++) {
+					Vector v = new Vector(winkelX, winkelY);
+					double test = Math.cos(phiP) * Math.cos(thetaP) * v.getVectorX()
+							+ Math.sin(phiP) * Math.cos(thetaP) * v.getVectorY() + Math.sin(thetaP) * v.getVectorZ();
+					if (test < 0) {
+						drawVector(maths.rotateVector(v, xRot, yRot, zRot), Constants.EARTHCOLORBACKFACE, 2, 2);
+					} else {
+						drawVector(maths.rotateVector(v, xRot, yRot, zRot), Constants.EARTHCOLORFRONT, 2, 2);
+					}
+					winkelY = winkelY + abstandY;
+
+				}
+				winkelY = 0;
 				winkelX = winkelX + abstandX;
 			}
-			winkelX = 0;
-			winkelY = winkelY + abstandY;
-		}
-
-		// Kreise vertikal
-		dotPerCircle = 300;
-		abstandY = 2 * Math.PI / dotPerCircle;
-		winkelX = 0;
-		winkelY = 0;
-		anzCircles = 6;
-		abstandX = 2 * Math.PI / (anzCircles * 2);
-		for (int iQuer = 0; iQuer < anzCircles * 2; iQuer++) {
-			for (int i = 0; i < dotPerCircle; i++) {
-				Vector v = new Vector(winkelX, winkelY);
-				double test = Math.cos(phiP) * Math.cos(thetaP) * v.getVectorX()
-						+ Math.sin(phiP) * Math.cos(thetaP) * v.getVectorY() + Math.sin(thetaP) * v.getVectorZ();
-				if (test < 0) {
-					drawVector(v, Constants.EARTHCOLORBACKFACE, 2, 2);
-				} else {
-					drawVector(v, Constants.EARTHCOLORFRONT, 2, 2);
-				}
-				winkelY = winkelY + abstandY;
-
-			}
-			winkelY = 0;
-			winkelX = winkelX + abstandX;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
