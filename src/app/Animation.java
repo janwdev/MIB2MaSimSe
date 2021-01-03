@@ -14,6 +14,8 @@ public class Animation {
 
 	double schritte = 360.0;
 	double gschw = 10.0;
+	boolean pause = false;
+	Timer timer = new Timer();
 
 	public Animation(MainGUI gui, CenterPanel centerPanel) {
 		this.gui = gui;
@@ -57,15 +59,16 @@ public class Animation {
 		 * for (double t = 0; gschw * t < winkel; t = t + ((Math.PI * 2) / schritte)) {
 		 * gui.drawVector(ma.berechnePunkt(pDach, u, t)); }
 		 */
-		Timer timer = new Timer();
 
 		TimerTask tt = new TimerTask() {
 			double t = 0;
 
 			@Override
 			public void run() {
-				gui.drawVector(ma.berechnePunkt(pDach, u, t));
-				t = t + ((Math.PI * 2) / schritte);
+				if (!pause) {
+					gui.drawVector(ma.berechnePunkt(pDach, u, t));
+					t = t + ((Math.PI * 2) / schritte);
+				}
 				if (t > winkel) {
 					timer.cancel();
 				}
@@ -75,16 +78,14 @@ public class Animation {
 
 	}
 
-	// Beim Buttonstart
-	private void startSimulation() {
-		Timer timer = new Timer();
-		TimerTask tt = new TimerTask() {
-			@Override
-			public void run() {
-
-			};
-		};
-		timer.scheduleAtFixedRate(tt, 0, (long) (1000 * gschw));
-
+	public void pauseContinue() {
+		pause = !pause;
 	}
+
+	public void cancel() {
+		timer.cancel();
+	}
+
+	// pausieren, abbrechen und weiter
+
 }
