@@ -11,6 +11,9 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import app.Animation;
 import app.Constants;
@@ -19,12 +22,12 @@ import objectClasses.Vector;
 
 public class MainGUI extends JFrame {
 	private Control control;
-	private CenterPanel centerPanel= new CenterPanel();
+	private CenterPanel centerPanel = new CenterPanel();
 	private Animation animation = new Animation(this, centerPanel);
 
 	private JComboBox<String> comboBAbflugK;
 	private JComboBox<String> comboBAnkunftK;
-	
+
 	private JLabel lbAnkunftK = new JLabel("Koordinaten:");
 	private JLabel lbAbflugK = new JLabel("Koordinaten:");
 
@@ -47,16 +50,20 @@ public class MainGUI extends JFrame {
 	private void setStartVector() {
 		int selIndex = comboBAbflugK.getSelectedIndex();
 		Vector v = new Vector(control.abflugFlughafenPhi[selIndex], control.abflugFlughafenThetha[selIndex]);
-		centerPanel.startVector = new VectorToDraw(v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH, Constants.STARTENDVECHEIGHT);
-		lbAnkunftK.setText("Koordinaten: Phi: " + (Math.round(v.getPWinkel()*1000)/1000.0) + "Thetha: " + (Math.round(v.getOWinkel()*1000)/1000.0));
-		
+		centerPanel.startVector = new VectorToDraw(v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
+				Constants.STARTENDVECHEIGHT);
+		lbAnkunftK.setText("Koordinaten: Phi: " + (Math.round(v.getPWinkel() * 1000) / 1000.0) + "Thetha: "
+				+ (Math.round(v.getOWinkel() * 1000) / 1000.0));
+
 	}
 
 	private void setEndVector() {
 		int selIndex = comboBAnkunftK.getSelectedIndex();
 		Vector v = new Vector(control.ankunftFlughafenPhi[selIndex], control.ankunftFlughafenThetha[selIndex]);
-		centerPanel.endVector = new VectorToDraw(v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH, Constants.STARTENDVECHEIGHT);
-		lbAbflugK.setText("Koordinaten: Phi: " + (Math.round(v.getPWinkel()*1000)/1000.0) + "Thetha: " + (Math.round(v.getOWinkel()*1000)/1000.0));
+		centerPanel.endVector = new VectorToDraw(v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
+				Constants.STARTENDVECHEIGHT);
+		lbAbflugK.setText("Koordinaten: Phi: " + (Math.round(v.getPWinkel() * 1000) / 1000.0) + "Thetha: "
+				+ (Math.round(v.getOWinkel() * 1000) / 1000.0));
 	}
 
 	public void drawVector(Vector v) {
@@ -68,7 +75,7 @@ public class MainGUI extends JFrame {
 		centerPanel.vectorDrawList.clear();
 		centerPanel.repaint();
 	}
-	
+
 	private void startAnim() {
 		clearDrawedVectors();
 		setStartVector();
@@ -91,7 +98,7 @@ public class MainGUI extends JFrame {
 		JLabel lbAnkunft = new JLabel("Ankunft:");
 		comboBAnkunftK = new JComboBox<String>(control.ankunftFlughafenStr); // TODO actionlistener
 		JButton btEditAnkunftK = new JButton("Koordinaten bearbeiten"); // TODO actionlistener
-		
+
 		JButton btStartAnim = new JButton("Animation starten");
 		btStartAnim.addActionListener(new ActionListener() {
 			@Override
@@ -104,7 +111,7 @@ public class MainGUI extends JFrame {
 		gbc.gridy = 1;
 		eastPanel.add(comboBAbflugK, gbc);
 		gbc.gridy = 2;
-		//eastPanel.add(btEditAbflugK, gbc);
+		// eastPanel.add(btEditAbflugK, gbc);
 		gbc.gridy = 3;
 		eastPanel.add(lbAbflugK, gbc);
 
@@ -116,11 +123,10 @@ public class MainGUI extends JFrame {
 		gbc.gridy = 6;
 		eastPanel.add(comboBAnkunftK, gbc);
 		gbc.gridy = 7;
-		//eastPanel.add(btEditAnkunftK, gbc);
+		// eastPanel.add(btEditAnkunftK, gbc);
 		gbc.gridy = 8;
 		eastPanel.add(lbAnkunftK, gbc);
-		
-		
+
 		gbc.gridy = 9;
 		eastPanel.add(btStartAnim, gbc);
 
@@ -134,6 +140,32 @@ public class MainGUI extends JFrame {
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = gbc.weighty = 1;
 
+		JSlider meinSlider = new JSlider();
+		meinSlider.setMinimum(0);
+		meinSlider.setMaximum(360);
+		meinSlider.setMajorTickSpacing(10);
+		meinSlider.setMinorTickSpacing(5);
+		meinSlider.setPaintTicks(true);
+		meinSlider.setPaintLabels(true);
+		meinSlider.setValue(0);
+
+		meinSlider.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				JSlider source = (JSlider) e.getSource();
+				if (!source.getValueIsAdjusting()) {
+					int deg = (int) source.getValue();
+					double val = 2 * Math.PI / 360 * deg;
+					centerPanel.zRot = val;
+					centerPanel.repaint();
+				}
+			}
+		});
+
+		southPanel.add(meinSlider, gbc);
+
+		gbc.gridx = 1;
+		gbc.weightx = 0;
 		JButton btShowInfo = new JButton("Info");
 		btShowInfo.addActionListener(new ActionListener() {
 			@Override

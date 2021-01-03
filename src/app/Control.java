@@ -16,10 +16,10 @@ public class Control {
 
 	// TODO in Konstruktor aus Datei einlesen
 	// TODO ueberpruefen und ersetzen
-	public String[] abflugFlughafenStr = new String[] { "Zürch", "Bangkok", "Helsinki" };
+	public String[] abflugFlughafenStr = new String[] { "Zürich", "Bangkok", "Helsinki" };
 	public double[] abflugFlughafenPhi = new double[] { 0, (2 * Math.PI * 3 / 4), (2 * Math.PI * 3 / 4) };
 	public double[] abflugFlughafenThetha = new double[] { 0, 0, (2 * Math.PI * 3 / 4) };
-	public String[] ankunftFlughafenStr = new String[] { "Zürch", "Bangkok", "Helsinki" };
+	public String[] ankunftFlughafenStr = new String[] { "Zürich", "Bangkok", "Helsinki" };
 	public double[] ankunftFlughafenPhi = new double[] { 0, (2 * Math.PI * 3 / 4), (2 * Math.PI * 3 / 4) };
 	public double[] ankunftFlughafenThetha = new double[] { 0, 0, (2 * Math.PI * 3 / 4) };
 
