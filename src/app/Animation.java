@@ -84,6 +84,8 @@ public class Animation {
 
 	public void cancel() {
 		timer.cancel();
+		timer = new Timer();
+		pause = false;
 	}
 
 	// pausieren, abbrechen und weiter

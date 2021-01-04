@@ -24,6 +24,8 @@ public class MainGUI extends JFrame {
 	private Control control;
 	private CenterPanel centerPanel = new CenterPanel();
 	private Animation animation = new Animation(this, centerPanel);
+	
+	private JFrame frame;
 
 	private JComboBox<String> comboBAbflugK;
 	private JComboBox<String> comboBAnkunftK;
@@ -45,11 +47,14 @@ public class MainGUI extends JFrame {
 		this.setVisible(true);
 
 		this.setMinimumSize(this.getSize());
+		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		
+		frame = this;
 	}
 
 	private void setStartVector() {
 		int selIndex = comboBAbflugK.getSelectedIndex();
-		Vector v = new Vector(control.abflugFlughafenPhi[selIndex], control.abflugFlughafenThetha[selIndex]);
+		Vector v = new Vector(control.flughafenPhi[selIndex], control.flughafenThetha[selIndex]);
 		centerPanel.startVector = new VectorToDraw(v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
 				Constants.STARTENDVECHEIGHT);
 		lbAnkunftK.setText("Koordinaten: Phi: " + (Math.round(v.getPWinkel() * 1000) / 1000.0) + "Thetha: "
@@ -59,7 +64,7 @@ public class MainGUI extends JFrame {
 
 	private void setEndVector() {
 		int selIndex = comboBAnkunftK.getSelectedIndex();
-		Vector v = new Vector(control.ankunftFlughafenPhi[selIndex], control.ankunftFlughafenThetha[selIndex]);
+		Vector v = new Vector(control.flughafenPhi[selIndex], control.flughafenThetha[selIndex]);
 		centerPanel.endVector = new VectorToDraw(v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
 				Constants.STARTENDVECHEIGHT);
 		lbAbflugK.setText("Koordinaten: Phi: " + (Math.round(v.getPWinkel() * 1000) / 1000.0) + "Thetha: "
@@ -73,6 +78,8 @@ public class MainGUI extends JFrame {
 
 	public void clearDrawedVectors() {
 		centerPanel.vectorDrawList.clear();
+		centerPanel.startVector = null;
+		centerPanel.endVector = null;
 		centerPanel.repaint();
 	}
 
@@ -91,13 +98,71 @@ public class MainGUI extends JFrame {
 		gbc.weightx = gbc.weighty = 0;
 		gbc.anchor = GridBagConstraints.LINE_START;
 
+		eastPanel.add(createCoordinatesPanel(), gbc);
+		gbc.gridy = 1;
+		eastPanel.add(new JLabel("###################"), gbc);
+		gbc.gridy = 2;
+		eastPanel.add(createAnimControlPanel(), gbc);
+
+		return eastPanel;
+	}
+
+	private JPanel createCoordinatesPanel() {
+		JPanel coordinPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.weightx = gbc.weighty = 0;
+		gbc.anchor = GridBagConstraints.LINE_START;
+
 		JLabel lbAbflug = new JLabel("Abflug:");
-		comboBAbflugK = new JComboBox<String>(control.abflugFlughafenStr); // TODO actionlistener
+		comboBAbflugK = new JComboBox<String>(control.flughafenAbModel); // TODO actionlistener
 		JButton btEditAbflugK = new JButton("Koordinaten bearbeiten"); // TODO actionlistener
 
 		JLabel lbAnkunft = new JLabel("Ankunft:");
-		comboBAnkunftK = new JComboBox<String>(control.ankunftFlughafenStr); // TODO actionlistener
+		comboBAnkunftK = new JComboBox<String>(control.flughafenAnModel); // TODO actionlistener
 		JButton btEditAnkunftK = new JButton("Koordinaten bearbeiten"); // TODO actionlistener
+		
+		JButton btAddKoordinates = new JButton("Add Koordinaten");
+		btAddKoordinates.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new AddCoordinatesDialog(frame, control);
+			}
+		});
+		
+		coordinPanel.add(btAddKoordinates, gbc);
+		gbc.gridy = 1;
+		coordinPanel.add(lbAbflug, gbc);
+		gbc.gridy = 2;
+		coordinPanel.add(comboBAbflugK, gbc);
+		gbc.gridy = 3;
+		// eastPanel.add(btEditAbflugK, gbc);
+		gbc.gridy = 4;
+		coordinPanel.add(lbAbflugK, gbc);
+
+		gbc.gridy = 5;
+		coordinPanel.add(new JLabel("-------------------"), gbc);
+
+		gbc.gridy = 6;
+		coordinPanel.add(lbAnkunft, gbc);
+		gbc.gridy = 7;
+		coordinPanel.add(comboBAnkunftK, gbc);
+		gbc.gridy = 8;
+		// eastPanel.add(btEditAnkunftK, gbc);
+		gbc.gridy = 9;
+		coordinPanel.add(lbAnkunftK, gbc);
+
+		return coordinPanel;
+	}
+
+	private JPanel createAnimControlPanel() {
+		JPanel animControlPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.weightx = gbc.weighty = 0;
+		gbc.anchor = GridBagConstraints.LINE_START;
 
 		JButton btStartAnim = new JButton("Animation starten");
 		btStartAnim.addActionListener(new ActionListener() {
@@ -122,34 +187,14 @@ public class MainGUI extends JFrame {
 			}
 		});
 
-		eastPanel.add(lbAbflug, gbc);
+		gbc.gridy = 0;
+		animControlPanel.add(btStartAnim, gbc);
 		gbc.gridy = 1;
-		eastPanel.add(comboBAbflugK, gbc);
+		animControlPanel.add(btPlayPause, gbc);
 		gbc.gridy = 2;
-		// eastPanel.add(btEditAbflugK, gbc);
-		gbc.gridy = 3;
-		eastPanel.add(lbAbflugK, gbc);
+		animControlPanel.add(btCancel, gbc);
 
-		gbc.gridy = 4;
-		eastPanel.add(new JLabel("-------------------"), gbc);
-
-		gbc.gridy = 5;
-		eastPanel.add(lbAnkunft, gbc);
-		gbc.gridy = 6;
-		eastPanel.add(comboBAnkunftK, gbc);
-		gbc.gridy = 7;
-		// eastPanel.add(btEditAnkunftK, gbc);
-		gbc.gridy = 8;
-		eastPanel.add(lbAnkunftK, gbc);
-
-		gbc.gridy = 9;
-		eastPanel.add(btStartAnim, gbc);
-		gbc.gridy = 10;
-		eastPanel.add(btPlayPause, gbc);
-		gbc.gridy = 11;
-		eastPanel.add(btCancel, gbc);
-
-		return eastPanel;
+		return animControlPanel;
 	}
 
 	private JPanel createSouthPanel() {
@@ -189,7 +234,7 @@ public class MainGUI extends JFrame {
 		btShowInfo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new InfoDialog();
+				new InfoDialog(frame);
 			}
 		});
 		southPanel.add(btShowInfo, gbc);

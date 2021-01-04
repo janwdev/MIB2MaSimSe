@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 
+import javax.swing.DefaultComboBoxModel;
+
 import gui.MainGUI;
 
 public class Control {
@@ -16,19 +18,34 @@ public class Control {
 
 	// TODO in Konstruktor aus Datei einlesen
 	// TODO ueberpruefen und ersetzen
-	public String[] abflugFlughafenStr = new String[] { "Zürich", "Bangkok", "Helsinki" };
-	public double[] abflugFlughafenPhi = new double[] { 0, (2 * Math.PI * 3 / 4), (2 * Math.PI * 3 / 4) };
-	public double[] abflugFlughafenThetha = new double[] { 0, 0, (2 * Math.PI * 3 / 4) };
-	public String[] ankunftFlughafenStr = new String[] { "Zürich", "Bangkok", "Helsinki" };
-	public double[] ankunftFlughafenPhi = new double[] { 0, (2 * Math.PI * 3 / 4), (2 * Math.PI * 3 / 4) };
-	public double[] ankunftFlughafenThetha = new double[] { 0, 0, (2 * Math.PI * 3 / 4) };
+	public DefaultComboBoxModel<String> flughafenAnModel = new DefaultComboBoxModel<String>();
+	public DefaultComboBoxModel<String> flughafenAbModel = new DefaultComboBoxModel<String>();
+	public String[] flughafenStr = new String[] { "Bangkok", "Helsinki" };
+	public double[] flughafenPhi = new double[] { (2 * Math.PI * 3 / 4), (2 * Math.PI * 3 / 4) };
+	public double[] flughafenThetha = new double[] { 0, (2 * Math.PI * 3 / 4) };
 
 	public Control() {
 		Constants.LICENCETEXT = createLicencesText();
+		reloadFlughafenCombobox();
 	}
 
 	protected void setGUI(MainGUI gui) {
 		this.gui = gui;
+	}
+	
+	public void reloadFlughafenCombobox() {
+		flughafenAbModel.removeAllElements();
+		for (String s : flughafenStr) {
+			flughafenAbModel.addElement(s);
+		}
+		flughafenAnModel.removeAllElements();
+		for (String s : flughafenStr) {
+			flughafenAnModel.addElement(s);
+		}
+		
+		for (int i = 0; i < flughafenStr.length; i++) {
+			System.out.println("Flughafen: " + flughafenStr[i] + ": Phi: " + flughafenPhi[i] + ", Theta: " + flughafenThetha[i]);
+		}
 	}
 
 	private String createLicencesText() {
