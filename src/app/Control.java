@@ -35,7 +35,6 @@ public class Control {
 		if (!airportFile.exists()) {
 			copyStdAirportFileToTemp();
 		}
-		readContentFromAirPFile();
 		reloadFlughafenCombobox();
 	}
 
@@ -45,6 +44,7 @@ public class Control {
 
 	public void reloadFlughafenCombobox() {
 		flughafenAbModel.removeAllElements();
+		readContentFromAirPFile();
 		for (String s : flughafenStr) {
 			flughafenAbModel.addElement(s);
 		}
@@ -87,7 +87,7 @@ public class Control {
 						flughafenPhi = Arrays.copyOf(flughafenPhi, flughafenPhi.length + 1);
 						flughafenPhi[flughafenPhi.length - 1] = Double.parseDouble(airport[1]);
 						flughafenThetha = Arrays.copyOf(flughafenThetha, flughafenThetha.length + 1);
-						flughafenThetha[flughafenThetha.length - 1] = Double.parseDouble(airport[2]);
+						flughafenThetha[flughafenThetha.length - 1] = Math.PI/2-Double.parseDouble(airport[2]);
 					} else {
 						throw new Exception("File corrupted");
 					}
@@ -98,6 +98,8 @@ public class Control {
 				System.out.println(e.getMessage());
 				copyStdAirportFileToTemp();
 			}
+		} else {
+			copyStdAirportFileToTemp();
 		}
 	}
 
