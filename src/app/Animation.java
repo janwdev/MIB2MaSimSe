@@ -71,6 +71,8 @@ public class Animation {
 				}
 				if (t > winkel) {
 					timer.cancel();
+					timer = new Timer();
+					pause = false;
 				}
 			};
 		};

@@ -20,9 +20,9 @@ public class Control {
 	// TODO ueberpruefen und ersetzen
 	public DefaultComboBoxModel<String> flughafenAnModel = new DefaultComboBoxModel<String>();
 	public DefaultComboBoxModel<String> flughafenAbModel = new DefaultComboBoxModel<String>();
-	public String[] flughafenStr = new String[] { "Bangkok", "Helsinki" };
-	public double[] flughafenPhi = new double[] { (2 * Math.PI * 3 / 4), (2 * Math.PI * 3 / 4) };
-	public double[] flughafenThetha = new double[] { 0, (2 * Math.PI * 3 / 4) };
+	public String[] flughafenStr = new String[] { "Bangkok", "Helsinki", "Wien" };
+	public double[] flughafenPhi = new double[] { (2 * Math.PI * 3 / 4), 0, 0.28623 };
+	public double[] flughafenThetha = new double[] { 0, 0 , 0.72955 };
 
 	public Control() {
 		Constants.LICENCETEXT = createLicencesText();

@@ -204,16 +204,16 @@ public class MainGUI extends JFrame {
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = gbc.weighty = 1;
 
-		JSlider meinSlider = new JSlider();
-		meinSlider.setMinimum(0);
-		meinSlider.setMaximum(360);
-		meinSlider.setMajorTickSpacing(10);
-		meinSlider.setMinorTickSpacing(5);
-		meinSlider.setPaintTicks(true);
-		meinSlider.setPaintLabels(true);
-		meinSlider.setValue(0);
+		JSlider rotationSlider = new JSlider();
+		rotationSlider.setMinimum(0);
+		rotationSlider.setMaximum(360);
+		rotationSlider.setMajorTickSpacing(10);
+		rotationSlider.setMinorTickSpacing(5);
+		rotationSlider.setPaintTicks(true);
+		rotationSlider.setPaintLabels(true);
+		rotationSlider.setValue(0);
 
-		meinSlider.addChangeListener(new ChangeListener() {
+		rotationSlider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider) e.getSource();
@@ -226,7 +226,7 @@ public class MainGUI extends JFrame {
 			}
 		});
 
-		southPanel.add(meinSlider, gbc);
+		//southPanel.add(rotationSlider, gbc);
 
 		gbc.gridx = 1;
 		gbc.weightx = 0;

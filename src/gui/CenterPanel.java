@@ -21,7 +21,7 @@ public class CenterPanel extends JPanel {
 
 	private double xRot = 0; // um QuerAchse
 	private double yRot = 0;
-	double zRot = 1; // Um Hochachse
+	double zRot = 0; // Um Hochachse
 
 	public CenterPanel() {
 		Dimension size = new Dimension(Constants.drawSizeXPixels, Constants.drawSizeYPixels);
@@ -48,19 +48,19 @@ public class CenterPanel extends JPanel {
 
 		try {
 			if (vectorDrawList.size() > 0) {
-				for (int i = 1; i < vectorDrawList.size() - 2; i++) {
+				for (int i = 0; i < vectorDrawList.size() - 1; i++) {
 
-					drawVector(maths.rotateVector(vectorDrawList.get(i).v, xRot, yRot, zRot), vectorDrawList.get(i).c,
-							vectorDrawList.get(i).w, vectorDrawList.get(i).h);
+					drawVector(vectorDrawList.get(i).v, vectorDrawList.get(i).c, vectorDrawList.get(i).w,
+							vectorDrawList.get(i).h);
 				}
-				drawVector(maths.rotateVector(vectorDrawList.get(vectorDrawList.size() - 1).v, xRot, yRot, zRot),
-						Constants.COLORFLIGHT, Constants.FLIGHTVECWIDTH, Constants.FLIGHTVECHEIGHT);
+				drawVector(vectorDrawList.get(vectorDrawList.size() - 1).v, Constants.COLORFLIGHT,
+						Constants.FLIGHTVECWIDTH, Constants.FLIGHTVECHEIGHT);
 			}
 			if (startVector != null && endVector != null) {
-				drawVector(maths.rotateVector(startVector.v, xRot, yRot, zRot), Constants.COLORSTARTEND,
-						Constants.STARTENDVECWIDTH, Constants.STARTENDVECHEIGHT);
-				drawVector(maths.rotateVector(endVector.v, xRot, yRot, zRot), Constants.COLORSTARTEND,
-						Constants.STARTENDVECWIDTH, Constants.STARTENDVECHEIGHT);
+				drawVector(startVector.v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
+						Constants.STARTENDVECHEIGHT);
+				drawVector(endVector.v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
+						Constants.STARTENDVECHEIGHT);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -112,7 +112,6 @@ public class CenterPanel extends JPanel {
 	}
 
 	private void drahtgitter() {
-		// TODO farbe anpassen wenn hinter kugel verborgen
 		// Kreise Horizontal
 
 		double s1 = maths.getProjektionsMatrixClass().getS();
@@ -134,9 +133,9 @@ public class CenterPanel extends JPanel {
 					double test = Math.cos(phiP) * Math.cos(thetaP) * v.getVectorX()
 							+ Math.sin(phiP) * Math.cos(thetaP) * v.getVectorY() + Math.sin(thetaP) * v.getVectorZ();
 					if (test < 0) {
-						drawVector(maths.rotateVector(v, xRot, yRot, zRot), Constants.EARTHCOLORBACKFACE, 2, 2);
+						drawVector(v, Constants.EARTHCOLORBACKFACE, 2, 2);
 					} else {
-						drawVector(maths.rotateVector(v, xRot, yRot, zRot), Constants.EARTHCOLORFRONT, 2, 2);
+						drawVector(v, Constants.EARTHCOLORFRONT, 2, 2);
 					}
 					winkelX = winkelX + abstandX;
 				}
@@ -157,9 +156,9 @@ public class CenterPanel extends JPanel {
 					double test = Math.cos(phiP) * Math.cos(thetaP) * v.getVectorX()
 							+ Math.sin(phiP) * Math.cos(thetaP) * v.getVectorY() + Math.sin(thetaP) * v.getVectorZ();
 					if (test < 0) {
-						drawVector(maths.rotateVector(v, xRot, yRot, zRot), Constants.EARTHCOLORBACKFACE, 2, 2);
+						drawVector(v, Constants.EARTHCOLORBACKFACE, 2, 2);
 					} else {
-						drawVector(maths.rotateVector(v, xRot, yRot, zRot), Constants.EARTHCOLORFRONT, 2, 2);
+						drawVector(v, Constants.EARTHCOLORFRONT, 2, 2);
 					}
 					winkelY = winkelY + abstandY;
 
