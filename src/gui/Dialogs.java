@@ -111,8 +111,7 @@ class AddCoordinatesDialog extends JDialog {
 						control.flughafenThetha[control.flughafenThetha.length - 1] = theta;
 						
 						control.reloadFlughafenCombobox();
-
-						// TODO
+						control.writeAirportToFile();
 
 						close();
 					} else {

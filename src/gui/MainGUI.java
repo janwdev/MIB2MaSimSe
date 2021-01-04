@@ -57,7 +57,7 @@ public class MainGUI extends JFrame {
 		Vector v = new Vector(control.flughafenPhi[selIndex], control.flughafenThetha[selIndex]);
 		centerPanel.startVector = new VectorToDraw(v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
 				Constants.STARTENDVECHEIGHT);
-		lbAnkunftK.setText("Koordinaten: Phi: " + (Math.round(v.getPWinkel() * 1000) / 1000.0) + "Thetha: "
+		lbAbflugK.setText("Koordinaten: Phi: " + (Math.round(v.getPWinkel() * 1000) / 1000.0) + "Thetha: "
 				+ (Math.round(v.getOWinkel() * 1000) / 1000.0));
 
 	}
@@ -67,7 +67,7 @@ public class MainGUI extends JFrame {
 		Vector v = new Vector(control.flughafenPhi[selIndex], control.flughafenThetha[selIndex]);
 		centerPanel.endVector = new VectorToDraw(v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
 				Constants.STARTENDVECHEIGHT);
-		lbAbflugK.setText("Koordinaten: Phi: " + (Math.round(v.getPWinkel() * 1000) / 1000.0) + "Thetha: "
+		lbAnkunftK.setText("Koordinaten: Phi: " + (Math.round(v.getPWinkel() * 1000) / 1000.0) + "Thetha: "
 				+ (Math.round(v.getOWinkel() * 1000) / 1000.0));
 	}
 
