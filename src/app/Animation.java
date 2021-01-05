@@ -13,7 +13,7 @@ public class Animation {
 	Maths ma = new Maths();
 
 	double schritte = 360.0;
-	double gschw = 10.0;
+	private double speed = 10.0;
 	boolean pause = false;
 	Timer timer = new Timer();
 
@@ -25,6 +25,22 @@ public class Animation {
 	public void startAnimation() {
 		formelBerechnung(centerPanel.getStartVector(), centerPanel.getEndVector(), gui);
 	}
+	
+	public void pauseContinue() {
+		pause = !pause;
+	}
+
+	public void cancel() {
+		timer.cancel();
+		timer = new Timer();
+		pause = false;
+		gui.animEnded();
+	}
+	
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
 
 	// muss man am Ende nicht noch zurück drehen ?
 	private void formelBerechnung(Vector p, Vector q, MainGUI gui) {
@@ -73,23 +89,11 @@ public class Animation {
 					timer.cancel();
 					timer = new Timer();
 					pause = false;
+					gui.animEnded();
 				}
 			};
 		};
-		timer.scheduleAtFixedRate(tt, 0, (long) (1000 / gschw));
+		timer.scheduleAtFixedRate(tt, 0, (long) (1000 / speed));
 
 	}
-
-	public void pauseContinue() {
-		pause = !pause;
-	}
-
-	public void cancel() {
-		timer.cancel();
-		timer = new Timer();
-		pause = false;
-	}
-
-	// pausieren, abbrechen und weiter
-
 }
