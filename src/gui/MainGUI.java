@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
@@ -24,14 +25,19 @@ public class MainGUI extends JFrame {
 	private Control control;
 	private CenterPanel centerPanel = new CenterPanel();
 	private Animation animation = new Animation(this, centerPanel);
-	
-	private JFrame frame;
+
+	private MainGUI gui; // Nur fuer uebergabeparam
 
 	private JComboBox<String> comboBAbflugK;
 	private JComboBox<String> comboBAnkunftK;
 
 	private JLabel lbAnkunftK = new JLabel("Koordinaten:");
 	private JLabel lbAbflugK = new JLabel("Koordinaten:");
+
+	private JButton btStartAnim;
+	private JButton btPlayPause;
+	private JButton btCancel;
+	private JComboBox<String> combSpeed;
 
 	public MainGUI(Control control) {
 		this.control = control;
@@ -48,8 +54,12 @@ public class MainGUI extends JFrame {
 
 		this.setMinimumSize(this.getSize());
 		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-		
-		frame = this;
+
+		gui = this;
+	}
+
+	public void showErrorMessage(String message) {
+		JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
 	private void setStartVector() {
@@ -58,7 +68,7 @@ public class MainGUI extends JFrame {
 		centerPanel.startVector = new VectorToDraw(v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
 				Constants.STARTENDVECHEIGHT);
 		lbAbflugK.setText("Koordinaten: Phi: " + (Math.round(v.getPWinkel() * 1000) / 1000.0) + "Theta: "
-				+ (Math.round((-v.getOWinkel()+Math.PI/2) * 1000) / 1000.0));
+				+ (Math.round((-v.getOWinkel() + Math.PI / 2) * 1000) / 1000.0));
 
 	}
 
@@ -68,7 +78,7 @@ public class MainGUI extends JFrame {
 		centerPanel.endVector = new VectorToDraw(v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
 				Constants.STARTENDVECHEIGHT);
 		lbAnkunftK.setText("Koordinaten: Phi: " + (Math.round(v.getPWinkel() * 1000) / 1000.0) + "Theta: "
-				+ (Math.round((-v.getOWinkel()+Math.PI/2) * 1000) / 1000.0));
+				+ (Math.round((-v.getOWinkel() + Math.PI / 2) * 1000) / 1000.0));
 	}
 
 	public void drawVector(Vector v) {
@@ -84,10 +94,26 @@ public class MainGUI extends JFrame {
 	}
 
 	private void startAnim() {
-		clearDrawedVectors();
-		setStartVector();
-		setEndVector();
-		animation.startAnimation();
+		if (comboBAnkunftK.getSelectedIndex() != comboBAbflugK.getSelectedIndex()) {
+			btStartAnim.setEnabled(false);
+			btPlayPause.setEnabled(true);
+			btCancel.setEnabled(true);
+			combSpeed.setEnabled(false);
+			clearDrawedVectors();
+			setStartVector();
+			setEndVector();
+			animation.startAnimation();
+		} else {
+			showErrorMessage("Destination and Departure Airport cant be the same");
+		}
+
+	}
+
+	public void animEnded() {
+		btStartAnim.setEnabled(true);
+		combSpeed.setEnabled(true);
+		btPlayPause.setEnabled(false);
+		btCancel.setEnabled(false);
 	}
 
 	private JPanel createEastPanel() {
@@ -116,21 +142,21 @@ public class MainGUI extends JFrame {
 		gbc.anchor = GridBagConstraints.LINE_START;
 
 		JLabel lbAbflug = new JLabel("Abflug:");
-		comboBAbflugK = new JComboBox<String>(control.flughafenAbModel); // TODO actionlistener
+		comboBAbflugK = new JComboBox<String>(control.flughafenAbModel);
 		JButton btEditAbflugK = new JButton("Koordinaten bearbeiten"); // TODO actionlistener
 
 		JLabel lbAnkunft = new JLabel("Ankunft:");
-		comboBAnkunftK = new JComboBox<String>(control.flughafenAnModel); // TODO actionlistener
+		comboBAnkunftK = new JComboBox<String>(control.flughafenAnModel);
 		JButton btEditAnkunftK = new JButton("Koordinaten bearbeiten"); // TODO actionlistener
-		
+
 		JButton btAddKoordinates = new JButton("Add Koordinaten");
 		btAddKoordinates.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new AddCoordinatesDialog(frame, control);
+				new AddCoordinatesDialog(gui, control);
 			}
 		});
-		
+
 		coordinPanel.add(btAddKoordinates, gbc);
 		gbc.gridy = 1;
 		coordinPanel.add(lbAbflug, gbc);
@@ -164,21 +190,22 @@ public class MainGUI extends JFrame {
 		gbc.weightx = gbc.weighty = 0;
 		gbc.anchor = GridBagConstraints.LINE_START;
 
-		JButton btStartAnim = new JButton("Animation starten");
+		btStartAnim = new JButton("Animation starten");
 		btStartAnim.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				startAnim();
 			}
 		});
-		JButton btPlayPause = new JButton("Pause/Weiter");
+		btPlayPause = new JButton("Pause/Weiter");
 		btPlayPause.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				animation.pauseContinue();
 			}
 		});
-		JButton btCancel = new JButton("Abbrechen");
+		btPlayPause.setEnabled(false);
+		btCancel = new JButton("Abbrechen");
 		btCancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -186,13 +213,36 @@ public class MainGUI extends JFrame {
 				clearDrawedVectors();
 			}
 		});
+		btCancel.setEnabled(false);
 
+		JLabel lbSpeed = new JLabel("Speed");
+		combSpeed = new JComboBox<String>(new String[] { "Normal", "Slow", "Fast" });
+		combSpeed.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selIndex = combSpeed.getSelectedIndex();
+				if (selIndex == 0) {
+					animation.setSpeed(Constants.animSpeedNormal);
+				} else if (selIndex == 1) {
+					animation.setSpeed(Constants.animSpeedSlow);
+				} else if (selIndex == 2) {
+					animation.setSpeed(Constants.animSpeedFast);
+				}
+			}
+		});
+
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.gridy = 0;
 		animControlPanel.add(btStartAnim, gbc);
-		gbc.gridy = 1;
+		gbc.gridy++;
 		animControlPanel.add(btPlayPause, gbc);
-		gbc.gridy = 2;
+		gbc.gridy++;
 		animControlPanel.add(btCancel, gbc);
+		gbc.gridy++;
+		gbc.gridwidth = 1;
+		animControlPanel.add(lbSpeed, gbc);
+		gbc.gridx++;
+		animControlPanel.add(combSpeed);
 
 		return animControlPanel;
 	}
@@ -226,7 +276,7 @@ public class MainGUI extends JFrame {
 			}
 		});
 
-		//southPanel.add(rotationSlider, gbc);
+		// southPanel.add(rotationSlider, gbc);
 
 		gbc.gridx = 1;
 		gbc.weightx = 0;
@@ -234,7 +284,7 @@ public class MainGUI extends JFrame {
 		btShowInfo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new InfoDialog(frame);
+				new InfoDialog(gui);
 			}
 		});
 		southPanel.add(btShowInfo, gbc);

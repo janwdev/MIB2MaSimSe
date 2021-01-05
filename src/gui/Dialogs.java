@@ -22,15 +22,15 @@ import app.Control;
 class AddCoordinatesDialog extends JDialog {
 
 	private Control control;
-	private JFrame parent;
+	private MainGUI gui;
 
-	public AddCoordinatesDialog(JFrame parent, Control control) {
-		super(parent, "Koordinaten hinzufuegen", true);
+	public AddCoordinatesDialog(MainGUI gui, Control control) {
+		super(gui, "Koordinaten hinzufuegen", true);
 		this.control = control;
-		this.parent = parent;
+		this.gui = gui;
 		createDialog();
 		this.pack();
-		this.setLocationRelativeTo(parent);
+		this.setLocationRelativeTo(gui);
 		this.setVisible(true);
 
 	}
@@ -115,15 +115,17 @@ class AddCoordinatesDialog extends JDialog {
 
 						close();
 					} else {
-						throw new Exception("Nicht alle Felder ausgefüllt!");
+						throw new Exception("You got empty Fields!");
 					}
 
 				} catch (NumberFormatException ex) {
 					ex.printStackTrace();
+					gui.showErrorMessage("Wrong Values (Number?)");
 					// TODO
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					System.out.println(e1.getMessage());
+					gui.showErrorMessage(e1.getMessage());
 				}
 			}
 		});
@@ -174,7 +176,7 @@ class AddCoordinatesDialog extends JDialog {
 
 	private void close() {
 		this.dispose();
-		parent.repaint();
+		gui.repaint();
 	}
 
 }
