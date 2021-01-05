@@ -276,7 +276,7 @@ public class MainGUI extends JFrame {
 			}
 		});
 
-		// southPanel.add(rotationSlider, gbc);
+		southPanel.add(rotationSlider, gbc);
 
 		gbc.gridx = 1;
 		gbc.weightx = 0;

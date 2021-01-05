@@ -27,10 +27,7 @@ public class Vektorberechnung { // erbt von Vector.java
 	}
 
 	protected Vector drehen(Vector vektor, Matrix drehMatrix) throws Exception {
-		double oldZ = vektor.getVectorZ();
-		vektor.setVector(vektor.getVectorX(), vektor.getVectorY(), 0);
 		vektor = vektorMatrix.multiply(vektor, drehMatrix);
-		vektor.setVector(vektor.getVectorX(), vektor.getVectorY(), oldZ);
 		return vektor;
 	}
 	

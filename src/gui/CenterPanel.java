@@ -18,10 +18,8 @@ public class CenterPanel extends JPanel {
 	ArrayList<VectorToDraw> vectorDrawList = new ArrayList<VectorToDraw>();
 	VectorToDraw startVector;
 	VectorToDraw endVector;
-
-	private double xRot = 0; // um QuerAchse
-	private double yRot = 0;
-	double zRot = 0; // Um Hochachse
+	
+	double zRot = 0; // drehung um Hochachse
 
 	public CenterPanel() {
 		Dimension size = new Dimension(Constants.drawSizeXPixels, Constants.drawSizeYPixels);
@@ -50,16 +48,16 @@ public class CenterPanel extends JPanel {
 			if (vectorDrawList.size() > 0) {
 				for (int i = 0; i < vectorDrawList.size() - 1; i++) {
 
-					drawVector(vectorDrawList.get(i).v, vectorDrawList.get(i).c, vectorDrawList.get(i).w,
+					drawVector(maths.rotateVectorZ(vectorDrawList.get(i).v, zRot) , vectorDrawList.get(i).c, vectorDrawList.get(i).w,
 							vectorDrawList.get(i).h);
 				}
-				drawVector(vectorDrawList.get(vectorDrawList.size() - 1).v, Constants.COLORFLIGHT,
+				drawVector(maths.rotateVectorZ(vectorDrawList.get(vectorDrawList.size() - 1).v, zRot), Constants.COLORFLIGHT,
 						Constants.FLIGHTVECWIDTH, Constants.FLIGHTVECHEIGHT);
 			}
 			if (startVector != null && endVector != null) {
-				drawVector(startVector.v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
+				drawVector(maths.rotateVectorZ(startVector.v, zRot), Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
 						Constants.STARTENDVECHEIGHT);
-				drawVector(endVector.v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
+				drawVector(maths.rotateVectorZ(endVector.v, zRot), Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
 						Constants.STARTENDVECHEIGHT);
 			}
 		} catch (Exception e) {
@@ -133,9 +131,9 @@ public class CenterPanel extends JPanel {
 					double test = Math.cos(phiP) * Math.cos(thetaP) * v.getVectorX()
 							+ Math.sin(phiP) * Math.cos(thetaP) * v.getVectorY() + Math.sin(thetaP) * v.getVectorZ();
 					if (test < 0) {
-						drawVector(v, Constants.EARTHCOLORBACKFACE, 2, 2);
+						drawVector(maths.rotateVectorZ(v, zRot), Constants.EARTHCOLORBACKFACE, 2, 2);
 					} else {
-						drawVector(v, Constants.EARTHCOLORFRONT, 2, 2);
+						drawVector(maths.rotateVectorZ(v, zRot), Constants.EARTHCOLORFRONT, 2, 2);
 					}
 					winkelX = winkelX + abstandX;
 				}
@@ -156,9 +154,9 @@ public class CenterPanel extends JPanel {
 					double test = Math.cos(phiP) * Math.cos(thetaP) * v.getVectorX()
 							+ Math.sin(phiP) * Math.cos(thetaP) * v.getVectorY() + Math.sin(thetaP) * v.getVectorZ();
 					if (test < 0) {
-						drawVector(v, Constants.EARTHCOLORBACKFACE, 2, 2);
+						drawVector(maths.rotateVectorZ(v, zRot), Constants.EARTHCOLORBACKFACE, 2, 2);
 					} else {
-						drawVector(v, Constants.EARTHCOLORFRONT, 2, 2);
+						drawVector(maths.rotateVectorZ(v, zRot), Constants.EARTHCOLORFRONT, 2, 2);
 					}
 					winkelY = winkelY + abstandY;
 
