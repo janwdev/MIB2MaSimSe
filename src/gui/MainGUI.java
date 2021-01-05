@@ -28,11 +28,11 @@ public class MainGUI extends JFrame {
 
 	private MainGUI gui; // Nur fuer uebergabeparam
 
-	private JComboBox<String> comboBAbflugK;
-	private JComboBox<String> comboBAnkunftK;
+	private JComboBox<String> combDeparture;
+	private JComboBox<String> combDestination;
 
-	private JLabel lbAnkunftK = new JLabel("Koordinaten:");
-	private JLabel lbAbflugK = new JLabel("Koordinaten:");
+	private JLabel lbDestinationC = new JLabel("Coordinates:");
+	private JLabel lbDepartureC = new JLabel("Coordinates:");
 
 	private JButton btStartAnim;
 	private JButton btPlayPause;
@@ -63,21 +63,21 @@ public class MainGUI extends JFrame {
 	}
 
 	private void setStartVector() {
-		int selIndex = comboBAbflugK.getSelectedIndex();
-		Vector v = new Vector(control.flughafenPhi[selIndex], control.flughafenThetha[selIndex]);
+		int selIndex = combDeparture.getSelectedIndex();
+		Vector v = new Vector(control.airportPhi[selIndex], control.airportThetha[selIndex]);
 		centerPanel.startVector = new VectorToDraw(v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
 				Constants.STARTENDVECHEIGHT);
-		lbAbflugK.setText("Koordinaten: Phi: " + (Math.round(v.getPWinkel() * 1000) / 1000.0) + "Theta: "
+		lbDepartureC.setText("Coordinates: Phi: " + (Math.round(v.getPWinkel() * 1000) / 1000.0) + "Theta: "
 				+ (Math.round((-v.getOWinkel() + Math.PI / 2) * 1000) / 1000.0));
 
 	}
 
 	private void setEndVector() {
-		int selIndex = comboBAnkunftK.getSelectedIndex();
-		Vector v = new Vector(control.flughafenPhi[selIndex], control.flughafenThetha[selIndex]);
+		int selIndex = combDestination.getSelectedIndex();
+		Vector v = new Vector(control.airportPhi[selIndex], control.airportThetha[selIndex]);
 		centerPanel.endVector = new VectorToDraw(v, Constants.COLORSTARTEND, Constants.STARTENDVECWIDTH,
 				Constants.STARTENDVECHEIGHT);
-		lbAnkunftK.setText("Koordinaten: Phi: " + (Math.round(v.getPWinkel() * 1000) / 1000.0) + "Theta: "
+		lbDestinationC.setText("Coordinates: Phi: " + (Math.round(v.getPWinkel() * 1000) / 1000.0) + "Theta: "
 				+ (Math.round((-v.getOWinkel() + Math.PI / 2) * 1000) / 1000.0));
 	}
 
@@ -94,7 +94,7 @@ public class MainGUI extends JFrame {
 	}
 
 	private void startAnim() {
-		if (comboBAnkunftK.getSelectedIndex() != comboBAbflugK.getSelectedIndex()) {
+		if (combDestination.getSelectedIndex() != combDeparture.getSelectedIndex()) {
 			btStartAnim.setEnabled(false);
 			btPlayPause.setEnabled(true);
 			btCancel.setEnabled(true);
@@ -134,52 +134,50 @@ public class MainGUI extends JFrame {
 	}
 
 	private JPanel createCoordinatesPanel() {
-		JPanel coordinPanel = new JPanel(new GridBagLayout());
+		JPanel coordinatesPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = gbc.weighty = 0;
 		gbc.anchor = GridBagConstraints.LINE_START;
 
-		JLabel lbAbflug = new JLabel("Abflug:");
-		comboBAbflugK = new JComboBox<String>(control.flughafenAbModel);
-		JButton btEditAbflugK = new JButton("Koordinaten bearbeiten"); // TODO actionlistener
+		JLabel lbDeparture = new JLabel("Departure:");
+		combDeparture = new JComboBox<String>(control.airportDepartModel);
+		JButton btEditDepartureC = new JButton("Edit Coordinates"); // TODO actionlistener
 
-		JLabel lbAnkunft = new JLabel("Ankunft:");
-		comboBAnkunftK = new JComboBox<String>(control.flughafenAnModel);
-		JButton btEditAnkunftK = new JButton("Koordinaten bearbeiten"); // TODO actionlistener
+		JLabel lbDestination = new JLabel("Destination:");
+		combDestination = new JComboBox<String>(control.airportDestiModel);
+		JButton btEditDestinationC = new JButton("Edit Coordinates"); // TODO actionlistener
 
-		JButton btAddKoordinates = new JButton("Add Koordinaten");
-		btAddKoordinates.addActionListener(new ActionListener() {
+		JButton btAddCoordinates = new JButton("Add Coordinates");
+		btAddCoordinates.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new AddCoordinatesDialog(gui, control);
 			}
 		});
 
-		coordinPanel.add(btAddKoordinates, gbc);
+		coordinatesPanel.add(btAddCoordinates, gbc);
 		gbc.gridy = 1;
-		coordinPanel.add(lbAbflug, gbc);
+		coordinatesPanel.add(lbDeparture, gbc);
 		gbc.gridy = 2;
-		coordinPanel.add(comboBAbflugK, gbc);
+		coordinatesPanel.add(combDeparture, gbc);
 		gbc.gridy = 3;
-		// eastPanel.add(btEditAbflugK, gbc);
 		gbc.gridy = 4;
-		coordinPanel.add(lbAbflugK, gbc);
+		coordinatesPanel.add(lbDepartureC, gbc);
 
 		gbc.gridy = 5;
-		coordinPanel.add(new JLabel("-------------------"), gbc);
+		coordinatesPanel.add(new JLabel("-------------------"), gbc);
 
 		gbc.gridy = 6;
-		coordinPanel.add(lbAnkunft, gbc);
+		coordinatesPanel.add(lbDestination, gbc);
 		gbc.gridy = 7;
-		coordinPanel.add(comboBAnkunftK, gbc);
+		coordinatesPanel.add(combDestination, gbc);
 		gbc.gridy = 8;
-		// eastPanel.add(btEditAnkunftK, gbc);
 		gbc.gridy = 9;
-		coordinPanel.add(lbAnkunftK, gbc);
+		coordinatesPanel.add(lbDestinationC, gbc);
 
-		return coordinPanel;
+		return coordinatesPanel;
 	}
 
 	private JPanel createAnimControlPanel() {
@@ -190,14 +188,14 @@ public class MainGUI extends JFrame {
 		gbc.weightx = gbc.weighty = 0;
 		gbc.anchor = GridBagConstraints.LINE_START;
 
-		btStartAnim = new JButton("Animation starten");
+		btStartAnim = new JButton("Start Animation");
 		btStartAnim.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				startAnim();
 			}
 		});
-		btPlayPause = new JButton("Pause/Weiter");
+		btPlayPause = new JButton("Pause/Continue");
 		btPlayPause.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -205,7 +203,7 @@ public class MainGUI extends JFrame {
 			}
 		});
 		btPlayPause.setEnabled(false);
-		btCancel = new JButton("Abbrechen");
+		btCancel = new JButton("Cancel");
 		btCancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -5,7 +5,7 @@ import java.awt.Color;
 public class Constants {
 	public static final String PROGNAME = "3DFlightMaSim - Luca Jannik";
 	public static final String VERSION = "0.001";
-	public static final String DESCRIPTION = "Programm um die Flugrouten zwischen zwei Positionen auf der Erde zu visualisieren";
+	public static final String DESCRIPTION = "Program to visualize the flight routes between two positions on the earth";
 	public static String LICENCETEXT;
 
 	public static int drawSizeXPixels = 800;
@@ -31,7 +31,7 @@ public class Constants {
 	public static int FLIGHTVECHEIGHT = 6;
 
 	public static Color EARTHCOLORFRONT = new Color(0, 0, 0, 255);
-	public static Color EARTHCOLORBACKFACE = new Color(35, 35, 35, 255); // oder new Color(42, 40, 39, 255);
+	public static Color EARTHCOLORBACKFACE = new Color(35, 35, 35, 255); // or new Color(42, 40, 39, 255);
 	public static Color EARTHOUTLINECOLOR = new Color(0, 0, 0, 255);
 	
 	public static Color COLORSTARTEND = new Color(255, 0, 0, 255);
