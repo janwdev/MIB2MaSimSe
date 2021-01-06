@@ -1,7 +1,7 @@
 # MIB2MaSimSemester
 ## Links
 - [Download Releases](https://github.com/janwdev/MIB2MaSimSe/releases)
-- [JavaDoc public](https://janwdev.github.io/MIB2MaSimSe/)
+- [JavaDoc public](https://janwdev.github.io/MIB2MaSimSe/docs/)
 
 ## Description
 Program to visualize the flight routes between two positions on the earth.
