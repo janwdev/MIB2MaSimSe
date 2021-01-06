@@ -114,7 +114,7 @@ public class VectorCalculation { // inherit from Vector.java
 	 */
 	protected double distanceVector(Vector u, Vector v) {
 
-		double r = Constants.earthRadius;
+		double r = Constants.EARTHRADIUS;
 		return (2 * Math.PI * r * Math.toDegrees(angelCalculation(u, v))) / 360;
 	}
 
@@ -140,7 +140,7 @@ public class VectorCalculation { // inherit from Vector.java
 	 * @return Vector Object
 	 */
 	protected Vector calculatePoint(Vector pRoof, Vector u, double a) {
-		double r = Constants.earthRadius;
+		double r = Constants.EARTHRADIUS;
 		return vecAddition(vecMulti(pRoof, r * Math.cos(a)), vecMulti(u, r * Math.sin(a))); // pRoof*r*cos(a) +
 																							// u*r*sin(a);
 	}

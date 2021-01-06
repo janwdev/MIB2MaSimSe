@@ -14,7 +14,7 @@ public class Vector {
 	private double x; // X-Coordinate
 	private double y; // Y-Coordinate
 	private double z; // Z-Coordinate
-	private double r = Constants.earthRadius; // Earthradius
+	private double r = Constants.EARTHRADIUS; // Earthradius
 	private double wPhi; // Longitude xRoof and v' Phi
 	private double wTheta; // Latitude v and v' Theta
 

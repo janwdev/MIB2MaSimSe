@@ -3,27 +3,38 @@ package maths;
 import objectClasses.Matrix;
 import objectClasses.Vector;
 
+/**
+ * @author Luca Jannik
+ *
+ */
 public class VectorMatrixCalculation {
 
+	/**
+	 * Multiply Vector with Matrix
+	 * 
+	 * @param vector
+	 * @param matrix
+	 * @return resulting Vector
+	 * @throws Exception
+	 */
 	protected Vector multiply(Vector vector, Matrix matrix) throws Exception {
 		try {
-			//matrix.check(1, vector.dim);
 			Vector returnVector = new Vector(0, 0, 0);
-			Double[] werte = new Double[matrix.cols];
+			Double[] values = new Double[matrix.cols];
 			for (int i = 0; i < matrix.rows; i++) {
-				double reihenErgebnis = 0;
+				double rowResult = 0;
 				for (int j = 0; j < matrix.cols; j++) {
-					double matrixValue = matrix.get(i + 1, j + 1); // zu double verändert
+					double matrixValue = matrix.get(i + 1, j + 1);
 					double vectorValue = vector.getVector()[i];
-					reihenErgebnis = reihenErgebnis + matrix.get(i + 1, j + 1) * vector.getVector()[j];
+					rowResult = rowResult + matrix.get(i + 1, j + 1) * vector.getVector()[j];
 				}
-				werte[i] = reihenErgebnis;
-				returnVector.setVector(werte);
+				values[i] = rowResult;
+				returnVector.setVector(values);
 			}
 			return returnVector;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new Exception("Matrix-Vektor-Multiplikation fehlgeschlagen");
+			throw new Exception("Matrix-Vektor-Multiplication went wrong");
 		}
 	}
 

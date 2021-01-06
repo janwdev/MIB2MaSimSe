@@ -6,8 +6,10 @@ import maths.Maths;
 import objectClasses.Vector;
 import java.util.Timer;
 import java.util.TimerTask;
+
 /**
  * Point Flight Animation
+ * 
  * @author Luca,Jannik
  *
  */

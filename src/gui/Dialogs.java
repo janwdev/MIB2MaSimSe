@@ -19,11 +19,23 @@ import javax.swing.JTextField;
 import app.Constants;
 import app.Control;
 
+/**
+ * Dialog to Add or Edit Coordinates
+ * 
+ * @author jweisser
+ *
+ */
 class AddCoordinatesDialog extends JDialog {
 
 	private Control control;
 	private MainGUI gui;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param gui
+	 * @param control
+	 */
 	public AddCoordinatesDialog(MainGUI gui, Control control) {
 		super(gui, "Add Coordinates", true);
 		this.control = control;
@@ -34,6 +46,9 @@ class AddCoordinatesDialog extends JDialog {
 		this.setVisible(true);
 	}
 
+	/**
+	 * create Dialog
+	 */
 	private void createDialog() {
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -66,6 +81,7 @@ class AddCoordinatesDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					// Check, convert and save the coordinates
 
 					if (!tfGradNS.getText().isBlank() && !tfMinNS.getText().isBlank() && !tfSekNS.getText().isBlank()
 							&& !tfGradEW.getText().isBlank() && !tfMinEW.getText().isBlank()
@@ -105,8 +121,7 @@ class AddCoordinatesDialog extends JDialog {
 						control.airportStr[control.airportStr.length - 1] = tfName.getText().trim();
 						control.airportPhi = Arrays.copyOf(control.airportPhi, control.airportPhi.length + 1);
 						control.airportPhi[control.airportPhi.length - 1] = phi;
-						control.airportThetha = Arrays.copyOf(control.airportThetha,
-								control.airportThetha.length + 1);
+						control.airportThetha = Arrays.copyOf(control.airportThetha, control.airportThetha.length + 1);
 						control.airportThetha[control.airportThetha.length - 1] = theta;
 
 						control.writeAirportToFile();
@@ -119,12 +134,12 @@ class AddCoordinatesDialog extends JDialog {
 
 				} catch (NumberFormatException ex) {
 					ex.printStackTrace();
-					gui.showErrorMessage("Wrong Values (Number?)");
+					MainGUI.showErrorMessage("Wrong Values (Number?)");
 					// TODO
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					System.out.println(e1.getMessage());
-					gui.showErrorMessage(e1.getMessage());
+					MainGUI.showErrorMessage(e1.getMessage());
 				}
 			}
 		});
@@ -177,6 +192,9 @@ class AddCoordinatesDialog extends JDialog {
 		this.add(lbHint, gbc);
 	}
 
+	/**
+	 * Close Dialog
+	 */
 	private void close() {
 		this.dispose();
 		gui.repaint();
@@ -184,8 +202,19 @@ class AddCoordinatesDialog extends JDialog {
 
 }
 
+/**
+ * Infodialog with Informations about the Program
+ * 
+ * @author jweisser
+ *
+ */
 class InfoDialog extends JDialog {
 
+	/**
+	 * Constructor
+	 * 
+	 * @param parent
+	 */
 	public InfoDialog(JFrame parent) {
 		super(parent, "Info", true);
 		createInfoDialog();
@@ -194,6 +223,9 @@ class InfoDialog extends JDialog {
 		this.setVisible(true);
 	}
 
+	/**
+	 * create Dialog
+	 */
 	private void createInfoDialog() {
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -236,6 +268,11 @@ class InfoDialog extends JDialog {
 		this.add(createLicencesSection(), gbc);
 	}
 
+	/**
+	 * Create Licences Panel
+	 * 
+	 * @return Licences Panel
+	 */
 	private JPanel createLicencesSection() {
 		JPanel licences = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();

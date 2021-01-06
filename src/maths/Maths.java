@@ -197,8 +197,8 @@ public class Maths {
 		int[] ret;
 		double x = v.getVectorX();
 		double y = v.getVectorY();
-		x = Constants.xOffsetDraw + x * 100 * Constants.drawScaleFactor;
-		y = Constants.yOffsetDraw + y * 100 * Constants.drawScaleFactor;
+		x = Constants.XOFFSETDRAW + x * 100 * Constants.DRAWSCALEFACTOR;
+		y = Constants.YOFFSETDRAW + y * 100 * Constants.DRAWSCALEFACTOR;
 		int xDisp = (int) Math.round(x);
 		int yDisp = (int) Math.round(y);
 		ret = new int[] { xDisp, yDisp };

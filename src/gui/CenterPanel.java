@@ -11,6 +11,12 @@ import maths.Maths;
 import objectClasses.Matrix;
 import objectClasses.Vector;
 
+/**
+ * Panel where the earth is drawn
+ * 
+ * @author jweisser
+ *
+ */
 public class CenterPanel extends JPanel {
 
 	private Maths maths = new Maths();
@@ -21,22 +27,38 @@ public class CenterPanel extends JPanel {
 
 	double zRot = 0; // rotation around vertical axis
 
+	/**
+	 * Constructor
+	 */
 	public CenterPanel() {
-		Dimension size = new Dimension(Constants.drawSizeXPixels, Constants.drawSizeYPixels);
+		Dimension size = new Dimension(Constants.DRAWSIZEXPIXELS, Constants.DRAWSIZEYPIXELS);
 		this.setMinimumSize(size);
 		this.setPreferredSize(size);
 		this.setMaximumSize(size);
 		this.repaint();
 	}
 
+	/**
+	 * Departure Airport
+	 * 
+	 * @return Vector from Airport
+	 */
 	public Vector getStartVector() {
 		return startVector.v;
 	}
 
+	/**
+	 * Destination Airport
+	 * 
+	 * @return Vector from Airport
+	 */
 	public Vector getEndVector() {
 		return endVector.v;
 	}
 
+	/**
+	 * Method which paints Components
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -44,6 +66,7 @@ public class CenterPanel extends JPanel {
 		wiremesh();
 		outline();
 
+		// Draw Flight route
 		try {
 			if (vectorDrawList.size() > 0) {
 				for (int i = 0; i < vectorDrawList.size() - 1; i++) {
@@ -65,6 +88,14 @@ public class CenterPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Draw Vector
+	 * 
+	 * @param v     Vector
+	 * @param color Color
+	 * @param w     Width
+	 * @param h     Height
+	 */
 	protected void drawVector(Vector v, Color color, int w, int h) {
 		g.setColor(color);
 		try {
@@ -79,6 +110,9 @@ public class CenterPanel extends JPanel {
 
 	}
 
+	/**
+	 * Draw outline
+	 */
 	private void outline() {
 		double s1 = maths.getProjectionsMatrixClass().getS();
 		double a = maths.getProjectionsMatrixClass().getA();
@@ -97,6 +131,14 @@ public class CenterPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Outline
+	 * 
+	 * @param t
+	 * @param phiP
+	 * @param thetaP
+	 * @throws Exception
+	 */
 	private void outlineVector(double t, double phiP, double thetaP) throws Exception {
 		Matrix rotMatRL = new Matrix(3, 3);
 		Matrix rotMatTB = new Matrix(3, 3);
@@ -108,6 +150,9 @@ public class CenterPanel extends JPanel {
 		drawVector(u, Constants.EARTHOUTLINECOLOR, 2, 2);
 	}
 
+	/**
+	 * Create Wiremesh
+	 */
 	private void wiremesh() {
 		// Circles Horizontal
 
@@ -122,8 +167,8 @@ public class CenterPanel extends JPanel {
 		double angleY = 0;
 		int nbrCircles = 8;
 		double distanceY = 2 * Math.PI / (nbrCircles * 2);
-		try {
 
+		try {
 			for (int iLscp = 0; iLscp < nbrCircles * 2; iLscp++) {
 				for (int i = 0; i < dotPerCircle; i++) {
 					Vector v = new Vector(angleX, angleY);
@@ -171,12 +216,26 @@ public class CenterPanel extends JPanel {
 
 }
 
+/**
+ * Save Vector with Color, Width and Height
+ * 
+ * @author jweisser
+ *
+ */
 class VectorToDraw {
 	Vector v;
 	Color c;
 	int w;
 	int h;
 
+	/**
+	 * Save Vector with Color, Width and Height
+	 * 
+	 * @param v Vector
+	 * @param c Color
+	 * @param w Width
+	 * @param h Height
+	 */
 	public VectorToDraw(Vector v, Color c, int w, int h) {
 		this.v = v;
 		this.c = c;
