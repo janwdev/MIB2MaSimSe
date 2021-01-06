@@ -1,96 +1,187 @@
 package objectClasses;
 
-import maths.Vektorberechnung;
+import maths.VectorCalculation;
 import app.Constants;
 
-public class Vector { 
+/**
+ * Vecotr Object class
+ * 
+ * @author Luca, Jannik
+ *
+ */
+public class Vector {
 
-	private double x;									// X-Koordinate des Vektors
-	private double y;									// Y-Koordinate des Vektors
-	private double z;									// Z-Koordinate des Vektors
-	private double r = Constants.earthRadius;			// Erdradius
-	private double wPhi ; 								// Längengrad xDach und v' 	Phi
-	private double wTheta ; 							// Breitengrad v und v'		Theta
+	private double x; // X-Coordinate
+	private double y; // Y-Coordinate
+	private double z; // Z-Coordinate
+	private double r = Constants.earthRadius; // Earthradius
+	private double wPhi; // Longitude xRoof and v' Phi
+	private double wTheta; // Latitude v and v' Theta
 
-	// Vektor mit x,y,z instanziieren und Winkelberechnung
+	/**
+	 * Instantiate vector with x,y,z and calculate angle
+	 * 
+	 * @param x double value
+	 * @param y double value
+	 * @param z double value
+	 */
 	public Vector(double x, double y, double z) {
 		initVector(true, x, y, z);
 	}
-	// Vektor mit x,y,z instanziieren und/ohne Winkelberechnung
-	private Vector(boolean sollteWinkel, double x, double y, double z) {
-		initVector(sollteWinkel, x, y, z);
+
+	/**
+	 * instantiate vector with x,y,z and/or without angle calculation
+	 * 
+	 * @param withAngel boolean
+	 * @param x         double value
+	 * @param y         double value
+	 * @param z         double value
+	 */
+	private Vector(boolean withAngel, double x, double y, double z) {
+		initVector(withAngel, x, y, z);
 	}
-	// Vektor werte zuweisen und/ohne Winkelberechnen
-	private void initVector(boolean sollteWinkel, double x, double y, double z) {
+
+	/**
+	 * Assign vector values and/or calculate angles
+	 * 
+	 * @param withAngel boolean
+	 * @param x         double value
+	 * @param y         double value
+	 * @param z         double value
+	 */
+	private void initVector(boolean withAngel, double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		if (sollteWinkel)
-			winkelBerechnen();
+		if (withAngel)
+			angelCalculation();
 	}
-	// Vektor mit 2 Winkel (Phi,Theta) instanziieren und Koordinaten berechnen
+
+	/**
+	 * instantiate vector with 2 angles (Phi,Theta) and calculate coordinates
+	 * 
+	 * @param wP double value
+	 * @param wO double value
+	 */
 	public Vector(double wP, double wO) {
 		this.wPhi = wP;
 		this.wTheta = wO;
-		koordinatenBerechnen();
+		coordinateCalculation();
 	}
-	// Winkelberechnung mit geg. Koordinaten
-	public void winkelBerechnen() {
-		Vektorberechnung vekbe = new Vektorberechnung();
-		wTheta = vekbe.winkelBerechnen(this, new Vector(false, x, y, 0));
-		wPhi = vekbe.winkelBerechnen(new Vector(false, x, y, 0), new Vector(false, x, 0, 0));
+
+	/**
+	 * Angle calculation with given coordinates
+	 */
+	public void angelCalculation() {
+		VectorCalculation vecCa = new VectorCalculation();
+		wTheta = vecCa.angelCalculation(this, new Vector(false, x, y, 0));
+		wPhi = vecCa.angelCalculation(new Vector(false, x, y, 0), new Vector(false, x, 0, 0));
 	}
-	// Koordinatenberechnung mit geg. Winkeln
-	public void koordinatenBerechnen() {
+
+	/**
+	 * Coordinate calculation with given angles
+	 */
+	public void coordinateCalculation() {
 		this.x = r * Math.cos(wTheta) * Math.cos(wPhi);
 		this.y = r * Math.cos(wTheta) * Math.sin(wPhi);
 		this.z = r * Math.sin(wTheta);
 	}
-	// Vektor setter/getter-Methoden ***********************************************************
+
+	// Vector setter/getter-Method
+	// ***********************************************************
+	/**
+	 * 
+	 * @return double[] Array
+	 */
 	public double[] getVector() {
 		return new double[] { x, y, z };
 	}
 
+	/**
+	 * 
+	 * @return double value
+	 */
 	public double getVectorX() {
 		return x;
 	}
+
+	/**
+	 * 
+	 * @return double value
+	 */
 	public double getVectorY() {
 		return y;
 	}
+
+	/**
+	 * 
+	 * @return double value
+	 */
 	public double getVectorZ() {
 		return z;
 	}
-	public void setVector(Double[] werte) {
-		if (werte[0] != null)
-			this.x = werte[0];
-		if (werte[1] != null)
-			this.y = werte[1];
-		if (werte[2] != null)
-			this.z = werte[2];
-		winkelBerechnen();
+
+	/**
+	 * 
+	 * @param value double[] array
+	 */
+	public void setVector(Double[] value) {
+		if (value[0] != null)
+			this.x = value[0];
+		if (value[1] != null)
+			this.y = value[1];
+		if (value[2] != null)
+			this.z = value[2];
+		angelCalculation();
 	}
+
+	/**
+	 * 
+	 * @param x double value
+	 * @param y double value
+	 * @param z double value
+	 */
 	public void setVector(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		winkelBerechnen();
+		angelCalculation();
 	}
 
-	public void setWinkel(double wP, double wO) {
+	/**
+	 * set Angel with Phi and Theta
+	 * 
+	 * @param wP double value
+	 * @param wO double value
+	 */
+	public void setAngel(double wP, double wO) {
 		this.wPhi = wP;
 		this.wTheta = wO;
-		koordinatenBerechnen();
+		coordinateCalculation();
 	}
-	public double getPWinkel() {
+
+	/**
+	 * 
+	 * @return double value
+	 */
+	public double getPAngel() {
 		return wPhi;
 	}
-	public double getOWinkel() {
+
+	/**
+	 * 
+	 * @return double value
+	 */
+	public double getOAngel() {
 		return wTheta;
 	}
+
 	// **********************************************************************************************
-	// toString-Methode für die vereinfachte Konsolenausgabe
+	/**
+	 * toString method for simplified console output
+	 */
 	public String toString() {
-		return "X: "+x+" Y: "+y+" Z: "+z+" Phi: "+wPhi+" Theta: "+wTheta;
+		return "X: " + x + " Y: " + y + " Z: " + z + " Phi: " + wPhi + " Theta: " + wTheta;
 	}
 
 }

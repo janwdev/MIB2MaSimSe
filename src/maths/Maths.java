@@ -4,84 +4,196 @@ import app.Constants;
 import objectClasses.Matrix;
 import objectClasses.Vector;
 
+/**
+ * Math Calculations
+ * 
+ * @author Luca,Jannik
+ *
+ */
 public class Maths {
-	private MatrixBerechnung bMatrix = new MatrixBerechnung();
-	private ProjektionsMatrix projektionsMatrix = new ProjektionsMatrix();
-	private Vektorberechnung bVektor = new Vektorberechnung();
-	private VektorMatrixBerechnung bVektorMatrix = new VektorMatrixBerechnung();
+	private MatrixCalculation bMatrix = new MatrixCalculation();
+	private ProjectionsMatrix projectionsMatrix = new ProjectionsMatrix();
+	private VectorCalculation bVector = new VectorCalculation();
+	private VectorMatrixCalculation bVectorMatrix = new VectorMatrixCalculation();
 
-	public Matrix getProjektionsMatrix() {
-		return projektionsMatrix.getProMatrix();
+	/**
+	 * 
+	 * @return Matrix Object
+	 */
+	public Matrix getProjectionsMatrix() {
+		return projectionsMatrix.getProMatrix();
 	}
 
-	public double[][] getProjektionsMatrixArray() {
-		return projektionsMatrix.getProjektionsMatrix();
+	/**
+	 * 
+	 * @return 2-Dimensional-Array (ProjectionsMatrix)
+	 */
+	public double[][] getProjectionsMatrixArray() {
+		return projectionsMatrix.getProjectionsMatrix();
 	}
 
-	public ProjektionsMatrix getProjektionsMatrixClass() {
-		return projektionsMatrix;
+	/**
+	 * 
+	 * @return ProjectionsMatrix Object
+	 */
+	public ProjectionsMatrix getProjectionsMatrixClass() {
+		return projectionsMatrix;
 	}
 
+	/**
+	 * Multiply Matrix * Matrix
+	 * 
+	 * @param ma1 Matrix Object
+	 * @param ma2 Matrix Object
+	 * @return Matrix Object
+	 */
 	public Matrix multiply(Matrix ma1, Matrix ma2) {
 		return bMatrix.multipy(ma1, ma2);
 	}
 
-	public double skalarProdukt(Vector u, Vector v) {
-		return bVektor.skalarProdukt(u, v);
+	/**
+	 * scalarProduct
+	 * 
+	 * @param u Vector Object
+	 * @param v Vector Object
+	 * @return double value
+	 */
+	public double scalarProduct(Vector u, Vector v) {
+		return bVector.scalarProduct(u, v);
 	}
 
-	public double vektorLaenge(Vector v) {
-		return bVektor.vecLength(v);
+	/**
+	 * calculate Vector length
+	 * 
+	 * @param v Vector Objects
+	 * @return double value
+	 */
+	public double vectorLength(Vector v) {
+		return bVector.vecLength(v);
 	}
 
-	public double getWinkelZwischen(Vector u, Vector v) {
-		return bVektor.winkelBerechnen(u, v);
+	/**
+	 * calculate the angel Between 2 Vectors
+	 * 
+	 * @param u Vector Object
+	 * @param v Vector Object
+	 * @return double value
+	 */
+	public double getAngelBetween(Vector u, Vector v) {
+		return bVector.angelCalculation(u, v);
 	}
-	
-	public Vector rotateVectorZ(Vector v, double wz) throws Exception{
-		Vector vec = bVektor.drehen(v, bMatrix.getDrehMatrixZ(wz));
+
+	/**
+	 * rotate Vector
+	 * 
+	 * @param v  Vector Object
+	 * @param wz double rotation
+	 * @return Vector Object
+	 * @throws Exception
+	 */
+	public Vector rotateVectorZ(Vector v, double wz) throws Exception {
+		Vector vec = bVector.rotate(v, bMatrix.getRotateMatrixZ(wz));
 		return vec;
 	}
 
-	public Vector vektorDivision(Vector v, double wert) {
-		return bVektor.vecDiv(v, wert);
+	/**
+	 * divide Vector with a value
+	 * 
+	 * @param v     Vector Object
+	 * @param value double
+	 * @return Vector Object
+	 */
+	public Vector vectorDivision(Vector v, double value) {
+		return bVector.vecDiv(v, value);
 	}
 
-	public Vector vektorMultiplikation(Vector v, double wert) {
-		return bVektor.vecMulti(v, wert);
+	/**
+	 * multiply Vector with a value
+	 * 
+	 * @param v     Vector Object
+	 * @param value double
+	 * @return Vector Object
+	 */
+	public Vector vectorMultiplication(Vector v, double value) {
+		return bVector.vecMulti(v, value);
 	}
 
-	public Vector vektorAddition(Vector v, Vector u) {
-		return bVektor.vecAddition(v, u);
+	/**
+	 * addition between 2 Vectors
+	 * 
+	 * @param v Vector Object
+	 * @param u Vector Object
+	 * @return Vector Object
+	 */
+	public Vector vectorAddition(Vector v, Vector u) {
+		return bVector.vecAddition(v, u);
 	}
 
-	public Vector kreuzprodukt(Vector u, Vector v) {
-		return bVektor.kreuzprodukt(u, v);
+	/**
+	 * crossProdukt between 2 Vectors
+	 * 
+	 * @param u Vector Object
+	 * @param v Vector Object
+	 * @return Vector Object
+	 */
+	public Vector crossProduct(Vector u, Vector v) {
+		return bVector.crossProduct(u, v);
 	}
-	// Berechnung des Punktes
-	public Vector berechneOrtho(Vector u, Vector v) {
-		return bVektor.berechneOrtho(u, v);
+
+	// Point Calculation
+	/**
+	 * 
+	 * @param u
+	 * @param v
+	 * @return
+	 */
+	public Vector calculateOrtho(Vector u, Vector v) {
+		return bVector.calculateOrtho(u, v);
 	}
-	
-	public Vector berechnePunkt(Vector p, Vector u, double a) {
-		return bVektor.berechnePunkt(p, u, a);
+
+	/**
+	 * Calculate Points
+	 * 
+	 * @param p Vector Object
+	 * @param u Vector Object
+	 * @param a double value
+	 * @return Vector Object
+	 */
+	public Vector calculatePoint(Vector p, Vector u, double a) {
+		return bVector.calculatePoint(p, u, a);
 	}
-	
+
 	// ***********************
-	
-	public double getAbstand(Vector u, Vector v) {
-		return bVektor.abstandVector(u, v);
+	/**
+	 * calculate the Distance between 2 Vectors on a circlepath
+	 * 
+	 * @param u Vector Object
+	 * @param v Vector Object
+	 * @return Vector Object
+	 */
+	public double getDistance(Vector u, Vector v) {
+		return bVector.distanceVector(u, v);
 	}
-	
-	
-	
 
+	/**
+	 * Multiply a Vector with Matrix
+	 * 
+	 * @param v Vector Object
+	 * @param m Matrix Object
+	 * @return Vector Object
+	 * @throws Exception
+	 */
 	public Vector multiply(Vector v, Matrix m) throws Exception {
-		return bVektorMatrix.multiply(v, m);
+		return bVectorMatrix.multiply(v, m);
 	}
 
-	public int[] vektor2DToDisplayKoordinates(Vector v) {
-		// TODO auf 2D Vektor pruefen
+	/**
+	 * Move 2D Vector into the center
+	 * 
+	 * @param v Vector Object
+	 * @return integer Array
+	 */
+	public int[] vector2DToDisplayKoordinates(Vector v) {
 		int[] ret;
 		double x = v.getVectorX();
 		double y = v.getVectorY();
