@@ -51,6 +51,9 @@ public class Control {
 	 */
 	public void reloadAirportCombobox() {
 		airportDepartModel.removeAllElements();
+		airportStr = new String[] {};
+		airportPhi = new Double[] {};
+		airportThetha = new Double[] {};
 		readContentFromAirPFile();
 		for (String s : airportStr) {
 			airportDepartModel.addElement(s);
