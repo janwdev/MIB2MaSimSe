@@ -6,17 +6,20 @@ public class Matrix {
 
 	public final int rows; // Zeilen
 	public final int cols; // Spalten
-
+	
+	// Matrixinstanziierung mit Spalten und Zeilen -Übergabe
 	public Matrix(int rows, int cols) throws Exception {
+		// Doppelt mit Check-Methode ------------------------------------------------------------------------------------------------
 		if (rows < 0 || cols < 0) {
 			throw new Exception("Negative Matrix");
 		}
 		this.rows = rows;
 		this.cols = cols;
 	}
-
+	// Matrix Werte zuweisen 
 	public void init(double... args) throws Exception {
-		if (args.length > this.cols * this.rows) {
+		// Überprüfung ob zu viele Werte übergeben worden sind
+		if (args.length > this.cols * this.rows) {			
 			throw new Exception("Übergabe-Anzahl ist größer als spalte*zeile");
 		}else {
 			this.matrix = new double[rows][cols];
@@ -33,31 +36,29 @@ public class Matrix {
 			}
 		}
 	}
-
+	// Matrix setter/getter - Methoden *********************************************************************
 	public double[][] getMatrix() throws Exception{
 		if(matrix == null) {
 			throw new Exception("Die Matrix wurde noch nicht deklariert");
 		}
 		return matrix;
 	}
-	// Warum -1
 	public double get(int rows, int cols) throws Exception {
 		check(rows, cols);
 		return this.matrix[rows -1 ][cols -1];
 	}
-	// Warum -1 wenn i oder j in Matrix.java 0 sein kann (-1 könnte entstehen);
 	public void set(int rows, int cols, double value) throws Exception {
 		check(rows, cols);
 		this.matrix[rows -1 ][cols -1 ] = value;
 	}
-	
 	public void setWithInit(int rows, int cols, double value) throws Exception {
 		check(rows, cols);
 		if(this.matrix == null)
 			this.matrix = new double[this.rows][this.cols];
 		this.matrix[rows -1 ][cols -1 ] = value;
 	}
-
+	// ******************************************************************************************************
+	
 	public void check(int rows, int cols) throws Exception {
 		if (rows < 0 || cols < 0) {
 			throw new Exception("Negative index werte.");
