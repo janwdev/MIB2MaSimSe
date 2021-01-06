@@ -25,14 +25,13 @@ class AddCoordinatesDialog extends JDialog {
 	private MainGUI gui;
 
 	public AddCoordinatesDialog(MainGUI gui, Control control) {
-		super(gui, "Koordinaten hinzufuegen", true);
+		super(gui, "Add Coordinates", true);
 		this.control = control;
 		this.gui = gui;
 		createDialog();
 		this.pack();
 		this.setLocationRelativeTo(gui);
 		this.setVisible(true);
-
 	}
 
 	private void createDialog() {
@@ -102,16 +101,16 @@ class AddCoordinatesDialog extends JDialog {
 							phi = 2 * Math.PI - (dezGradEW * (Math.PI / 180));
 						}
 
-						control.flughafenStr = Arrays.copyOf(control.flughafenStr, control.flughafenStr.length + 1);
-						control.flughafenStr[control.flughafenStr.length - 1] = tfName.getText().trim();
-						control.flughafenPhi = Arrays.copyOf(control.flughafenPhi, control.flughafenPhi.length + 1);
-						control.flughafenPhi[control.flughafenPhi.length - 1] = phi;
-						control.flughafenThetha = Arrays.copyOf(control.flughafenThetha,
-								control.flughafenThetha.length + 1);
-						control.flughafenThetha[control.flughafenThetha.length - 1] = theta;
-						
+						control.airportStr = Arrays.copyOf(control.airportStr, control.airportStr.length + 1);
+						control.airportStr[control.airportStr.length - 1] = tfName.getText().trim();
+						control.airportPhi = Arrays.copyOf(control.airportPhi, control.airportPhi.length + 1);
+						control.airportPhi[control.airportPhi.length - 1] = phi;
+						control.airportThetha = Arrays.copyOf(control.airportThetha,
+								control.airportThetha.length + 1);
+						control.airportThetha[control.airportThetha.length - 1] = theta;
+
 						control.writeAirportToFile();
-						control.reloadFlughafenCombobox();
+						control.reloadAirportCombobox();
 
 						close();
 					} else {
@@ -129,6 +128,8 @@ class AddCoordinatesDialog extends JDialog {
 				}
 			}
 		});
+
+		JLabel lbHint = new JLabel("To edit coordinates just enter the new coordinates with the same name");
 
 		this.add(tfGradNS, gbc);
 		gbc.gridx++;
@@ -172,6 +173,8 @@ class AddCoordinatesDialog extends JDialog {
 		gbc.gridx = 0;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		this.add(btApply, gbc);
+		gbc.gridy++;
+		this.add(lbHint, gbc);
 	}
 
 	private void close() {
@@ -199,9 +202,9 @@ class InfoDialog extends JDialog {
 		gbc.weightx = 0;
 		gbc.weighty = 0.1;
 
-		JLabel lbProgName = new JLabel("Programm Name:");
+		JLabel lbProgName = new JLabel("Programmname:");
 		JLabel lbVersion = new JLabel("Version:");
-		JLabel lbDescription = new JLabel("Beschreibung:");
+		JLabel lbDescription = new JLabel("Description:");
 
 		JTextField tfProgName = new JTextField(Constants.PROGNAME);
 		JTextField tfVersion = new JTextField(Constants.VERSION);
@@ -240,7 +243,7 @@ class InfoDialog extends JDialog {
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 1;
 		gbc.weighty = 0;
-		licences.add(new JLabel("Lizenzen:"), gbc);
+		licences.add(new JLabel("Licences:"), gbc);
 		gbc.gridy = 1;
 		gbc.weighty = 1;
 

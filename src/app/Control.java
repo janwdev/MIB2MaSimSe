@@ -24,44 +24,44 @@ public class Control {
 	private String fileDiv = ":";
 	private File airportFile = new File(tempFilePath + "/" + fileName);
 
-	public DefaultComboBoxModel<String> flughafenAnModel = new DefaultComboBoxModel<String>();
-	public DefaultComboBoxModel<String> flughafenAbModel = new DefaultComboBoxModel<String>();
-	public String[] flughafenStr = new String[] {};
-	public Double[] flughafenPhi = new Double[] {};
-	public Double[] flughafenThetha = new Double[] {};
+	public DefaultComboBoxModel<String> airportDestiModel = new DefaultComboBoxModel<String>();
+	public DefaultComboBoxModel<String> airportDepartModel = new DefaultComboBoxModel<String>();
+	public String[] airportStr = new String[] {};
+	public Double[] airportPhi = new Double[] {};
+	public Double[] airportThetha = new Double[] {};
 
 	public Control() {
 		Constants.LICENCETEXT = createLicencesText();
 		if (!airportFile.exists()) {
 			copyStdAirportFileToTemp();
 		}
-		reloadFlughafenCombobox();
+		reloadAirportCombobox();
 	}
 
 	protected void setGUI(MainGUI gui) {
 		this.gui = gui;
 	}
 
-	public void reloadFlughafenCombobox() {
-		flughafenAbModel.removeAllElements();
+	public void reloadAirportCombobox() {
+		airportDepartModel.removeAllElements();
 		readContentFromAirPFile();
-		for (String s : flughafenStr) {
-			flughafenAbModel.addElement(s);
+		for (String s : airportStr) {
+			airportDepartModel.addElement(s);
 		}
-		flughafenAnModel.removeAllElements();
-		for (String s : flughafenStr) {
-			flughafenAnModel.addElement(s);
+		airportDestiModel.removeAllElements();
+		for (String s : airportStr) {
+			airportDestiModel.addElement(s);
 		}
 
-		for (int i = 0; i < flughafenStr.length; i++) {
+		for (int i = 0; i < airportStr.length; i++) {
 			System.out.println(
-					"Flughafen: " + flughafenStr[i] + ": Phi: " + flughafenPhi[i] + ", Theta: " + flughafenThetha[i]);
+					"Airport: " + airportStr[i] + ": Phi: " + airportPhi[i] + ", Theta: " + airportThetha[i]);
 		}
 	}
 
 	public void writeAirportToFile() {
-		for (int i = 0; i < flughafenStr.length; i++) {
-			writeContenToAirPFile(flughafenStr[i], flughafenPhi[i].toString(), flughafenThetha[i].toString());
+		for (int i = 0; i < airportStr.length; i++) {
+			writeContenToAirPFile(airportStr[i], airportPhi[i].toString(), airportThetha[i].toString());
 		}
 	}
 	
@@ -82,12 +82,12 @@ public class Control {
 				for (String string : fileContent) {
 					String[] airport = string.split(fileDiv);
 					if (airport.length == 3) {
-						flughafenStr = Arrays.copyOf(flughafenStr, flughafenStr.length + 1);
-						flughafenStr[flughafenStr.length - 1] = airport[0];
-						flughafenPhi = Arrays.copyOf(flughafenPhi, flughafenPhi.length + 1);
-						flughafenPhi[flughafenPhi.length - 1] = Double.parseDouble(airport[1]);
-						flughafenThetha = Arrays.copyOf(flughafenThetha, flughafenThetha.length + 1);
-						flughafenThetha[flughafenThetha.length - 1] = Math.PI/2-Double.parseDouble(airport[2]);
+						airportStr = Arrays.copyOf(airportStr, airportStr.length + 1);
+						airportStr[airportStr.length - 1] = airport[0];
+						airportPhi = Arrays.copyOf(airportPhi, airportPhi.length + 1);
+						airportPhi[airportPhi.length - 1] = Double.parseDouble(airport[1]);
+						airportThetha = Arrays.copyOf(airportThetha, airportThetha.length + 1);
+						airportThetha[airportThetha.length - 1] = Math.PI/2-Double.parseDouble(airport[2]);
 					} else {
 						throw new Exception("File corrupted");
 					}
@@ -147,8 +147,6 @@ public class Control {
 			e.printStackTrace();
 		}
 		String apacheLicence = apacheBuilder.toString();
-
-		// evtl mehr Lizenzen einfuegen
 
 		String licences = apacheLicence + "\n";
 
