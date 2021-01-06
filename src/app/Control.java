@@ -17,8 +17,13 @@ import javax.swing.DefaultComboBoxModel;
 
 import gui.MainGUI;
 
+/**
+ * Control Class to read Files and manage stuff
+ * 
+ * @author jweisser
+ *
+ */
 public class Control {
-	private MainGUI gui;
 	private String tempFilePath = System.getProperty("java.io.tmpdir");
 	private String fileName = "airportSim.cfg";
 	private String fileDiv = ":";
@@ -30,6 +35,9 @@ public class Control {
 	public Double[] airportPhi = new Double[] {};
 	public Double[] airportThetha = new Double[] {};
 
+	/**
+	 * Constructor
+	 */
 	public Control() {
 		Constants.LICENCETEXT = createLicencesText();
 		if (!airportFile.exists()) {
@@ -38,10 +46,9 @@ public class Control {
 		reloadAirportCombobox();
 	}
 
-	protected void setGUI(MainGUI gui) {
-		this.gui = gui;
-	}
-
+	/**
+	 * Reload Combobox for Airports
+	 */
 	public void reloadAirportCombobox() {
 		airportDepartModel.removeAllElements();
 		readContentFromAirPFile();
@@ -54,17 +61,23 @@ public class Control {
 		}
 
 		for (int i = 0; i < airportStr.length; i++) {
-			System.out.println(
-					"Airport: " + airportStr[i] + ": Phi: " + airportPhi[i] + ", Theta: " + airportThetha[i]);
+			System.out
+					.println("Airport: " + airportStr[i] + ": Phi: " + airportPhi[i] + ", Theta: " + airportThetha[i]);
 		}
 	}
 
+	/**
+	 * Saves Airports to Files
+	 */
 	public void writeAirportToFile() {
 		for (int i = 0; i < airportStr.length; i++) {
 			writeContenToAirPFile(airportStr[i], airportPhi[i].toString(), airportThetha[i].toString());
 		}
 	}
-	
+
+	/**
+	 * Copy Standard Airport File to Temp Directory
+	 */
 	private void copyStdAirportFileToTemp() {
 		File f = new File(getPathFromRessourceInProject("assets/airportSim.cfg"));
 		try {
@@ -74,6 +87,9 @@ public class Control {
 		}
 	}
 
+	/**
+	 * Read Airports from File
+	 */
 	private void readContentFromAirPFile() {
 		if (airportFile.exists()) {
 			try {
@@ -87,7 +103,7 @@ public class Control {
 						airportPhi = Arrays.copyOf(airportPhi, airportPhi.length + 1);
 						airportPhi[airportPhi.length - 1] = Double.parseDouble(airport[1]);
 						airportThetha = Arrays.copyOf(airportThetha, airportThetha.length + 1);
-						airportThetha[airportThetha.length - 1] = Math.PI/2-Double.parseDouble(airport[2]);
+						airportThetha[airportThetha.length - 1] = Math.PI / 2 - Double.parseDouble(airport[2]);
 					} else {
 						throw new Exception("File corrupted");
 					}
@@ -103,6 +119,13 @@ public class Control {
 		}
 	}
 
+	/**
+	 * Write Airport to File
+	 * 
+	 * @param AIRPORT
+	 * @param PHI
+	 * @param THETA
+	 */
 	protected void writeContenToAirPFile(String AIRPORT, String PHI, String THETA) {
 		if (airportFile.exists()) {
 			try {
@@ -133,6 +156,11 @@ public class Control {
 		}
 	}
 
+	/**
+	 * Create Licence Text from used Librarys
+	 * 
+	 * @return Licence Text
+	 */
 	private String createLicencesText() {
 		StringBuilder apacheBuilder = new StringBuilder();
 		apacheBuilder.append("Uses Apache 2 Licence\n");
@@ -153,7 +181,13 @@ public class Control {
 		return licences;
 	}
 
-	private String getPathFromRessourceInProject(String resource) {
+	/**
+	 * Get Path from File in Program (needed for .jar)
+	 * 
+	 * @param resource Path to File in Project
+	 * @return Path from File
+	 */
+	public String getPathFromRessourceInProject(String resource) {
 		File file = null;
 		try {
 			InputStream input = getClass().getClassLoader().getResourceAsStream(resource);

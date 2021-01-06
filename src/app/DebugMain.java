@@ -11,7 +11,6 @@ public class DebugMain {
 
 		Control control = new Control();
 		MainGUI gui = new MainGUI(control);
-		control.setGUI(gui); // Noetig damit auf GUI zugegriffen werden kann
 	}
 
 }

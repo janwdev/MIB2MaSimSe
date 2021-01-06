@@ -1,6 +1,5 @@
 package maths;
 
-import app.Constants;
 import gui.MainGUI;
 import objectClasses.Matrix;
 
@@ -16,7 +15,6 @@ public class ProjectionsMatrix {
 	double a = 3.0; // (3*Math.PI)/4; // in Degree
 	double[][] pm; // Projectionsmatrix in 2Dim-Array
 	Matrix m; // Matrix-Object
-	private MainGUI gui;
 
 	/**
 	 * Constructor
@@ -41,7 +39,7 @@ public class ProjectionsMatrix {
 																				// (args ...)
 			pm = m.getMatrix();
 		} catch (Exception e) {
-			gui.showErrorMessage("An error in the projection matrix generation");
+			MainGUI.showErrorMessage("An error in the projection matrix generation");
 		}
 	}
 

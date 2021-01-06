@@ -6,15 +6,16 @@ import maths.Maths;
 import objectClasses.Vector;
 import java.util.Timer;
 import java.util.TimerTask;
+
 /**
  * Point Flight Animation
+ * 
  * @author Luca,Jannik
  *
  */
 public class Animation {
 	MainGUI gui;
 	CenterPanel centerPanel;
-	Maths ma = new Maths();
 
 	double steps = 360.0; // Steps per Circle track
 	double speed = 10.0; // StepCounter Speed
@@ -75,15 +76,15 @@ public class Animation {
 	 */
 	private void formulaCalculation(Vector p, Vector q, MainGUI gui) {
 
-		Vector pRoof = ma.vectorDivision(p, ma.vectorLength(p));
+		Vector pRoof = Maths.vectorDivision(p, Maths.vectorLength(p));
 
-		Vector n = ma.calculateOrtho(p, q);
-		Vector u = ma.calculateOrtho(n, pRoof);
+		Vector n = Maths.calculateOrtho(p, q);
+		Vector u = Maths.calculateOrtho(n, pRoof);
 
 		// Point movement declaration
-		double angel = ma.getAngelBetween(p, q);
+		double angel = Maths.getAngelBetween(p, q);
 		double degreeAngel = Math.toDegrees(angel);
-		double r = ma.vectorLength(p);
+		double r = Maths.vectorLength(p);
 
 		pointAnimation(angel, pRoof, u, gui);
 
@@ -98,7 +99,7 @@ public class Animation {
 			public void run() {
 
 				if (!pause) {
-					gui.drawVector(ma.calculatePoint(pRoof, u, t)); // Draw Point
+					gui.drawVector(Maths.calculatePoint(pRoof, u, t)); // Draw Point
 					t = t + ((Math.PI * 2) / steps); // increase Step Counter
 
 				}

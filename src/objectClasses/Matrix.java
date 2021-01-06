@@ -4,37 +4,41 @@ import gui.MainGUI;
 
 /**
  * Matrix Object Class
+ * 
  * @author Luca
  *
  */
 public class Matrix {
 
 	private double[][] matrix;
-	private MainGUI gui;
 
-	public final int rows; 
-	public final int cols; 
+	public final int rows;
+	public final int cols;
 
 	/**
 	 * Matrix instantiation with column and row passing
+	 * 
 	 * @param rows
 	 * @param cols
 	 * @throws Exception
 	 */
-	public Matrix(int rows, int cols) {
-		check(rows, cols);
+	public Matrix(int rows, int cols) throws Exception {
+		if (rows < 0 || cols < 0) {
+			throw new Exception("Negative index values.");
+		}
 		this.rows = rows;
 		this.cols = cols;
 	}
 
 	/**
 	 * Assign matrix values
+	 * 
 	 * @param args [double,double,double,...]
 	 */
 	public void init(double... args) {
 		// Check if too many values have been passed
 		if (args.length > this.cols * this.rows) {
-			gui.showErrorMessage("Transfer count is greater than column*row");
+			MainGUI.showErrorMessage("Transfer count is greater than column*row");
 		} else {
 			this.matrix = new double[rows][cols];
 			int index = 0;
@@ -55,16 +59,19 @@ public class Matrix {
 	// *********************************************************************
 	/**
 	 * get Matrix as an 2 Dimensional Array
+	 * 
 	 * @return Array[][]
 	 */
-	public double[][] getMatrix(){
+	public double[][] getMatrix() {
 		if (matrix == null) {
-			gui.showErrorMessage("The matrix has not yet been declared");
+			MainGUI.showErrorMessage("The matrix has not yet been declared");
 		}
 		return matrix;
 	}
+
 	/**
 	 * get value in a specific column,row
+	 * 
 	 * @param rows
 	 * @param cols
 	 * @return double value
@@ -74,8 +81,10 @@ public class Matrix {
 		check(rows, cols);
 		return this.matrix[rows - 1][cols - 1];
 	}
+
 	/**
 	 * set a value in a specific column,row
+	 * 
 	 * @param rows
 	 * @param cols
 	 * @param value double
@@ -85,30 +94,36 @@ public class Matrix {
 		check(rows, cols);
 		this.matrix[rows - 1][cols - 1] = value;
 	}
+
 	/**
 	 * set a value in a specific column,row and initialize
+	 * 
 	 * @param rows
 	 * @param cols
 	 * @param value double
+	 * @throws Exception
 	 */
-	public void setWithInit(int rows, int cols, double value) {
+	public void setWithInit(int rows, int cols, double value) throws Exception {
 		check(rows, cols);
 		if (this.matrix == null)
 			this.matrix = new double[this.rows][this.cols];
 		this.matrix[rows - 1][cols - 1] = value;
 	}
+
 	// ******************************************************************************************************
 	/**
 	 * Check Matrix rows and Cols
+	 * 
 	 * @param rows
 	 * @param cols
+	 * @throws Exception
 	 */
-	public void check(int rows, int cols) {
+	public void check(int rows, int cols) throws Exception {
 		if (rows < 0 || cols < 0) {
-			gui.showErrorMessage("Negative index values.");
+			MainGUI.showErrorMessage("Negative index values.");
 		}
 		if (rows > this.rows || cols > this.cols) {
-			gui.showErrorMessage("too high index for the matrix");
+			MainGUI.showErrorMessage("too high index for the matrix");
 		}
 	}
 }
