@@ -5,8 +5,8 @@ import objectClasses.Matrix;
 
 public class ProjektionsMatrix {
 
-	double s = 2.0; 			// Standardeinstellungen axonometrische Angaben
-	double a = 3.0;							// Winkel in Grad
+	double s = (1 / Math.sqrt(2)); // Standardeinstellungen axonometrische Angaben
+	double a = 3.0;//(3*Math.PI)/4; // in Grad
 	double[][] pm;							// Projektionsmatrix in 2Dim-Array
 	Matrix m;								// Matrix-Objekt
 
