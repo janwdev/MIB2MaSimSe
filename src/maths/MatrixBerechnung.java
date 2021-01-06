@@ -51,17 +51,11 @@ public class MatrixBerechnung {
 			return null;
 		}
 	}
-
-	protected Matrix getDrehMatrix(double winkelX, double winkelY, double winkelZ) throws Exception {
-		Matrix xMatrix = new Matrix(3, 3);
-		xMatrix.init(1, 0, 0, 0, Math.cos(winkelX), -Math.sin(winkelX), 0, Math.sin(winkelX), Math.cos(winkelX));
-		Matrix yMatrix = new Matrix(3, 3);
-		yMatrix.init(Math.cos(winkelY), 0, Math.sin(winkelY), 0, 1, 0, -Math.sin(winkelY), 0, Math.cos(winkelY));
+	
+	protected Matrix getDrehMatrixZ(double winkelZ) throws Exception {
 		Matrix zMatrix = new Matrix(3, 3);
 		zMatrix.init(Math.cos(winkelZ), -Math.sin(winkelZ), 0, Math.sin(winkelZ), Math.cos(winkelZ), 0, 0, 0, 1);
-		Matrix retMa = multipy(xMatrix, yMatrix);
-		retMa = multipy(retMa, zMatrix);
-		return retMa;
+		return zMatrix;
 	}
 
 }

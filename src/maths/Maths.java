@@ -37,9 +37,9 @@ public class Maths {
 	public double getWinkelZwischen(Vector u, Vector v) {
 		return bVektor.winkelBerechnen(u, v);
 	}
-
-	public Vector rotateVector(Vector v, int winkelX, int winkelY, int winkelZ) throws Exception {
-		Vector vec = bVektor.drehen(v, bMatrix.getDrehMatrix(winkelX, winkelY, winkelZ));
+	
+	public Vector rotateVectorZ(Vector v, double wz) throws Exception{
+		Vector vec = bVektor.drehen(v, bMatrix.getDrehMatrixZ(wz));
 		return vec;
 	}
 

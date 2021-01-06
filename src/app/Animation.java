@@ -13,7 +13,7 @@ public class Animation {
 	Maths ma = new Maths();
 
 	double schritte = 360.0; // Schritte pro Kreisbahn
-	double gschw = 10.0; // Geschwindigkeit des Schrittzählers
+	double speed = 10.0; // Geschwindigkeit des SchrittzÃ¤hlers
 	boolean pause = false; // Animation pausieren
 	Timer timer = new Timer();
 
@@ -25,12 +25,28 @@ public class Animation {
 	public void startAnimation() {
 		formelBerechnung(centerPanel.getStartVector(), centerPanel.getEndVector(), gui);
 	}
+	
+	public void pauseContinue() {
+		pause = !pause;
+	}
 
-	// muss man am Ende nicht noch zurück drehen ?
+	public void cancel() {
+		timer.cancel();
+		timer = new Timer();
+		pause = false;
+		gui.animEnded();
+	}
+	
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
+
+	// muss man am Ende nicht noch zurÃ¼ck drehen ?
 	private void formelBerechnung(Vector p, Vector q, MainGUI gui) {
 
-		// Vectorlänge (=radius) ist bei Berechnung mit Winkel immer 1
-		Vector pDach = ma.vektorDivision(p, ma.vektorLaenge(p)); // Einheitsvektor hat immer die länge 1
+		// VectorlÃ¤nge (=radius) ist bei Berechnung mit Winkel immer 1
+		Vector pDach = ma.vektorDivision(p, ma.vektorLaenge(p)); // Einheitsvektor hat immer die lÃ¤nge 1
 		// ******
 
 		Vector n = ma.berechneOrtho(p, q);
@@ -56,28 +72,20 @@ public class Animation {
 
 				if (!pause) {
 					gui.drawVector(ma.berechnePunkt(pDach, u, t)); // Punkt zeichnen
-					t = t + ((Math.PI * 2) / schritte); // Schrittzähler erhöhen
+					t = t + ((Math.PI * 2) / schritte); // SchrittzÃ¤hler erhÃ¶hen
 
 				}
 				if (t > winkel) {
 					timer.cancel();
+					timer = new Timer();
+					pause = false;
+					gui.animEnded();
 				}
 			};
 		};
-		// tt-Task wird mit 0millisek Verzögerung und jede (1000/gschw) millisek
-		// ausgeführt
-		timer.scheduleAtFixedRate(tt, 0, (long) (1000 / gschw));
+    // tt-Task wird mit 0millisek VerzÃ¶gerung und jede (1000/gschw) millisek
+		// ausgefÃ¼hrt
+		timer.scheduleAtFixedRate(tt, 0, (long) (1000 / speed));
 
 	}
-
-	public void pauseContinue() {
-		pause = !pause;
-	}
-
-	public void cancel() {
-		timer.cancel();
-	}
-
-	// pausieren, abbrechen und weiter
-
 }
