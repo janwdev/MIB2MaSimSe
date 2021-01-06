@@ -12,11 +12,10 @@ public class Animation {
 	CenterPanel centerPanel;
 	Maths ma = new Maths();
 
-	double schritte = 360.0;
-	double gschw = 10.0;
-	boolean pause = false;
+	double schritte = 360.0;	// Schritte pro Kreisbahn
+	double gschw = 10.0;		// Geschwindigkeit des Schrittzählers
+	boolean pause = false;		// Animation pausieren
 	Timer timer = new Timer();
-	
 
 	public Animation(MainGUI gui, CenterPanel centerPanel) {
 		this.gui = gui;
@@ -36,58 +35,65 @@ public class Animation {
 
 		Vector n = ma.berechneOrtho(p, q);
 		Vector u = ma.berechneOrtho(n, pDach);
-		ApplicationTime time = new ApplicationTime();
 
 		// Deklaration zur Punktbewegung
 		double winkel = ma.getWinkelZwischen(p, q);
 		double degreeWinkel = Math.toDegrees(winkel);
 		double r = ma.vektorLaenge(p);
 
-		// schrittzaehler in der Strecke zwischen p und q (Phi)
+		// Kurze zeichnen (Animation)
 		kurveZeichnen(winkel, pDach, u, gui);
-		/*
-		 * for (double t = 0; gschw * t < winkel; t = t + ((Math.PI * 2) / schritte)) {
-		 * gui.drawVector(ma.berechnePunkt(pDach, u, t));
-		 * 
-		 * }
-		 */
 
 	}
 
 	private void kurveZeichnen(double winkel, Vector pDach, Vector u, MainGUI gui) {
+<<<<<<< HEAD
+		
+=======
 
 		/*
 		 * for (double t = 0; gschw * t < winkel; t = t + ((Math.PI * 2) / schritte)) {
 		 * gui.drawVector(ma.berechnePunkt(pDach, u, t)); }
 		 */
-		
-		
+
+>>>>>>> Luca
 		TimerTask tt = new TimerTask() {
 			double t = 0;
 
 			@Override
 			public void run() {
+<<<<<<< HEAD
 				if(!pause) {
+					gui.drawVector(ma.berechnePunkt(pDach, u, t));	// Punkt zeichnen
+					t = t + ((Math.PI * 2) / schritte);				// Schrittzähler erhöhen
+=======
+				if (!pause) {
 					gui.drawVector(ma.berechnePunkt(pDach, u, t));
 					t = t + ((Math.PI * 2) / schritte);
+>>>>>>> Luca
 				}
 				if (t > winkel) {
 					timer.cancel();
 				}
 			};
 		};
+		// tt-Task wird mit 0millisek Verzögerung und jede (1000/gschw) millisek ausgeführt
 		timer.scheduleAtFixedRate(tt, 0, (long) (1000 / gschw));
 
 	}
-	
-	private void pauseContinue() {
+
+	public void pauseContinue() {
 		pause = !pause;
 	}
-	private void cancel() {
+
+	public void cancel() {
 		timer.cancel();
 	}
+<<<<<<< HEAD
 	
-	//pausieren, abbrechen und weiter
+=======
+>>>>>>> Luca
 
-	
+	// pausieren, abbrechen und weiter
+
 }

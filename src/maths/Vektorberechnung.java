@@ -6,7 +6,8 @@ import objectClasses.Vector;
 
 public class Vektorberechnung { // erbt von Vector.java
 	VektorMatrixBerechnung vektorMatrix = new VektorMatrixBerechnung();
-
+	
+	// Skalarprodukt
 	protected double skalarProdukt(Vector u, Vector v) {
 		double skalarprodukt = 0;
 		for (int i = 0; i < 3; i++) { // ändern
@@ -14,18 +15,11 @@ public class Vektorberechnung { // erbt von Vector.java
 		}
 		return skalarprodukt;
 	}
-
-	protected double vecLength(Vector v) {//norm oder length
-		// Fehlermeldung hinzufügen, falls zu wenig werte im Array (oder zu viel)
+	// Länge eines Vektors berechnen
+	protected double vecLength(Vector v) {
 		return Math.sqrt(Math.pow(v.getVectorX(), 2) + Math.pow(v.getVectorY(), 2) + Math.pow(v.getVectorZ(), 2));
 	}
-
-	public double winkelBerechnen(Vector u, Vector v) {// hier muss noch bedingung hin wann -arccos oder +arccos, für Kugelkoordinaten p (y>=0) und O (z>=0) => Also noch eine Drehübergabeparameter (pan,tilt,roll) Nicht nötig
-			// radiant wird zurückgegebene 0.90 zB
-			return (double) Math.acos(skalarProdukt(u, v) / (vecLength(v) * vecLength(u)));
-	
-	}
-
+	// Drehen eines Vektors durch multiplikation mit einer drehMatrix
 	protected Vector drehen(Vector vektor, Matrix drehMatrix) throws Exception {
 		double oldZ = vektor.getVectorZ();
 		vektor.setVector(vektor.getVectorX(), vektor.getVectorY(), 0);
@@ -33,23 +27,22 @@ public class Vektorberechnung { // erbt von Vector.java
 		vektor.setVector(vektor.getVectorX(), vektor.getVectorY(), oldZ);
 		return vektor;
 	}
-	
+	// Division von Vektor und wert
 	protected Vector vecDiv(Vector vector, double wert) {
 		Vector vec = new Vector(vector.getVectorX()/wert, vector.getVectorY()/wert, vector.getVectorZ()/wert);
 		return vec;
 	}
-	
+	// Multiplikation von Vektor und wert
 	protected Vector vecMulti(Vector vector, double wert) {
 		Vector vec = new Vector(vector.getVectorX()*wert, vector.getVectorY()*wert, vector.getVectorZ()*wert);
 		return vec;
 	}
-	
+	// Addition von Vektoren
 	protected Vector vecAddition(Vector v, Vector u) {
 		Vector vecNew = new Vector(v.getVectorX()+u.getVectorX(), v.getVectorY()+u.getVectorY(), v.getVectorZ()+u.getVectorZ());					
 		return vecNew;
 	}
-
-
+	// Kreuzprodukt: Ergebniss ist ein Vektor der auf beiden geg. Vektoren senkrecht steht
 	protected Vector kreuzprodukt(Vector u, Vector v) {
 		
 		double x = (u.getVectorY()*v.getVectorZ())-(u.getVectorZ()*v.getVectorY());
@@ -58,26 +51,33 @@ public class Vektorberechnung { // erbt von Vector.java
 		
 		return new Vector(x,y,z);
 	}
-	
+	// Abstand zwischen 2 Vektoren auf der Kreisbahn
 	protected double abstandVector(Vector u, Vector v) {
 		
-		double r = Constants.earthRadius;//radius r=konstante Erdradius
+		double r = Constants.earthRadius;	//radius verändert ---------------------------------------------------------------------------------------------------------
 		return (2*Math.PI*r*Math.toDegrees(winkelBerechnen(u, v)))/360;
 		
 	}
-
+	// Punktberechnung *****************************************************************
 	protected Vector berechneOrtho(Vector u, Vector v) {
 		Vector vec = vecDiv(kreuzprodukt(u, v), vecLength(kreuzprodukt(u, v)));
 		return vec;
 		
 	}
-	
+	// Kurvenparameter
 	protected Vector berechnePunkt(Vector pDach, Vector u, double a) {
-		double r = 1.0; // Constants.earthRadius // ist immer 1
+		double r = Constants.earthRadius; // ist hier immer 1
 		Vector v = null;
 		
 		return vecAddition(vecMulti(pDach, r*Math.cos(a)),vecMulti(u, r*Math.sin(a))); // Formel pDach*r*cos(a) + u*r*sin(a);
 	}
+	// *********************************************************************************
+	
+	// Winkel zwischen 2 Vektoren
+	public double winkelBerechnen(Vector u, Vector v) { 
+		return (double) Math.acos(skalarProdukt(u, v) / (vecLength(v) * vecLength(u)));
+
+}
 	
 	
 }
