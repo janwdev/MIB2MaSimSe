@@ -12,9 +12,9 @@ public class Animation {
 	CenterPanel centerPanel;
 	Maths ma = new Maths();
 
-	double schritte = 360.0;
-	private double speed = 10.0;
-	boolean pause = false;
+	double schritte = 360.0; // Schritte pro Kreisbahn
+	double speed = 10.0; // Geschwindigkeit des Schrittzählers
+	boolean pause = false; // Animation pausieren
 	Timer timer = new Timer();
 
 	public Animation(MainGUI gui, CenterPanel centerPanel) {
@@ -42,48 +42,38 @@ public class Animation {
 	}
 
 
-	// muss man am Ende nicht noch zur�ck drehen ?
+	// muss man am Ende nicht noch zurück drehen ?
 	private void formelBerechnung(Vector p, Vector q, MainGUI gui) {
 
-		// Vectorl�nge (=radius) ist bei Berechnung mit Winkel immer 1
-		Vector pDach = ma.vektorDivision(p, ma.vektorLaenge(p)); // Einheitsvektor hat immer die l�nge 1
+		// Vectorlänge (=radius) ist bei Berechnung mit Winkel immer 1
+		Vector pDach = ma.vektorDivision(p, ma.vektorLaenge(p)); // Einheitsvektor hat immer die länge 1
 		// ******
 
 		Vector n = ma.berechneOrtho(p, q);
 		Vector u = ma.berechneOrtho(n, pDach);
-		ApplicationTime time = new ApplicationTime();
 
 		// Deklaration zur Punktbewegung
 		double winkel = ma.getWinkelZwischen(p, q);
 		double degreeWinkel = Math.toDegrees(winkel);
 		double r = ma.vektorLaenge(p);
 
-		// schrittzaehler in der Strecke zwischen p und q (Phi)
+		// Kurze zeichnen (Animation)
 		kurveZeichnen(winkel, pDach, u, gui);
-		/*
-		 * for (double t = 0; gschw * t < winkel; t = t + ((Math.PI * 2) / schritte)) {
-		 * gui.drawVector(ma.berechnePunkt(pDach, u, t));
-		 * 
-		 * }
-		 */
 
 	}
 
 	private void kurveZeichnen(double winkel, Vector pDach, Vector u, MainGUI gui) {
-
-		/*
-		 * for (double t = 0; gschw * t < winkel; t = t + ((Math.PI * 2) / schritte)) {
-		 * gui.drawVector(ma.berechnePunkt(pDach, u, t)); }
-		 */
 
 		TimerTask tt = new TimerTask() {
 			double t = 0;
 
 			@Override
 			public void run() {
+
 				if (!pause) {
-					gui.drawVector(ma.berechnePunkt(pDach, u, t));
-					t = t + ((Math.PI * 2) / schritte);
+					gui.drawVector(ma.berechnePunkt(pDach, u, t)); // Punkt zeichnen
+					t = t + ((Math.PI * 2) / schritte); // Schrittzähler erhöhen
+
 				}
 				if (t > winkel) {
 					timer.cancel();
@@ -93,6 +83,8 @@ public class Animation {
 				}
 			};
 		};
+    // tt-Task wird mit 0millisek Verzögerung und jede (1000/gschw) millisek
+		// ausgeführt
 		timer.scheduleAtFixedRate(tt, 0, (long) (1000 / speed));
 
 	}

@@ -15,8 +15,7 @@ public class Constants {
 	public static int FPS = 60;
 	public static int TPF = 1000 / FPS;
 	public static double TIMESCALE = 1.0;
-	public static double earthRadius = 1.0; // später
-	
+	public static double earthRadius = 1.0;
 	public static double animSpeedNormal = 10;
 	public static double animSpeedSlow = 5;
 	public static double animSpeedFast = 30;
