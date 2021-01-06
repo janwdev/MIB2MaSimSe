@@ -11,16 +11,16 @@ import objectClasses.Vector;
  *
  */
 public class Maths {
-	private MatrixCalculation bMatrix = new MatrixCalculation();
-	private ProjectionsMatrix projectionsMatrix = new ProjectionsMatrix();
-	private VectorCalculation bVector = new VectorCalculation();
-	private VectorMatrixCalculation bVectorMatrix = new VectorMatrixCalculation();
+	private static MatrixCalculation bMatrix = new MatrixCalculation();
+	private static ProjectionsMatrix projectionsMatrix = new ProjectionsMatrix();
+	private static VectorCalculation bVector = new VectorCalculation();
+	private static VectorMatrixCalculation bVectorMatrix = new VectorMatrixCalculation();
 
 	/**
 	 * 
 	 * @return Matrix Object
 	 */
-	public Matrix getProjectionsMatrix() {
+	public static Matrix getProjectionsMatrix() {
 		return projectionsMatrix.getProMatrix();
 	}
 
@@ -28,7 +28,7 @@ public class Maths {
 	 * 
 	 * @return 2-Dimensional-Array (ProjectionsMatrix)
 	 */
-	public double[][] getProjectionsMatrixArray() {
+	public static double[][] getProjectionsMatrixArray() {
 		return projectionsMatrix.getProjectionsMatrix();
 	}
 
@@ -36,7 +36,7 @@ public class Maths {
 	 * 
 	 * @return ProjectionsMatrix Object
 	 */
-	public ProjectionsMatrix getProjectionsMatrixClass() {
+	public static ProjectionsMatrix getProjectionsMatrixClass() {
 		return projectionsMatrix;
 	}
 
@@ -47,7 +47,7 @@ public class Maths {
 	 * @param ma2 Matrix Object
 	 * @return Matrix Object
 	 */
-	public Matrix multiply(Matrix ma1, Matrix ma2) {
+	public static Matrix multiply(Matrix ma1, Matrix ma2) {
 		return bMatrix.multipy(ma1, ma2);
 	}
 
@@ -58,7 +58,7 @@ public class Maths {
 	 * @param v Vector Object
 	 * @return double value
 	 */
-	public double scalarProduct(Vector u, Vector v) {
+	public static double scalarProduct(Vector u, Vector v) {
 		return bVector.scalarProduct(u, v);
 	}
 
@@ -68,7 +68,7 @@ public class Maths {
 	 * @param v Vector Objects
 	 * @return double value
 	 */
-	public double vectorLength(Vector v) {
+	public static double vectorLength(Vector v) {
 		return bVector.vecLength(v);
 	}
 
@@ -79,7 +79,7 @@ public class Maths {
 	 * @param v Vector Object
 	 * @return double value
 	 */
-	public double getAngelBetween(Vector u, Vector v) {
+	public static double getAngelBetween(Vector u, Vector v) {
 		return bVector.angelCalculation(u, v);
 	}
 
@@ -91,7 +91,7 @@ public class Maths {
 	 * @return Vector Object
 	 * @throws Exception
 	 */
-	public Vector rotateVectorZ(Vector v, double wz) throws Exception {
+	public static Vector rotateVectorZ(Vector v, double wz) throws Exception {
 		Vector vec = bVector.rotate(v, bMatrix.getRotateMatrixZ(wz));
 		return vec;
 	}
@@ -103,7 +103,7 @@ public class Maths {
 	 * @param value double
 	 * @return Vector Object
 	 */
-	public Vector vectorDivision(Vector v, double value) {
+	public static Vector vectorDivision(Vector v, double value) {
 		return bVector.vecDiv(v, value);
 	}
 
@@ -114,7 +114,7 @@ public class Maths {
 	 * @param value double
 	 * @return Vector Object
 	 */
-	public Vector vectorMultiplication(Vector v, double value) {
+	public static Vector vectorMultiplication(Vector v, double value) {
 		return bVector.vecMulti(v, value);
 	}
 
@@ -125,7 +125,7 @@ public class Maths {
 	 * @param u Vector Object
 	 * @return Vector Object
 	 */
-	public Vector vectorAddition(Vector v, Vector u) {
+	public static Vector vectorAddition(Vector v, Vector u) {
 		return bVector.vecAddition(v, u);
 	}
 
@@ -136,7 +136,7 @@ public class Maths {
 	 * @param v Vector Object
 	 * @return Vector Object
 	 */
-	public Vector crossProduct(Vector u, Vector v) {
+	public static Vector crossProduct(Vector u, Vector v) {
 		return bVector.crossProduct(u, v);
 	}
 
@@ -147,7 +147,7 @@ public class Maths {
 	 * @param v
 	 * @return
 	 */
-	public Vector calculateOrtho(Vector u, Vector v) {
+	public static Vector calculateOrtho(Vector u, Vector v) {
 		return bVector.calculateOrtho(u, v);
 	}
 
@@ -159,7 +159,7 @@ public class Maths {
 	 * @param a double value
 	 * @return Vector Object
 	 */
-	public Vector calculatePoint(Vector p, Vector u, double a) {
+	public static Vector calculatePoint(Vector p, Vector u, double a) {
 		return bVector.calculatePoint(p, u, a);
 	}
 
@@ -171,7 +171,7 @@ public class Maths {
 	 * @param v Vector Object
 	 * @return Vector Object
 	 */
-	public double getDistance(Vector u, Vector v) {
+	public static double getDistance(Vector u, Vector v) {
 		return bVector.distanceVector(u, v);
 	}
 
@@ -183,7 +183,7 @@ public class Maths {
 	 * @return Vector Object
 	 * @throws Exception
 	 */
-	public Vector multiply(Vector v, Matrix m) throws Exception {
+	public static Vector multiply(Vector v, Matrix m) throws Exception {
 		return bVectorMatrix.multiply(v, m);
 	}
 
@@ -193,7 +193,7 @@ public class Maths {
 	 * @param v Vector Object
 	 * @return integer Array
 	 */
-	public int[] vector2DToDisplayKoordinates(Vector v) {
+	public static int[] vector2DToDisplayKoordinates(Vector v) {
 		int[] ret;
 		double x = v.getVectorX();
 		double y = v.getVectorY();
