@@ -3,7 +3,7 @@ package maths;
 import objectClasses.Matrix;
 import objectClasses.Vector;
 
-public class VektorMatrixBerechnung {
+public class VectorMatrixCalculation {
 
 	protected Vector multiply(Vector vector, Matrix matrix) throws Exception {
 		try {

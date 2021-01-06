@@ -2,7 +2,7 @@ package maths;
 
 import objectClasses.Matrix;
 
-public class MatrixBerechnung {
+public class MatrixCalculation {
 
 	protected Matrix multipy(Matrix ma1, Matrix ma2) {
 		try {
@@ -52,7 +52,7 @@ public class MatrixBerechnung {
 		}
 	}
 	
-	protected Matrix getDrehMatrixZ(double winkelZ) throws Exception {
+	protected Matrix getRotateMatrixZ(double winkelZ) throws Exception {
 		Matrix zMatrix = new Matrix(3, 3);
 		zMatrix.init(Math.cos(winkelZ), -Math.sin(winkelZ), 0, Math.sin(winkelZ), Math.cos(winkelZ), 0, 0, 0, 1);
 		return zMatrix;

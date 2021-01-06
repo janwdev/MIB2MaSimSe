@@ -1,32 +1,46 @@
 package objectClasses;
 
+import gui.MainGUI;
+
+/**
+ * Matrix Object Class
+ * @author Luca
+ *
+ */
 public class Matrix {
 
 	private double[][] matrix;
+	private MainGUI gui;
 
-	public final int rows; // Zeilen
-	public final int cols; // Spalten
-	
-	// Matrixinstanziierung mit Spalten und Zeilen -Übergabe
-	public Matrix(int rows, int cols) throws Exception {
-		// Doppelt mit Check-Methode ------------------------------------------------------------------------------------------------
-		if (rows < 0 || cols < 0) {
-			throw new Exception("Negative Matrix");
-		}
+	public final int rows; 
+	public final int cols; 
+
+	/**
+	 * Matrix instantiation with column and row passing
+	 * @param rows
+	 * @param cols
+	 * @throws Exception
+	 */
+	public Matrix(int rows, int cols) {
+		check(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
 	}
-	// Matrix Werte zuweisen 
-	public void init(double... args) throws Exception {
-		// Überprüfung ob zu viele Werte übergeben worden sind
-		if (args.length > this.cols * this.rows) {			
-			throw new Exception("Übergabe-Anzahl ist größer als spalte*zeile");
-		}else {
+
+	/**
+	 * Assign matrix values
+	 * @param args [double,double,double,...]
+	 */
+	public void init(double... args) {
+		// Check if too many values have been passed
+		if (args.length > this.cols * this.rows) {
+			gui.showErrorMessage("Transfer count is greater than column*row");
+		} else {
 			this.matrix = new double[rows][cols];
 			int index = 0;
 			for (int i = 0; i < this.rows; i++) {
 				for (int j = 0; j < this.cols; j++) {
-					// wenn z.b. nur drei Elemente eingegeben wurden bei einer 3x3 Matrix
+					// if e.g. only three elements were entered for a 3x3 matrix
 					if (index + 1 > args.length) {
 						break;
 					}
@@ -36,35 +50,65 @@ public class Matrix {
 			}
 		}
 	}
-	// Matrix setter/getter - Methoden *********************************************************************
-	public double[][] getMatrix() throws Exception{
-		if(matrix == null) {
-			throw new Exception("Die Matrix wurde noch nicht deklariert");
+
+	// Matrix setter/getter Method
+	// *********************************************************************
+	/**
+	 * get Matrix as an 2 Dimensional Array
+	 * @return Array[][]
+	 */
+	public double[][] getMatrix(){
+		if (matrix == null) {
+			gui.showErrorMessage("The matrix has not yet been declared");
 		}
 		return matrix;
 	}
+	/**
+	 * get value in a specific column,row
+	 * @param rows
+	 * @param cols
+	 * @return double value
+	 * @throws Exception
+	 */
 	public double get(int rows, int cols) throws Exception {
 		check(rows, cols);
-		return this.matrix[rows -1 ][cols -1];
+		return this.matrix[rows - 1][cols - 1];
 	}
+	/**
+	 * set a value in a specific column,row
+	 * @param rows
+	 * @param cols
+	 * @param value double
+	 * @throws Exception
+	 */
 	public void set(int rows, int cols, double value) throws Exception {
 		check(rows, cols);
-		this.matrix[rows -1 ][cols -1 ] = value;
+		this.matrix[rows - 1][cols - 1] = value;
 	}
-	public void setWithInit(int rows, int cols, double value) throws Exception {
+	/**
+	 * set a value in a specific column,row and initialize
+	 * @param rows
+	 * @param cols
+	 * @param value double
+	 */
+	public void setWithInit(int rows, int cols, double value) {
 		check(rows, cols);
-		if(this.matrix == null)
+		if (this.matrix == null)
 			this.matrix = new double[this.rows][this.cols];
-		this.matrix[rows -1 ][cols -1 ] = value;
+		this.matrix[rows - 1][cols - 1] = value;
 	}
 	// ******************************************************************************************************
-	
-	public void check(int rows, int cols) throws Exception {
+	/**
+	 * Check Matrix rows and Cols
+	 * @param rows
+	 * @param cols
+	 */
+	public void check(int rows, int cols) {
 		if (rows < 0 || cols < 0) {
-			throw new Exception("Negative index werte.");
+			gui.showErrorMessage("Negative index values.");
 		}
 		if (rows > this.rows || cols > this.cols) {
-			throw new Exception("zu hoher index für die Matrix");
+			gui.showErrorMessage("too high index for the matrix");
 		}
 	}
 }

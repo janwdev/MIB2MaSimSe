@@ -68,8 +68,8 @@ public class CenterPanel extends JPanel {
 	protected void drawVector(Vector v, Color color, int w, int h) {
 		g.setColor(color);
 		try {
-			Vector vN = maths.multiply(v, maths.getProjektionsMatrix());
-			int[] dispCoordinates = maths.vektor2DToDisplayKoordinates(vN);
+			Vector vN = maths.multiply(v, maths.getProjectionsMatrix());
+			int[] dispCoordinates = maths.vector2DToDisplayKoordinates(vN);
 			int x = dispCoordinates[0];
 			int y = dispCoordinates[1];
 			g.fillOval(x, y, w, h);
@@ -80,8 +80,8 @@ public class CenterPanel extends JPanel {
 	}
 
 	private void outline() {
-		double s1 = maths.getProjektionsMatrixClass().getS();
-		double a = maths.getProjektionsMatrixClass().getA();
+		double s1 = maths.getProjectionsMatrixClass().getS();
+		double a = maths.getProjectionsMatrixClass().getA();
 		double phiP = Math.atan(s1 * Math.sin(a));
 		double thetaP = Math.atan(-s1 * Math.cos(a) * Math.cos(phiP));
 		int stepWidthOutline = 360;
@@ -111,8 +111,8 @@ public class CenterPanel extends JPanel {
 	private void wiremesh() {
 		// Circles Horizontal
 
-		double s1 = maths.getProjektionsMatrixClass().getS();
-		double a = maths.getProjektionsMatrixClass().getA();
+		double s1 = maths.getProjectionsMatrixClass().getS();
+		double a = maths.getProjectionsMatrixClass().getA();
 		double phiP = Math.atan(s1 * Math.sin(a));
 		double thetaP = Math.atan(-s1 * Math.cos(a) * Math.cos(phiP));
 
